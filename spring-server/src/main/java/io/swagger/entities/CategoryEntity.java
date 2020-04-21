@@ -1,11 +1,7 @@
 package io.swagger.entities;
 
-import io.swagger.articles.api.model.Tag;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +13,8 @@ public class CategoryEntity implements Serializable {
     private long id;
 
     private String name;
-    private List<Tag> children = new ArrayList<Tag>();
+    @OneToMany
+    private List<TagEntity> children = new ArrayList<TagEntity>();
 
     public long getId() {
         return id;
@@ -31,11 +28,11 @@ public class CategoryEntity implements Serializable {
         this.name = name;
     }
 
-    public List<Tag> getChildren() {
+    public List<TagEntity> getChildren() {
         return children;
     }
 
-    public void setChildren(List<Tag> children) {
+    public void setChildren(List<TagEntity> children) {
         this.children = children;
     }
 

@@ -1,12 +1,7 @@
 package io.swagger.entities;
 
-import io.swagger.articles.api.model.Tag;
-import io.swagger.articles.api.model.User;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,15 +13,18 @@ public class ArticleEntity implements Serializable{
     private long id;
 
     private String title;
-    private List<Tag> tags = new ArrayList<Tag>();
+    @OneToMany
+    private List<TagEntity> tags = new ArrayList<TagEntity>();
     private String content;
+    @ElementCollection
     private List<String> photoUrls = null;
-    private User author;
+    @OneToOne
+    private UserEntity author;
     private String createdAt;
     private String lastUpdateAt;
     private Integer views;
 
-    public long getId(long id) {
+    public long getId() {
         return id ;
     }
 
@@ -38,11 +36,11 @@ public class ArticleEntity implements Serializable{
         this.title = title;
     }
 
-    public List<Tag> getTags() {
+    public List<TagEntity> getTags() {
         return tags;
     }
 
-    public void setTags(List<Tag> tags) {
+    public void setTags(List<TagEntity> tags) {
         this.tags = tags;
     }
 
@@ -62,11 +60,11 @@ public class ArticleEntity implements Serializable{
         this.photoUrls = photoUrls;
     }
 
-    public User getAuthor() {
+    public UserEntity getAuthor() {
         return author;
     }
 
-    public void setAuthor(User author) {
+    public void setAuthor(UserEntity author) {
         this.author = author;
     }
 

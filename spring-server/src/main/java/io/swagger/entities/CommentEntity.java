@@ -3,10 +3,7 @@ package io.swagger.entities;
 import io.swagger.articles.api.model.Article;
 import io.swagger.articles.api.model.User;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
 
 
@@ -18,8 +15,10 @@ public class CommentEntity implements Serializable{
 
     private String title;
     private String content;
-    private User author;
-    private Article article;
+    @OneToOne
+    private UserEntity author;
+    @ManyToOne
+    private ArticleEntity article;
 
     public long getId() {
         return id;
@@ -41,19 +40,19 @@ public class CommentEntity implements Serializable{
         this.content = content;
     }
 
-    public User getAuthor() {
+    public UserEntity getAuthor() {
         return author;
     }
 
-    public void setAuthor(User author) {
+    public void setAuthor(UserEntity author) {
         this.author = author;
     }
 
-    public Article getArticle() {
+    public ArticleEntity getArticle() {
         return article;
     }
 
-    public void setArticle(Article article) {
+    public void setArticle(ArticleEntity article) {
         this.article = article;
     }
 }

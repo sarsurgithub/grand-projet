@@ -6,25 +6,35 @@ import io.swagger.articles.api.model.Category;
 import io.swagger.articles.api.model.Comment;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.annotations.*;
+import io.swagger.articles.api.model.Tag;
+import io.swagger.articles.api.model.User;
+import io.swagger.entities.ArticleEntity;
+import io.swagger.entities.TagEntity;
+import io.swagger.entities.UserEntity;
+import io.swagger.repositories.ArticleRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.constraints.*;
 import javax.validation.Valid;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.net.URI;
 import java.util.List;
 
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2020-04-08T14:21:38.963Z[GMT]")
 @Controller
 public class ArticlesApiController implements ArticlesApi {
-
+    @Autowired
+    ArticleRepository articleRepository;
     private static final Logger log = LoggerFactory.getLogger(ArticlesApiController.class);
 
     private final ObjectMapper objectMapper;
@@ -48,7 +58,15 @@ public class ArticlesApiController implements ArticlesApi {
     public ResponseEntity<Void> createArticle(@ApiParam(value = "Article that needs to be added" ,required=true )  @Valid @RequestBody Article body
 ) {
         String accept = request.getHeader("Accept");
-        return new ResponseEntity<Void>(HttpStatus.NOT_IMPLEMENTED);
+        ArticleEntity newArticleEntity = toArticleEntity(body);
+        articleRepository.save(newArticleEntity);
+
+        URI location = ServletUriComponentsBuilder
+                .fromCurrentRequest().path("/{id}")
+                .buildAndExpand(newArticleEntity.getId()).toUri();
+
+        return ResponseEntity.created(location).build();
+
     }
 
     public ResponseEntity<Void> deleteArticleById(@ApiParam(value = "Article id to delete",required=true) @PathVariable("articleId") Long articleId
@@ -152,6 +170,80 @@ public class ArticlesApiController implements ArticlesApi {
 ) {
         String accept = request.getHeader("Accept");
         return new ResponseEntity<Void>(HttpStatus.NOT_IMPLEMENTED);
+    }
+
+    private ArticleEntity toArticleEntity(Article article) {
+        ArticleEntity entity = new ArticleEntity();
+        entity.setAuthor(toUserEntity(article.getAuthor()));
+        entity.setContent(article.getContent());
+        entity.setCreatedAt(article.getCreatedAt());
+        entity.setLastUpdateAt(article.getLastUpdateAt());
+        entity.setPhotoUrls(article.getPhotoUrls());
+        entity.setTags(toTagEntityList(article.getTags()));
+        entity.setTitle(article.getTitle());
+        entity.setViews(article.getViews());
+
+        return entity;
+    }
+
+    private Article toArticle(ArticleEntity entity) {
+        Article article = new Article();
+        article.setAuthor(toUser(entity.getAuthor()));
+        article.setContent(entity.getContent());
+        article.setCreatedAt(entity.getCreatedAt());
+        article.setLastUpdateAt(entity.getLastUpdateAt());
+        article.setPhotoUrls(entity.getPhotoUrls());
+        article.setTags(toTagList(entity.getTags()));
+        article.setTitle(entity.getTitle());
+        article.setViews(entity.getViews());
+        return article;
+    }
+
+    private UserEntity toUserEntity( User user) {
+       UserEntity entity = new UserEntity();
+       entity.setEmail(user.getEmail());
+       entity.setFirstName(user.getFirstName());
+       entity.setLastName(user.getLastName());
+       entity.setPassword(user.getPassword());
+       entity.setUsername(user.getUsername());
+       return entity;
+    }
+
+    private User toUser(UserEntity entity) {
+        User user = new User();
+        user.setUsername(entity.getUsername());
+        user.setEmail(entity.getEmail());
+        user.setFirstName(entity.getFirstName());
+        user.setLastName(entity.getLastName());
+        user.setPassword(entity.getPassword());
+        return user;
+    }
+
+    private TagEntity toTagEntity( Tag tag) {
+        TagEntity entity = new TagEntity();
+        entity.setName(tag.getName());
+        return entity;
+    }
+
+    private List<Tag> toTagList(List<TagEntity> listEntity) {
+        List<Tag> listTags = null;
+        for (int i = 0; i < listEntity.size(); i++) {
+            Tag tag = new Tag();
+            tag.setName(listEntity.get(i).getName());
+            listTags.add(tag);
+        }
+
+       return listTags;
+    }
+
+    private List<TagEntity> toTagEntityList(List<Tag> listTags) {
+        List<TagEntity> listEntity = null;
+        for (int i = 0; i < listTags.size(); i++) {
+            TagEntity tagEntity = new TagEntity();
+            tagEntity.setName(listTags.get(i).getName());
+            listEntity.add(tagEntity);
+        }
+        return listEntity;
     }
 
 }
