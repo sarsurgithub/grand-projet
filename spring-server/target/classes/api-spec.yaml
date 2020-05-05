@@ -1,6 +1,6 @@
 openapi: 3.0.1
 info:
-  title: Articles app API 
+  title: Articles app API
   description: "API de mon grand projet qui n'a pas encore de nom. App sur laquelle on peut poster des articles et intéragir avec ceux-ci."
   version: 1.0.0
 servers:
@@ -24,7 +24,7 @@ paths:
       summary: Finds all articles by date
       operationId: findArticlesByDate
       responses:
-        200: 
+        200:
           description: successful operation
           content:
             application/json:
@@ -78,7 +78,7 @@ paths:
                 items:
                   $ref: '#/components/schemas/Article'
         400:
-          description: Invalid category 
+          description: Invalid category
           content: {}
   /articles/{articleId}:
     get:
@@ -129,7 +129,7 @@ paths:
               $ref: '#/components/schemas/Article'
         required: true
       responses:
-        200: 
+        200:
           description: updated successfully
         405:
           description: Invalid input
@@ -148,7 +148,7 @@ paths:
           type: integer
           format: int64
       responses:
-        200: 
+        200:
           description: deleted successfully
         400:
           description: Invalid ID supplied
@@ -203,7 +203,7 @@ paths:
           format: int64
       requestBody:
         description: comment to add to the article
-        content: 
+        content:
           application/json:
             schema:
               $ref: '#/components/schemas/Comment'
@@ -212,7 +212,7 @@ paths:
             description: added successfully
           405:
             description: Invalid input
-            content: {} 
+            content: {}
   /articles/{articleId}/comments/{commentId}:
     get:
       tags:
@@ -336,7 +336,7 @@ paths:
         in: query
         description: The word for the research
         required: true
-        schema: 
+        schema:
           type: string
       responses:
         200:
@@ -347,7 +347,7 @@ paths:
                 $ref: '#/components/schemas/User'
   /users/register:
     post:
-      tags: 
+      tags:
         - users
       summary: Registers a user into the system
       operationId: registerUser
@@ -355,10 +355,10 @@ paths:
         description: infos about the new user
         content:
           '*/*':
-            schema: 
+            schema:
               $ref: '#/components/schemas/User'
-      responses: 
-        200: 
+      responses:
+        200:
           description: a new User was correctly added
           content: {}
   /users/login:
@@ -468,7 +468,7 @@ paths:
         - categories
       summary: Finds all categories
       operationId: findCategories
-      responses: 
+      responses:
         200:
           description: successful operation
           content:
@@ -477,7 +477,7 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Category'
-              
+
     post:
       tags:
         - categories
@@ -491,7 +491,7 @@ paths:
               $ref: '#/components/schemas/Category'
         required: true
       responses:
-        200: 
+        200:
           description: successful operation
         405:
           description: Invalid input
@@ -502,7 +502,7 @@ paths:
         - categories
       summary: finds a category by Id
       operationId: findACategoryById
-      parameters: 
+      parameters:
         - name: categoryId
           in: path
           description: category to delete
@@ -517,7 +517,7 @@ paths:
         - categories
       summary: updates a category by Id
       operationId: updateCategoryById
-      parameters: 
+      parameters:
         - name: categoryId
           in: path
           description: category to delete
@@ -535,9 +535,9 @@ paths:
         200:
           description: successful operation
     delete:
-        tags: 
+        tags:
           - categories
-        parameters: 
+        parameters:
         - name: categoryId
           in: path
           description: category to delete
@@ -549,14 +549,14 @@ paths:
         responses:
           200:
             description: successful operation
-    
+
   /tags:
     get:
       tags:
         - tags
       summary: Finds all tags
       operationId: findtags
-      responses: 
+      responses:
         200:
           description: successful operation
           content:
@@ -565,7 +565,7 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Tag'
-              
+
     post:
       tags:
         - tags
@@ -579,7 +579,7 @@ paths:
               $ref: '#/components/schemas/Tag'
         required: true
       responses:
-        200: 
+        200:
           description: successful operation
         405:
           description: Invalid input
@@ -590,7 +590,7 @@ paths:
         - tags
       summary: finds a tag by Id
       operationId: findATagById
-      parameters: 
+      parameters:
         - name: tagId
           in: path
           description: Tag to delete
@@ -605,7 +605,7 @@ paths:
         - tags
       summary: updates a tag by Id
       operationId: updateTagById
-      parameters: 
+      parameters:
         - name: tagId
           in: path
           description: tag to delete
@@ -623,9 +623,9 @@ paths:
         200:
           description: successful operation
     delete:
-        tags: 
+        tags:
           - tags
-        parameters: 
+        parameters:
         - name: tagId
           in: path
           description: tag to delete
@@ -637,7 +637,7 @@ paths:
         responses:
           200:
             description: successful operation
-          
+
 components:
   schemas:
     User:
@@ -658,7 +658,7 @@ components:
           type: string
     Tag:
       required:
-        - id 
+        - id
         - name
       type: object
       properties:
@@ -696,10 +696,10 @@ components:
           type: array
           items:
             type: string
-        author: 
+        author:
           $ref: '#/components/schemas/User'
-        createdAt: 
-          type: string 
+        createdAt:
+          type: string
           example: '12-02-2013H12-05'
         lastUpdateAt:
           type: string
@@ -708,11 +708,11 @@ components:
           type: integer
           example: 456
     Comment:
-      required: 
+      required:
         - content
         - article
         - title
-        - id 
+        - id
         - author
       type: object
       properties:
@@ -727,7 +727,7 @@ components:
           example: tu pourrais faire mieux
         author:
           $ref: '#/components/schemas/User'
-        article: 
+        article:
           $ref: '#/components/schemas/Article'
     Category:
       required:

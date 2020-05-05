@@ -23,6 +23,8 @@ public class ArticleEntity implements Serializable{
     private String createdAt;
     private String lastUpdateAt;
     private Integer views;
+    @OneToMany
+    private List<CommentEntity> comments = new ArrayList<>();
 
     public long getId() {
         return id ;
@@ -90,6 +92,14 @@ public class ArticleEntity implements Serializable{
 
     public void setViews(Integer views) {
         this.views = views;
+    }
+
+    public List<CommentEntity> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<CommentEntity> comments) {
+        this.comments = comments;
     }
 
 

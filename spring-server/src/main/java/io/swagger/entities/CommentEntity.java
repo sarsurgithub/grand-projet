@@ -17,8 +17,7 @@ public class CommentEntity implements Serializable{
     private String content;
     @OneToOne
     private UserEntity author;
-    @ManyToOne
-    private ArticleEntity article;
+
 
     public long getId() {
         return id;
@@ -48,11 +47,4 @@ public class CommentEntity implements Serializable{
         this.author = author;
     }
 
-    public ArticleEntity getArticle() {
-        return article;
-    }
-
-    public void setArticle(ArticleEntity article) {
-        this.article = article;
-    }
 }

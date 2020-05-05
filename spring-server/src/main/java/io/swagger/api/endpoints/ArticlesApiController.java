@@ -9,9 +9,11 @@ import io.swagger.annotations.*;
 import io.swagger.articles.api.model.Tag;
 import io.swagger.articles.api.model.User;
 import io.swagger.entities.ArticleEntity;
+import io.swagger.entities.CommentEntity;
 import io.swagger.entities.TagEntity;
 import io.swagger.entities.UserEntity;
 import io.swagger.repositories.ArticleRepository;
+import io.swagger.repositories.CommentRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,12 +31,14 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.net.URI;
 import java.util.List;
+import java.util.Optional;
 
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2020-04-08T14:21:38.963Z[GMT]")
 @Controller
 public class ArticlesApiController implements ArticlesApi {
     @Autowired
     ArticleRepository articleRepository;
+    CommentRepository commentRepository;
     private static final Logger log = LoggerFactory.getLogger(ArticlesApiController.class);
 
     private final ObjectMapper objectMapper;
@@ -72,14 +76,21 @@ public class ArticlesApiController implements ArticlesApi {
     public ResponseEntity<Void> deleteArticleById(@ApiParam(value = "Article id to delete",required=true) @PathVariable("articleId") Long articleId
 ) {
         String accept = request.getHeader("Accept");
-        return new ResponseEntity<Void>(HttpStatus.NOT_IMPLEMENTED);
+        articleRepository.deleteById(articleId);
+        return ResponseEntity.ok().build();
     }
 
     public ResponseEntity<Void> deleteComment(@ApiParam(value = "ID of the comment to delete",required=true) @PathVariable("commentId") Long commentId
 ,@ApiParam(value = "Article ID",required=true) @PathVariable("articleId") Long articleId
 ) {
         String accept = request.getHeader("Accept");
-        return new ResponseEntity<Void>(HttpStatus.NOT_IMPLEMENTED);
+
+        ArticleEntity article = articleRepository.findById(articleId).get();
+        List<CommentEntity> comments = article.getComments();
+        toCommentList(comments);
+        ;
+        return ResponseEntity.ok().build();
+
     }
 
     public ResponseEntity<Article> findArticleById(@ApiParam(value = "ID of the article to return",required=true) @PathVariable("articleId") Long articleId
@@ -94,7 +105,10 @@ public class ArticlesApiController implements ArticlesApi {
             }
         }
 
-        return new ResponseEntity<Article>(HttpStatus.NOT_IMPLEMENTED);
+        ArticleEntity articleEntity = articleRepository.findById(articleId).get();
+        Article article = toArticle(articleEntity);
+        return ResponseEntity.ok(article);
+
     }
 
     public ResponseEntity<List<Article>> findArticlesByCategories(@NotNull @ApiParam(value = "Categories to filter by", required = true) @Valid @RequestParam(value = "category", required = true) List<Category> category
@@ -244,6 +258,26 @@ public class ArticlesApiController implements ArticlesApi {
             listEntity.add(tagEntity);
         }
         return listEntity;
+    }
+
+    private Comment toComment(CommentEntity entity){
+        Comment comment = new Comment();
+        comment.setAuthor(toUser(entity.getAuthor()));
+        comment.setContent(entity.getContent());
+        comment.setTitle(entity.getTitle());
+        return comment;
+    }
+    private List<Comment> toCommentList(List<CommentEntity> listEntity) {
+        List<Comment> listComments = null;
+        for (int i = 0; i < listEntity.size(); i++) {
+            Comment comment = new Comment();
+            comment.setTitle(listEntity.get(i).getTitle());
+            comment.setContent(listEntity.get(i).getContent());
+            comment.setAuthor(toUser(listEntity.get(i).getAuthor()));
+            listComments.add(comment);
+        }
+
+        return listComments;
     }
 
 }
