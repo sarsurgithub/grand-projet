@@ -12,7 +12,7 @@ import javax.validation.constraints.*;
 /**
  * Tag
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2020-04-23T13:41:54.206239+02:00[Europe/Zurich]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2020-05-18T10:09:53.531853+02:00[Europe/Zurich]")
 
 public class Tag   {
   @JsonProperty("id")
@@ -20,6 +20,12 @@ public class Tag   {
 
   @JsonProperty("name")
   private String name;
+
+  @JsonProperty("article_id")
+  private Long articleId;
+
+  @JsonProperty("category_id")
+  private Long categoryId;
 
   public Tag id(Long id) {
     this.id = id;
@@ -63,6 +69,46 @@ public class Tag   {
     this.name = name;
   }
 
+  public Tag articleId(Long articleId) {
+    this.articleId = articleId;
+    return this;
+  }
+
+  /**
+   * Get articleId
+   * @return articleId
+  */
+  @ApiModelProperty(value = "")
+
+
+  public Long getArticleId() {
+    return articleId;
+  }
+
+  public void setArticleId(Long articleId) {
+    this.articleId = articleId;
+  }
+
+  public Tag categoryId(Long categoryId) {
+    this.categoryId = categoryId;
+    return this;
+  }
+
+  /**
+   * Get categoryId
+   * @return categoryId
+  */
+  @ApiModelProperty(value = "")
+
+
+  public Long getCategoryId() {
+    return categoryId;
+  }
+
+  public void setCategoryId(Long categoryId) {
+    this.categoryId = categoryId;
+  }
+
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -74,12 +120,14 @@ public class Tag   {
     }
     Tag tag = (Tag) o;
     return Objects.equals(this.id, tag.id) &&
-        Objects.equals(this.name, tag.name);
+        Objects.equals(this.name, tag.name) &&
+        Objects.equals(this.articleId, tag.articleId) &&
+        Objects.equals(this.categoryId, tag.categoryId);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, name);
+    return Objects.hash(id, name, articleId, categoryId);
   }
 
   @Override
@@ -89,6 +137,8 @@ public class Tag   {
     
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
+    sb.append("    articleId: ").append(toIndentedString(articleId)).append("\n");
+    sb.append("    categoryId: ").append(toIndentedString(categoryId)).append("\n");
     sb.append("}");
     return sb.toString();
   }

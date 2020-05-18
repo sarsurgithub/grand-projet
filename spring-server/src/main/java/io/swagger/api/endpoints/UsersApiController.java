@@ -1,7 +1,7 @@
 package io.swagger.api.endpoints;
 
 import io.swagger.articles.api.UsersApi;
-import io.swagger.articles.api.model.User;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.annotations.*;
 import org.slf4j.Logger;

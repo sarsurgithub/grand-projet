@@ -26,7 +26,7 @@ import javax.validation.constraints.*;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2020-04-23T13:41:54.206239+02:00[Europe/Zurich]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2020-05-18T10:09:53.531853+02:00[Europe/Zurich]")
 
 @Validated
 @Api(value = "tags", description = "the tags API")
@@ -81,7 +81,7 @@ public interface TagsApi {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"name\" : \"name\", \"id\" : 6 }";
+                    String exampleString = "{ \"article_id\" : 6, \"category_id\" : 1, \"name\" : \"name\", \"id\" : 0 }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }

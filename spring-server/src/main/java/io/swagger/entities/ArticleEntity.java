@@ -13,8 +13,6 @@ public class ArticleEntity implements Serializable{
     private long id;
 
     private String title;
-    @OneToMany
-    private List<TagEntity> tags = new ArrayList<TagEntity>();
     private String content;
     @ElementCollection
     private List<String> photoUrls = null;
@@ -23,8 +21,6 @@ public class ArticleEntity implements Serializable{
     private String createdAt;
     private String lastUpdateAt;
     private Integer views;
-    @OneToMany
-    private List<CommentEntity> comments = new ArrayList<>();
 
     public long getId() {
         return id ;
@@ -36,14 +32,6 @@ public class ArticleEntity implements Serializable{
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public List<TagEntity> getTags() {
-        return tags;
-    }
-
-    public void setTags(List<TagEntity> tags) {
-        this.tags = tags;
     }
 
     public String getContent() {
@@ -92,14 +80,6 @@ public class ArticleEntity implements Serializable{
 
     public void setViews(Integer views) {
         this.views = views;
-    }
-
-    public List<CommentEntity> getComments() {
-        return comments;
-    }
-
-    public void setComments(List<CommentEntity> comments) {
-        this.comments = comments;
     }
 
 

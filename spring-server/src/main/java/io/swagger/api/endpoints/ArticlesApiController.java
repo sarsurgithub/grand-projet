@@ -1,37 +1,30 @@
 package io.swagger.api.endpoints;
 
 import io.swagger.articles.api.ArticlesApi;
-import io.swagger.articles.api.model.Article;
-import io.swagger.articles.api.model.Category;
-import io.swagger.articles.api.model.Comment;
+import io.swagger.articles.api.model.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.annotations.*;
-import io.swagger.articles.api.model.Tag;
-import io.swagger.articles.api.model.User;
 import io.swagger.entities.ArticleEntity;
 import io.swagger.entities.CommentEntity;
-import io.swagger.entities.TagEntity;
 import io.swagger.entities.UserEntity;
 import io.swagger.repositories.ArticleRepository;
 import io.swagger.repositories.CommentRepository;
+import io.swagger.repositories.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.constraints.*;
 import javax.validation.Valid;
 import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2020-04-08T14:21:38.963Z[GMT]")
 @Controller
@@ -39,6 +32,8 @@ public class ArticlesApiController implements ArticlesApi {
     @Autowired
     ArticleRepository articleRepository;
     CommentRepository commentRepository;
+    UserRepository userRepository;
+
     private static final Logger log = LoggerFactory.getLogger(ArticlesApiController.class);
 
     private final ObjectMapper objectMapper;
@@ -51,233 +46,190 @@ public class ArticlesApiController implements ArticlesApi {
         this.request = request;
     }
 
-    public ResponseEntity<Void> addCommentToAnArticle(@ApiParam(value = "",required=true) @PathVariable("commentId") Long commentId
-,@ApiParam(value = "ID of the article",required=true) @PathVariable("articleId") Long articleId
-,@ApiParam(value = "comment to add to the article"  )  @Valid @RequestBody Comment body
-) {
-        String accept = request.getHeader("Accept");
-        return new ResponseEntity<Void>(HttpStatus.NOT_IMPLEMENTED);
+
+    public ResponseEntity<Void> updateArticleById(@ApiParam(value = "ID of article that needs to be updated",required=true) @PathVariable("articleId") Long articleId,@ApiParam(value = "updated article" ,required=true )  @Valid @RequestBody UpdateArticle updateArticle) {
+        ArticleEntity articleEntity = articleRepository.findById(articleId).get();
+
+        articleEntity = fromUpdateArticleToArticleEntity(updateArticle);
+        //ici on n'update pas l'auteur puisque celui-ci ne peut pas changer, est-ce que c'est possible de le faire comme ça ?
+
+        URI location = ServletUriComponentsBuilder
+                .fromCurrentRequest().build().toUri();
+
+        articleRepository.save(articleEntity);
+
+        return ResponseEntity.created(location).build();
     }
 
-    public ResponseEntity<Void> createArticle(@ApiParam(value = "Article that needs to be added" ,required=true )  @Valid @RequestBody Article body
-) {
-        String accept = request.getHeader("Accept");
-        ArticleEntity newArticleEntity = toArticleEntity(body);
-        articleRepository.save(newArticleEntity);
+    public ResponseEntity<Void> createArticle(@ApiParam(value = "Article that needs to be added" ,required=true )  @Valid @RequestBody CreateArticle createArticle) {
+        ArticleEntity articleEntity = new ArticleEntity();
+
+        UserEntity author = userRepository.findById(createArticle.getAuthorId()).get();
+        // y'a sûrement un moyen beaucoup plus propre de faire ça but it will do for now
+        //j'ai trouvé ça c'est mieux :
+        articleEntity = fromCreateArticleToArticleEntity(createArticle);
+        articleEntity.setAuthor(author);
+
+        articleRepository.save(articleEntity);
 
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest().path("/{id}")
-                .buildAndExpand(newArticleEntity.getId()).toUri();
+                .buildAndExpand(articleEntity.getId()).toUri();
+
+        return ResponseEntity.created(location).build();
+    }
+
+    public ResponseEntity<Void> deleteArticleById(@ApiParam(value = "Article id to delete",required=true) @PathVariable("articleId") Long articleId) {
+        articleRepository.deleteById(articleId);
+        return ResponseEntity.ok().build();
+    }
+
+    public ResponseEntity<Void> deleteComment(@ApiParam(value = "ID of the comment to delete",required=true) @PathVariable("commentId") Long commentId,@ApiParam(value = "Article ID",required=true) @PathVariable("articleId") Long articleId) {
+        commentRepository.deleteById(commentId);
+        return ResponseEntity.ok().build();
+    }
+
+    public ResponseEntity<GetArticle> findArticleById(@ApiParam(value = "ID of the article to return",required=true) @PathVariable("articleId") Long articleId) {
+        ArticleEntity articleEntity = articleRepository.findById(articleId).get();
+        GetArticle article = toGetArticle(articleEntity);
+        return ResponseEntity.ok(article);
+    }
+
+
+    public ResponseEntity<List<GetArticle>> findArticlesByDate() {
+        List<GetArticle> articles = new ArrayList<>();
+
+        for (ArticleEntity articleEntity : articleRepository.findAllOrOrderByLastUpdateAt()) {
+            articles.add(toGetArticle(articleEntity));
+        }
+
+        return ResponseEntity.ok(articles);
+
+    }
+
+
+    public  ResponseEntity<Comment> findCommentbyID(@ApiParam(value = "ID of the comment",required=true) @PathVariable("commentId") Long commentId,@ApiParam(value = "ID of the article",required=true) @PathVariable("articleId") Long articleId) {
+        CommentEntity commentEntity = commentRepository.findById(commentId).get();
+        Comment comment = toComment(commentEntity);
+        return ResponseEntity.ok(comment);
+
+    }
+
+    public ResponseEntity<List<Comment>> findCommentsByArticle(@ApiParam(value = "Id of the article",required=true) @PathVariable("articleId") Long articleId) {
+        ArticleEntity articleEntity = articleRepository.findById(articleId).get();
+        GetArticle article = toGetArticle(articleEntity);
+        List<Comment> comments = article.getComments();
+        return ResponseEntity.ok(comments);
+
+    }
+
+
+    public ResponseEntity<Void> updateCommentbyId(@ApiParam(value = "ID of the comment that needs to be updated",required=true) @PathVariable("commentId") Long commentId,@ApiParam(value = "ID of the article",required=true) @PathVariable("articleId") Long articleId,@ApiParam(value = "updated comment"  )  @Valid @RequestBody Comment comment) {
+        CommentEntity commentEntitytoUpdate = commentRepository.findById(commentId).get();
+
+        commentEntitytoUpdate.setTitle(comment.getTitle());
+        commentEntitytoUpdate.setContent(comment.getContent());
+
+        URI location = ServletUriComponentsBuilder
+                .fromCurrentRequest().build().toUri();
+
+        commentRepository.save(commentEntitytoUpdate);
 
         return ResponseEntity.created(location).build();
 
     }
 
-    public ResponseEntity<Void> deleteArticleById(@ApiParam(value = "Article id to delete",required=true) @PathVariable("articleId") Long articleId
-) {
-        String accept = request.getHeader("Accept");
-        articleRepository.deleteById(articleId);
-        return ResponseEntity.ok().build();
-    }
 
-    public ResponseEntity<Void> deleteComment(@ApiParam(value = "ID of the comment to delete",required=true) @PathVariable("commentId") Long commentId
-,@ApiParam(value = "Article ID",required=true) @PathVariable("articleId") Long articleId
-) {
-        String accept = request.getHeader("Accept");
-
-        ArticleEntity article = articleRepository.findById(articleId).get();
-        List<CommentEntity> comments = article.getComments();
-        toCommentList(comments);
-        ;
-        return ResponseEntity.ok().build();
-
-    }
-
-    public ResponseEntity<Article> findArticleById(@ApiParam(value = "ID of the article to return",required=true) @PathVariable("articleId") Long articleId
-) {
-        String accept = request.getHeader("Accept");
-        if (accept != null && accept.contains("application/json")) {
-            try {
-                return new ResponseEntity<Article>(objectMapper.readValue("{\n  \"createdAt\" : \"12-02-2013H12-05\",\n  \"photoUrls\" : [ \"photoUrls\", \"photoUrls\" ],\n  \"author\" : {\n    \"firstName\" : \"firstName\",\n    \"lastName\" : \"lastName\",\n    \"password\" : \"password\",\n    \"id\" : 1,\n    \"email\" : \"email\",\n    \"username\" : \"username\"\n  },\n  \"id\" : 0,\n  \"lastUpdateAt\" : \"12-02-2013H12-05\",\n  \"title\" : \"my super article\",\n  \"content\" : \"Le Lorem Ipsum est simplement du faux texte employé dans la composition et la mise en page avant impression. Le Lorem Ipsum est le faux texte standard de l'imprimerie depuis les années 1500...\",\n  \"views\" : 456,\n  \"tags\" : [ {\n    \"name\" : \"name\",\n    \"id\" : 6\n  }, {\n    \"name\" : \"name\",\n    \"id\" : 6\n  } ]\n}", Article.class), HttpStatus.NOT_IMPLEMENTED);
-            } catch (IOException e) {
-                log.error("Couldn't serialize response for content type application/json", e);
-                return new ResponseEntity<Article>(HttpStatus.INTERNAL_SERVER_ERROR);
-            }
-        }
-
-        ArticleEntity articleEntity = articleRepository.findById(articleId).get();
-        Article article = toArticle(articleEntity);
-        return ResponseEntity.ok(article);
-
-    }
-
-    public ResponseEntity<List<Article>> findArticlesByCategories(@NotNull @ApiParam(value = "Categories to filter by", required = true) @Valid @RequestParam(value = "category", required = true) List<Category> category
-) {
-        String accept = request.getHeader("Accept");
-        if (accept != null && accept.contains("application/json")) {
-            try {
-                return new ResponseEntity<List<Article>>(objectMapper.readValue("[ {\n  \"createdAt\" : \"12-02-2013H12-05\",\n  \"photoUrls\" : [ \"photoUrls\", \"photoUrls\" ],\n  \"author\" : {\n    \"firstName\" : \"firstName\",\n    \"lastName\" : \"lastName\",\n    \"password\" : \"password\",\n    \"id\" : 1,\n    \"email\" : \"email\",\n    \"username\" : \"username\"\n  },\n  \"id\" : 0,\n  \"lastUpdateAt\" : \"12-02-2013H12-05\",\n  \"title\" : \"my super article\",\n  \"content\" : \"Le Lorem Ipsum est simplement du faux texte employé dans la composition et la mise en page avant impression. Le Lorem Ipsum est le faux texte standard de l'imprimerie depuis les années 1500...\",\n  \"views\" : 456,\n  \"tags\" : [ {\n    \"name\" : \"name\",\n    \"id\" : 6\n  }, {\n    \"name\" : \"name\",\n    \"id\" : 6\n  } ]\n}, {\n  \"createdAt\" : \"12-02-2013H12-05\",\n  \"photoUrls\" : [ \"photoUrls\", \"photoUrls\" ],\n  \"author\" : {\n    \"firstName\" : \"firstName\",\n    \"lastName\" : \"lastName\",\n    \"password\" : \"password\",\n    \"id\" : 1,\n    \"email\" : \"email\",\n    \"username\" : \"username\"\n  },\n  \"id\" : 0,\n  \"lastUpdateAt\" : \"12-02-2013H12-05\",\n  \"title\" : \"my super article\",\n  \"content\" : \"Le Lorem Ipsum est simplement du faux texte employé dans la composition et la mise en page avant impression. Le Lorem Ipsum est le faux texte standard de l'imprimerie depuis les années 1500...\",\n  \"views\" : 456,\n  \"tags\" : [ {\n    \"name\" : \"name\",\n    \"id\" : 6\n  }, {\n    \"name\" : \"name\",\n    \"id\" : 6\n  } ]\n} ]", List.class), HttpStatus.NOT_IMPLEMENTED);
-            } catch (IOException e) {
-                log.error("Couldn't serialize response for content type application/json", e);
-                return new ResponseEntity<List<Article>>(HttpStatus.INTERNAL_SERVER_ERROR);
-            }
-        }
-
-        return new ResponseEntity<List<Article>>(HttpStatus.NOT_IMPLEMENTED);
-    }
-
-    public ResponseEntity<List<Article>> findArticlesByDate() {
-        String accept = request.getHeader("Accept");
-        if (accept != null && accept.contains("application/json")) {
-            try {
-                return new ResponseEntity<List<Article>>(objectMapper.readValue("[ {\n  \"createdAt\" : \"12-02-2013H12-05\",\n  \"photoUrls\" : [ \"photoUrls\", \"photoUrls\" ],\n  \"author\" : {\n    \"firstName\" : \"firstName\",\n    \"lastName\" : \"lastName\",\n    \"password\" : \"password\",\n    \"id\" : 1,\n    \"email\" : \"email\",\n    \"username\" : \"username\"\n  },\n  \"id\" : 0,\n  \"lastUpdateAt\" : \"12-02-2013H12-05\",\n  \"title\" : \"my super article\",\n  \"content\" : \"Le Lorem Ipsum est simplement du faux texte employé dans la composition et la mise en page avant impression. Le Lorem Ipsum est le faux texte standard de l'imprimerie depuis les années 1500...\",\n  \"views\" : 456,\n  \"tags\" : [ {\n    \"name\" : \"name\",\n    \"id\" : 6\n  }, {\n    \"name\" : \"name\",\n    \"id\" : 6\n  } ]\n}, {\n  \"createdAt\" : \"12-02-2013H12-05\",\n  \"photoUrls\" : [ \"photoUrls\", \"photoUrls\" ],\n  \"author\" : {\n    \"firstName\" : \"firstName\",\n    \"lastName\" : \"lastName\",\n    \"password\" : \"password\",\n    \"id\" : 1,\n    \"email\" : \"email\",\n    \"username\" : \"username\"\n  },\n  \"id\" : 0,\n  \"lastUpdateAt\" : \"12-02-2013H12-05\",\n  \"title\" : \"my super article\",\n  \"content\" : \"Le Lorem Ipsum est simplement du faux texte employé dans la composition et la mise en page avant impression. Le Lorem Ipsum est le faux texte standard de l'imprimerie depuis les années 1500...\",\n  \"views\" : 456,\n  \"tags\" : [ {\n    \"name\" : \"name\",\n    \"id\" : 6\n  }, {\n    \"name\" : \"name\",\n    \"id\" : 6\n  } ]\n} ]", List.class), HttpStatus.NOT_IMPLEMENTED);
-            } catch (IOException e) {
-                log.error("Couldn't serialize response for content type application/json", e);
-                return new ResponseEntity<List<Article>>(HttpStatus.INTERNAL_SERVER_ERROR);
-            }
-        }
-
-        return new ResponseEntity<List<Article>>(HttpStatus.NOT_IMPLEMENTED);
-    }
-
-    public ResponseEntity<List<Comment>> findCommentbyID(@ApiParam(value = "ID of the comment",required=true) @PathVariable("commentId") Long commentId
-,@ApiParam(value = "ID of the article",required=true) @PathVariable("articleId") Long articleId
-) {
-        String accept = request.getHeader("Accept");
-        if (accept != null && accept.contains("application/json")) {
-            try {
-                return new ResponseEntity<List<Comment>>(objectMapper.readValue("[ {\n  \"author\" : {\n    \"firstName\" : \"firstName\",\n    \"lastName\" : \"lastName\",\n    \"password\" : \"password\",\n    \"id\" : 1,\n    \"email\" : \"email\",\n    \"username\" : \"username\"\n  },\n  \"id\" : 0,\n  \"title\" : \"article nul\",\n  \"content\" : \"tu pourrais faire mieux\",\n  \"article\" : {\n    \"createdAt\" : \"12-02-2013H12-05\",\n    \"photoUrls\" : [ \"photoUrls\", \"photoUrls\" ],\n    \"author\" : {\n      \"firstName\" : \"firstName\",\n      \"lastName\" : \"lastName\",\n      \"password\" : \"password\",\n      \"id\" : 1,\n      \"email\" : \"email\",\n      \"username\" : \"username\"\n    },\n    \"id\" : 0,\n    \"lastUpdateAt\" : \"12-02-2013H12-05\",\n    \"title\" : \"my super article\",\n    \"content\" : \"Le Lorem Ipsum est simplement du faux texte employé dans la composition et la mise en page avant impression. Le Lorem Ipsum est le faux texte standard de l'imprimerie depuis les années 1500...\",\n    \"views\" : 456,\n    \"tags\" : [ {\n      \"name\" : \"name\",\n      \"id\" : 6\n    }, {\n      \"name\" : \"name\",\n      \"id\" : 6\n    } ]\n  }\n}, {\n  \"author\" : {\n    \"firstName\" : \"firstName\",\n    \"lastName\" : \"lastName\",\n    \"password\" : \"password\",\n    \"id\" : 1,\n    \"email\" : \"email\",\n    \"username\" : \"username\"\n  },\n  \"id\" : 0,\n  \"title\" : \"article nul\",\n  \"content\" : \"tu pourrais faire mieux\",\n  \"article\" : {\n    \"createdAt\" : \"12-02-2013H12-05\",\n    \"photoUrls\" : [ \"photoUrls\", \"photoUrls\" ],\n    \"author\" : {\n      \"firstName\" : \"firstName\",\n      \"lastName\" : \"lastName\",\n      \"password\" : \"password\",\n      \"id\" : 1,\n      \"email\" : \"email\",\n      \"username\" : \"username\"\n    },\n    \"id\" : 0,\n    \"lastUpdateAt\" : \"12-02-2013H12-05\",\n    \"title\" : \"my super article\",\n    \"content\" : \"Le Lorem Ipsum est simplement du faux texte employé dans la composition et la mise en page avant impression. Le Lorem Ipsum est le faux texte standard de l'imprimerie depuis les années 1500...\",\n    \"views\" : 456,\n    \"tags\" : [ {\n      \"name\" : \"name\",\n      \"id\" : 6\n    }, {\n      \"name\" : \"name\",\n      \"id\" : 6\n    } ]\n  }\n} ]", List.class), HttpStatus.NOT_IMPLEMENTED);
-            } catch (IOException e) {
-                log.error("Couldn't serialize response for content type application/json", e);
-                return new ResponseEntity<List<Comment>>(HttpStatus.INTERNAL_SERVER_ERROR);
-            }
-        }
-
-        return new ResponseEntity<List<Comment>>(HttpStatus.NOT_IMPLEMENTED);
-    }
-
-    public ResponseEntity<List<Comment>> findCommentsByArticle(@ApiParam(value = "Id of the article",required=true) @PathVariable("articleId") Long articleId
-) {
-        String accept = request.getHeader("Accept");
-        if (accept != null && accept.contains("application/json")) {
-            try {
-                return new ResponseEntity<List<Comment>>(objectMapper.readValue("[ {\n  \"author\" : {\n    \"firstName\" : \"firstName\",\n    \"lastName\" : \"lastName\",\n    \"password\" : \"password\",\n    \"id\" : 1,\n    \"email\" : \"email\",\n    \"username\" : \"username\"\n  },\n  \"id\" : 0,\n  \"title\" : \"article nul\",\n  \"content\" : \"tu pourrais faire mieux\",\n  \"article\" : {\n    \"createdAt\" : \"12-02-2013H12-05\",\n    \"photoUrls\" : [ \"photoUrls\", \"photoUrls\" ],\n    \"author\" : {\n      \"firstName\" : \"firstName\",\n      \"lastName\" : \"lastName\",\n      \"password\" : \"password\",\n      \"id\" : 1,\n      \"email\" : \"email\",\n      \"username\" : \"username\"\n    },\n    \"id\" : 0,\n    \"lastUpdateAt\" : \"12-02-2013H12-05\",\n    \"title\" : \"my super article\",\n    \"content\" : \"Le Lorem Ipsum est simplement du faux texte employé dans la composition et la mise en page avant impression. Le Lorem Ipsum est le faux texte standard de l'imprimerie depuis les années 1500...\",\n    \"views\" : 456,\n    \"tags\" : [ {\n      \"name\" : \"name\",\n      \"id\" : 6\n    }, {\n      \"name\" : \"name\",\n      \"id\" : 6\n    } ]\n  }\n}, {\n  \"author\" : {\n    \"firstName\" : \"firstName\",\n    \"lastName\" : \"lastName\",\n    \"password\" : \"password\",\n    \"id\" : 1,\n    \"email\" : \"email\",\n    \"username\" : \"username\"\n  },\n  \"id\" : 0,\n  \"title\" : \"article nul\",\n  \"content\" : \"tu pourrais faire mieux\",\n  \"article\" : {\n    \"createdAt\" : \"12-02-2013H12-05\",\n    \"photoUrls\" : [ \"photoUrls\", \"photoUrls\" ],\n    \"author\" : {\n      \"firstName\" : \"firstName\",\n      \"lastName\" : \"lastName\",\n      \"password\" : \"password\",\n      \"id\" : 1,\n      \"email\" : \"email\",\n      \"username\" : \"username\"\n    },\n    \"id\" : 0,\n    \"lastUpdateAt\" : \"12-02-2013H12-05\",\n    \"title\" : \"my super article\",\n    \"content\" : \"Le Lorem Ipsum est simplement du faux texte employé dans la composition et la mise en page avant impression. Le Lorem Ipsum est le faux texte standard de l'imprimerie depuis les années 1500...\",\n    \"views\" : 456,\n    \"tags\" : [ {\n      \"name\" : \"name\",\n      \"id\" : 6\n    }, {\n      \"name\" : \"name\",\n      \"id\" : 6\n    } ]\n  }\n} ]", List.class), HttpStatus.NOT_IMPLEMENTED);
-            } catch (IOException e) {
-                log.error("Couldn't serialize response for content type application/json", e);
-                return new ResponseEntity<List<Comment>>(HttpStatus.INTERNAL_SERVER_ERROR);
-            }
-        }
-
-        return new ResponseEntity<List<Comment>>(HttpStatus.NOT_IMPLEMENTED);
-    }
-
-    public ResponseEntity<Void> updateArticleById(@ApiParam(value = "updated article" ,required=true )  @Valid @RequestBody Article body
-,@ApiParam(value = "ID of article that needs to be updated",required=true) @PathVariable("articleId") Long articleId
-) {
-        String accept = request.getHeader("Accept");
-        return new ResponseEntity<Void>(HttpStatus.NOT_IMPLEMENTED);
-    }
-
-    public ResponseEntity<Void> updateCommentbyId(@ApiParam(value = "ID of the comment that needs to be updated",required=true) @PathVariable("commentId") Long commentId
-,@ApiParam(value = "ID of the article",required=true) @PathVariable("articleId") Long articleId
-,@ApiParam(value = "updated comment"  )  @Valid @RequestBody Comment body
-) {
-        String accept = request.getHeader("Accept");
-        return new ResponseEntity<Void>(HttpStatus.NOT_IMPLEMENTED);
-    }
-
-    private ArticleEntity toArticleEntity(Article article) {
+    private ArticleEntity fromCreateArticleToArticleEntity(CreateArticle article) {
         ArticleEntity entity = new ArticleEntity();
-        entity.setAuthor(toUserEntity(article.getAuthor()));
-        entity.setContent(article.getContent());
-        entity.setCreatedAt(article.getCreatedAt());
-        entity.setLastUpdateAt(article.getLastUpdateAt());
-        entity.setPhotoUrls(article.getPhotoUrls());
-        entity.setTags(toTagEntityList(article.getTags()));
         entity.setTitle(article.getTitle());
-        entity.setViews(article.getViews());
-
+        entity.setPhotoUrls(article.getPhotoUrls());
+        entity.setCreatedAt(article.getCreatedAt());
+        entity.setContent(article.getContent());
         return entity;
     }
 
-    private Article toArticle(ArticleEntity entity) {
-        Article article = new Article();
-        article.setAuthor(toUser(entity.getAuthor()));
-        article.setContent(entity.getContent());
-        article.setCreatedAt(entity.getCreatedAt());
-        article.setLastUpdateAt(entity.getLastUpdateAt());
-        article.setPhotoUrls(entity.getPhotoUrls());
-        article.setTags(toTagList(entity.getTags()));
-        article.setTitle(entity.getTitle());
+    private ArticleEntity fromGetArticleToArticleEntity(GetArticle article) {
+        ArticleEntity entity = new ArticleEntity();
+        entity.setViews(article.getViews());
+        entity.setTitle(article.getTitle());
+        entity.setPhotoUrls(article.getPhotoUrls());
+        entity.setLastUpdateAt(article.getLastUpdateAt());
+        entity.setCreatedAt(article.getCreatedAt());
+        entity.setContent(article.getContent());
+        entity.setAuthor(fromGetUserToUserEntity(article.getAuthor()));
+        return entity;
+    }
+
+    private ArticleEntity fromUpdateArticleToArticleEntity(UpdateArticle article) {
+        ArticleEntity entity = new ArticleEntity();
+        entity.setViews(article.getViews());
+        entity.setTitle(article.getTitle());
+        entity.setPhotoUrls(article.getPhotoUrls());
+        entity.setLastUpdateAt(article.getLastUpdateAt());
+        entity.setCreatedAt(article.getCreatedAt());
+        entity.setContent(article.getContent());
+        return entity;
+    }
+
+
+
+    private GetArticle toGetArticle(ArticleEntity entity) {
+        GetArticle article = new GetArticle();
+        article.setId(entity.getId());
         article.setViews(entity.getViews());
+        article.setTitle(entity.getTitle());
+        article.setPhotoUrls(entity.getPhotoUrls());
+        article.setLastUpdateAt(entity.getLastUpdateAt());
+        article.setCreatedAt(entity.getCreatedAt());
+        article.setContent(entity.getContent());
+        article.setAuthor(toGetUser(entity.getAuthor()));
         return article;
     }
 
-    private UserEntity toUserEntity( User user) {
-       UserEntity entity = new UserEntity();
-       entity.setEmail(user.getEmail());
-       entity.setFirstName(user.getFirstName());
-       entity.setLastName(user.getLastName());
-       entity.setPassword(user.getPassword());
-       entity.setUsername(user.getUsername());
-       return entity;
-    }
-
-    private User toUser(UserEntity entity) {
-        User user = new User();
+    private GetUser toGetUser(UserEntity entity){
+        GetUser user = new GetUser();
+        user.setId(entity.getId());
         user.setUsername(entity.getUsername());
-        user.setEmail(entity.getEmail());
-        user.setFirstName(entity.getFirstName());
         user.setLastName(entity.getLastName());
-        user.setPassword(entity.getPassword());
+        user.setFirstName(entity.getFirstName());
+        user.setEmail(entity.getEmail());
         return user;
     }
 
-    private TagEntity toTagEntity( Tag tag) {
-        TagEntity entity = new TagEntity();
-        entity.setName(tag.getName());
+    private UserEntity fromCreateUsertoUserEntity(CreateUser user){
+        UserEntity entity = new UserEntity();
+        entity.setPassword(user.getPassword());
+        entity.setUsername(user.getUsername());
+        entity.setLastName(user.getLastName());
+        entity.setFirstName(user.getFirstName());
+        entity.setEmail(user.getEmail());
         return entity;
     }
 
-    private List<Tag> toTagList(List<TagEntity> listEntity) {
-        List<Tag> listTags = null;
-        for (int i = 0; i < listEntity.size(); i++) {
-            Tag tag = new Tag();
-            tag.setName(listEntity.get(i).getName());
-            listTags.add(tag);
-        }
-
-       return listTags;
+    private UserEntity fromGetUserToUserEntity(GetUser user){
+        UserEntity entity = new UserEntity();
+        entity.setUsername(user.getUsername());
+        entity.setLastName(user.getLastName());
+        entity.setFirstName(user.getFirstName());
+        entity.setEmail(user.getEmail());
+        return entity;
     }
 
-    private List<TagEntity> toTagEntityList(List<Tag> listTags) {
-        List<TagEntity> listEntity = null;
-        for (int i = 0; i < listTags.size(); i++) {
-            TagEntity tagEntity = new TagEntity();
-            tagEntity.setName(listTags.get(i).getName());
-            listEntity.add(tagEntity);
-        }
-        return listEntity;
-    }
-
-    private Comment toComment(CommentEntity entity){
+    private Comment toComment(CommentEntity entity) {
         Comment comment = new Comment();
-        comment.setAuthor(toUser(entity.getAuthor()));
         comment.setContent(entity.getContent());
         comment.setTitle(entity.getTitle());
-        return comment;
+        comment.setAuthorId(entity.getAuthorId());
+        return comment ;
     }
-    private List<Comment> toCommentList(List<CommentEntity> listEntity) {
-        List<Comment> listComments = null;
-        for (int i = 0; i < listEntity.size(); i++) {
-            Comment comment = new Comment();
-            comment.setTitle(listEntity.get(i).getTitle());
-            comment.setContent(listEntity.get(i).getContent());
-            comment.setAuthor(toUser(listEntity.get(i).getAuthor()));
-            listComments.add(comment);
-        }
 
-        return listComments;
+    private CommentEntity toCommentEntity( Comment comment){
+        CommentEntity entity = new CommentEntity();
+        entity.setAuthorId(comment.getAuthorId());
+        entity.setContent(comment.getContent());
+        entity.setTitle(comment.getTitle());
+        return entity;
     }
 
 }

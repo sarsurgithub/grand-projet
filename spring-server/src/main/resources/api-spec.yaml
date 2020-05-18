@@ -4,23 +4,23 @@ info:
   description: "API de mon grand projet qui n'a pas encore de nom. App sur laquelle on peut poster des articles et intéragir avec ceux-ci."
   version: 1.0.0
 servers:
-- url: https://localhost:8080/api
+  - url: https://localhost:8080/api
 tags:
-- name: articles
-  description: Operations about articles
-- name: comments
-  description: Operations about comments
-- name: users
-  description: Operations about users
-- name: categories
-  description: Operartions about categories
-- name: tags
-  description: Operations about tags
+  - name: articles
+    description: Operations about articles
+  - name: comments
+    description: Operations about comments
+  - name: users
+    description: Operations about users
+  - name: categories
+    description: Operartions about categories
+  - name: tags
+    description: Operations about tags
 paths:
   /articles:
     get:
       tags:
-      - articles
+        - articles
       summary: Finds all articles by date
       operationId: findArticlesByDate
       responses:
@@ -31,13 +31,13 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Article'
+                  $ref: '#/components/schemas/GetArticle'
         404:
           description: Articles not found
           content: {}
     post:
       tags:
-      - articles
+        - articles
       summary: Creates a new article
       operationId: createArticle
       requestBody:
@@ -45,7 +45,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Article'
+              $ref: '#/components/schemas/CreateArticle'
         required: true
       responses:
         405:
@@ -54,20 +54,20 @@ paths:
   /articles/byCategories:
     get:
       tags:
-      - articles
+        - articles
       summary: Finds articles by categories
       operationId: findArticlesByCategories
       parameters:
-      - name: category
-        in: query
-        description: Categories to filter by
-        required: true
-        style: form
-        explode: true
-        schema:
-          type: array
-          items:
-            $ref: '#/components/schemas/Category'
+        - name: category
+          in: query
+          description: Categories to filter by
+          required: true
+          style: form
+          explode: true
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/Category'
       responses:
         200:
           description: successful operation
@@ -76,32 +76,32 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Article'
+                  $ref: '#/components/schemas/GetArticle'
         400:
           description: Invalid category
           content: {}
   /articles/{articleId}:
     get:
       tags:
-      - articles
+        - articles
       summary: Find article by ID
       description: Returns a single article by ID
       operationId: FindArticleById
       parameters:
-      - name: articleId
-        in: path
-        description: ID of the article to return
-        required: true
-        schema:
-          type: integer
-          format: int64
+        - name: articleId
+          in: path
+          description: ID of the article to return
+          required: true
+          schema:
+            type: integer
+            format: int64
       responses:
         200:
           description: successful operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Article'
+                $ref: '#/components/schemas/GetArticle'
         400:
           description: Invalid ID supplied
           content: {}
@@ -110,23 +110,23 @@ paths:
           content: {}
     patch:
       tags:
-      - articles
+        - articles
       summary: Updates an article by ID
       operationId: updateArticleById
       parameters:
-      - name: articleId
-        in: path
-        description: ID of article that needs to be updated
-        required: true
-        schema:
-          type: integer
-          format: int64
+        - name: articleId
+          in: path
+          description: ID of article that needs to be updated
+          required: true
+          schema:
+            type: integer
+            format: int64
       requestBody:
         description: updated article
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Article'
+              $ref: '#/components/schemas/UpdateArticle'
         required: true
       responses:
         200:
@@ -136,17 +136,17 @@ paths:
           content: {}
     delete:
       tags:
-      - articles
+        - articles
       summary: Deletes an article by ID
       operationId: deleteArticleById
       parameters:
-      - name: articleId
-        in: path
-        description: Article id to delete
-        required: true
-        schema:
-          type: integer
-          format: int64
+        - name: articleId
+          in: path
+          description: Article id to delete
+          required: true
+          schema:
+            type: integer
+            format: int64
       responses:
         200:
           description: deleted successfully
@@ -159,17 +159,17 @@ paths:
   /articles/{articleId}/comments:
     get:
       tags:
-      - comments
+        - comments
       summary: returns an array of comments for a particular article
       operationId: findCommentsByArticle
       parameters:
-      - name: articleId
-        in: path
-        description: Id of the article
-        required: true
-        schema:
-          type: integer
-          format: int64
+        - name: articleId
+          in: path
+          description: Id of the article
+          required: true
+          schema:
+            type: integer
+            format: int64
       responses:
         200:
           description: successful operation
@@ -184,23 +184,23 @@ paths:
           content: {}
     post:
       tags:
-      - comments
+        - comments
       summary: add a new comment to an article
       operationId: addCommentToAnArticle
       parameters:
-      - name: commentId
-        in: path
-        required: true
-        schema:
-          type: integer
-          format: int64
-      - name: articleId
-        in: path
-        description: ID of the article
-        required: true
-        schema:
-          type: integer
-          format: int64
+        - name: commentId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: articleId
+          in: path
+          description: ID of the article
+          required: true
+          schema:
+            type: integer
+            format: int64
       requestBody:
         description: comment to add to the article
         content:
@@ -208,64 +208,62 @@ paths:
             schema:
               $ref: '#/components/schemas/Comment'
       responses:
-          200:
-            description: added successfully
-          405:
-            description: Invalid input
-            content: {}
+        200:
+          description: added successfully
+        405:
+          description: Invalid input
+          content: {}
   /articles/{articleId}/comments/{commentId}:
     get:
       tags:
-      - comments
+        - comments
       summary: returns a comment by ID
       operationId: findCommentbyID
       parameters:
-      - name: commentId
-        in: path
-        description: ID of the comment
-        required: true
-        schema:
-          type: integer
-          format: int64
-      - name: articleId
-        in: path
-        description: ID of the article
-        required: true
-        schema:
-          type: integer
-          format: int64
+        - name: commentId
+          in: path
+          description: ID of the comment
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: articleId
+          in: path
+          description: ID of the article
+          required: true
+          schema:
+            type: integer
+            format: int64
       responses:
         200:
           description: successful operation
           content:
             application/json:
               schema:
-                type: array
-                items:
                   $ref: '#/components/schemas/Comment'
         400:
           description: Invalid tag value
           content: {}
     patch:
       tags:
-      - comments
+        - comments
       summary: Updates a comment by ID
       operationId: updateCommentbyId
       parameters:
-      - name: commentId
-        in: path
-        required: true
-        description: ID of the comment that needs to be updated
-        schema:
-          type: integer
-          format: int64
-      - name: articleId
-        in: path
-        description: ID of the article
-        required: true
-        schema:
-          type: integer
-          format: int64
+        - name: commentId
+          in: path
+          required: true
+          description: ID of the comment that needs to be updated
+          schema:
+            type: integer
+            format: int64
+        - name: articleId
+          in: path
+          description: ID of the article
+          required: true
+          schema:
+            type: integer
+            format: int64
       requestBody:
         description: updated comment
         content:
@@ -280,24 +278,24 @@ paths:
           content: {}
     delete:
       tags:
-      - comments
+        - comments
       summary: Deletes a comment by ID
       operationId: deleteComment
       parameters:
-      - name: commentId
-        in: path
-        description: ID of the comment to delete
-        required: true
-        schema:
-          type: integer
-          format: int64
-      - name: articleId
-        in: path
-        description: Article ID
-        required: true
-        schema:
-          type: integer
-          format: int64
+        - name: commentId
+          in: path
+          description: ID of the comment to delete
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: articleId
+          in: path
+          description: Article ID
+          required: true
+          schema:
+            type: integer
+            format: int64
       responses:
         200:
           description: deleted successfully
@@ -310,105 +308,57 @@ paths:
   /users:
     post:
       tags:
-      - users
-      summary: Create user
-      description: creates a user
-      operationId: createUser
+        - users
+      summary: Register a  user
+      description: register a user
+      operationId: RegisterUser
       requestBody:
         description: Created user object
         content:
           '*/*':
             schema:
-              $ref: '#/components/schemas/User'
+              $ref: '#/components/schemas/CreateUser'
         required: true
       responses:
         default:
           description: successful operation
           content: {}
-  /users/search:
     get:
       tags:
-      - users
-      summary: search for a user
-      operationId: searchUser
-      parameters:
-      - name: search
-        in: query
-        description: The word for the research
-        required: true
-        schema:
-          type: string
+        - users
+      summary: gets all users
+      operationId: getUsers
       responses:
         200:
           description: successful operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
-  /users/register:
-    post:
-      tags:
-        - users
-      summary: Registers a user into the system
-      operationId: registerUser
-      requestBody:
-        description: infos about the new user
-        content:
-          '*/*':
-            schema:
-              $ref: '#/components/schemas/User'
-      responses:
-        200:
-          description: a new User was correctly added
-          content: {}
-  /users/login:
-    post:
-      tags:
-      - users
-      summary: Logs a user into the system
-      operationId: loginUser
-      requestBody:
-        description: infos about the user to log in
-        content:
-          '*/*':
-            schema:
-              $ref: '#/components/schemas/User'
-      responses:
-        200:
-          description: successful operation
-        400:
-          description: Invalid username/password supplied
-          content: {}
-  /users/logout:
-    post:
-      tags:
-      - users
-      summary: Logs out current logged in user session
-      operationId: logoutUser
-      responses:
-        default:
-          description: successful operation
-          content: {}
+                type: array
+                items:
+                  $ref: '#/components/schemas/GetUser'
+
   /users/{userId}:
     get:
       tags:
-      - users
-      summary: Get user by user name
-      operationId: getUserByName
+        - users
+      summary: Get user by user id
+      operationId: getUserById
       parameters:
-      - name: userId
-        in: path
-        description: 'The name that needs to be fetched.'
-        required: true
-        schema:
-          type: string
+        - name: userId
+          in: path
+          description: 'The name that needs to be fetched.'
+          required: true
+          schema:
+            type: integer
+            format: int64
       responses:
         200:
           description: successful operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
+                $ref: '#/components/schemas/GetUser'
         400:
           description: Invalid username supplied
           content: {}
@@ -417,23 +367,24 @@ paths:
           content: {}
     patch:
       tags:
-      - users
+        - users
       summary: Update a user by ID
       description: This can only be done by the logged in user.
       operationId: updateUser
       parameters:
-      - name: userId
-        in: path
-        description: name that need to be updated
-        required: true
-        schema:
-          type: string
+        - name: userId
+          in: path
+          description: name that need to be updated
+          required: true
+          schema:
+            type: integer
+            format: int64
       requestBody:
         description: Updated user object
         content:
           '*/*':
             schema:
-              $ref: '#/components/schemas/User'
+              $ref: '#/components/schemas/CreateUser'
         required: true
       responses:
         400:
@@ -444,17 +395,18 @@ paths:
           content: {}
     delete:
       tags:
-      - users
+        - users
       summary: Delete user
       description: This can only be done by the logged in user.
       operationId: deleteUser
       parameters:
-      - name: userId
-        in: path
-        description: The name that needs to be deleted
-        required: true
-        schema:
-          type: string
+        - name: userId
+          in: path
+          description: The name that needs to be deleted
+          required: true
+          schema:
+            type: integer
+            format: int64
       responses:
         400:
           description: Invalid username supplied
@@ -477,7 +429,6 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Category'
-
     post:
       tags:
         - categories
@@ -535,20 +486,20 @@ paths:
         200:
           description: successful operation
     delete:
-        tags:
-          - categories
-        parameters:
+      tags:
+        - categories
+      parameters:
         - name: categoryId
           in: path
           description: category to delete
           required: true
           schema:
             type: string
-        summary: deletes a category by ID
-        operationId: deleteACategory
-        responses:
-          200:
-            description: successful operation
+      summary: deletes a category by ID
+      operationId: deleteACategory
+      responses:
+        200:
+          description: successful operation
 
   /tags:
     get:
@@ -623,24 +574,50 @@ paths:
         200:
           description: successful operation
     delete:
-        tags:
-          - tags
-        parameters:
+      tags:
+        - tags
+      parameters:
         - name: tagId
           in: path
           description: tag to delete
           required: true
           schema:
             type: string
-        summary: deletes a tag by ID
-        operationId: deleteAtag
-        responses:
-          200:
-            description: successful operation
+      summary: deletes a tag by ID
+      operationId: deleteAtag
+      responses:
+        200:
+          description: successful operation
 
 components:
   schemas:
-    User:
+    CreateUser:
+      required:
+        - id
+        - username
+        - firstName
+        - lastName
+        - email
+        - password
+      type: object
+      properties:
+        username:
+          type: string
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+    GetUser:
+      required:
+        - id
+        - username
+        - firstName
+        - lastName
+        - email
       type: object
       properties:
         id:
@@ -654,29 +631,38 @@ components:
           type: string
         email:
           type: string
-        password:
-          type: string
-    Tag:
+    CreateArticle:
       required:
-        - id
-        - name
+        - title
+        - author_id
+        - content
+        - author
+        - createdAt
       type: object
       properties:
-        id:
+        title:
+          type: string
+          example: my super article
+        content:
+          type: string
+        photoUrls:
+          type: array
+          items:
+            type: string
+        author_id:
           type: integer
           format: int64
-        name:
+        createdAt:
           type: string
-    Article:
+          example: '12-02-2013H12-05'
+    GetArticle:
       required:
-      - id
-      - title
-      - tags
-      - content
-      - author
-      - createdAt
-      - lastUpdatedAt
-      - views
+        - id
+        - title
+        - author
+        - content
+        - createdAt
+        - views
       type: object
       properties:
         id:
@@ -684,20 +670,48 @@ components:
           format: int64
         title:
           type: string
-          example: my super article
-        tags:
-          type: array
-          items:
-            $ref: '#/components/schemas/Tag'
+        author:
+          $ref: '#/components/schemas/GetUser'
         content:
           type: string
-          example: "Le Lorem Ipsum est simplement du faux texte employé dans la composition et la mise en page avant impression. Le Lorem Ipsum est le faux texte standard de l'imprimerie depuis les années 1500..."
         photoUrls:
           type: array
           items:
             type: string
-        author:
-          $ref: '#/components/schemas/User'
+        createdAt:
+          type: string
+          example: '12-02-2013H12-05'
+        lastUpdateAt:
+          type: string
+          example: '12-02-2013H12-05'
+        views:
+          type: integer
+          example: 456
+        comments:
+          type: array
+          items:
+            $ref: '#/components/schemas/Comment'
+    UpdateArticle:
+      required:
+        - id
+        - title
+        - content
+        - createdAt
+        - lastUpdateAt
+        - views
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        title:
+          type: string
+        content:
+          type: string
+        photoUrls:
+          type: array
+          items:
+            type: string
         createdAt:
           type: string
           example: '12-02-2013H12-05'
@@ -713,7 +727,7 @@ components:
         - article
         - title
         - id
-        - author
+        - author_id
       type: object
       properties:
         id:
@@ -725,14 +739,13 @@ components:
         content:
           type: string
           example: tu pourrais faire mieux
-        author:
-          $ref: '#/components/schemas/User'
-        article:
-          $ref: '#/components/schemas/Article'
+        author_id:
+          type: integer
+          format: int64
     Category:
       required:
+        - id
         - name
-        - children
       type: object
       properties:
         id:
@@ -740,7 +753,20 @@ components:
           format: int64
         name:
           type: string
-        children:
-          type: array
-          items:
-            $ref: '#/components/schemas/Tag'
+    Tag:
+      required:
+        - id
+        - name
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        article_id:
+          type:  integer
+          format: int64
+        category_id:
+          type: integer
+          format: int64

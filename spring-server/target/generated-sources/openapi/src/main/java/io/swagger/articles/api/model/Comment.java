@@ -5,8 +5,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import io.swagger.articles.api.model.Article;
-import io.swagger.articles.api.model.User;
 import org.openapitools.jackson.nullable.JsonNullable;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
@@ -14,7 +12,7 @@ import javax.validation.constraints.*;
 /**
  * Comment
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2020-04-23T13:41:54.206239+02:00[Europe/Zurich]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2020-05-18T10:09:53.531853+02:00[Europe/Zurich]")
 
 public class Comment   {
   @JsonProperty("id")
@@ -26,11 +24,8 @@ public class Comment   {
   @JsonProperty("content")
   private String content;
 
-  @JsonProperty("author")
-  private User author;
-
-  @JsonProperty("article")
-  private Article article;
+  @JsonProperty("author_id")
+  private Long authorId;
 
   public Comment id(Long id) {
     this.id = id;
@@ -95,48 +90,25 @@ public class Comment   {
     this.content = content;
   }
 
-  public Comment author(User author) {
-    this.author = author;
+  public Comment authorId(Long authorId) {
+    this.authorId = authorId;
     return this;
   }
 
   /**
-   * Get author
-   * @return author
+   * Get authorId
+   * @return authorId
   */
   @ApiModelProperty(required = true, value = "")
   @NotNull
 
-  @Valid
 
-  public User getAuthor() {
-    return author;
+  public Long getAuthorId() {
+    return authorId;
   }
 
-  public void setAuthor(User author) {
-    this.author = author;
-  }
-
-  public Comment article(Article article) {
-    this.article = article;
-    return this;
-  }
-
-  /**
-   * Get article
-   * @return article
-  */
-  @ApiModelProperty(required = true, value = "")
-  @NotNull
-
-  @Valid
-
-  public Article getArticle() {
-    return article;
-  }
-
-  public void setArticle(Article article) {
-    this.article = article;
+  public void setAuthorId(Long authorId) {
+    this.authorId = authorId;
   }
 
 
@@ -152,13 +124,12 @@ public class Comment   {
     return Objects.equals(this.id, comment.id) &&
         Objects.equals(this.title, comment.title) &&
         Objects.equals(this.content, comment.content) &&
-        Objects.equals(this.author, comment.author) &&
-        Objects.equals(this.article, comment.article);
+        Objects.equals(this.authorId, comment.authorId);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, title, content, author, article);
+    return Objects.hash(id, title, content, authorId);
   }
 
   @Override
@@ -169,8 +140,7 @@ public class Comment   {
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    title: ").append(toIndentedString(title)).append("\n");
     sb.append("    content: ").append(toIndentedString(content)).append("\n");
-    sb.append("    author: ").append(toIndentedString(author)).append("\n");
-    sb.append("    article: ").append(toIndentedString(article)).append("\n");
+    sb.append("    authorId: ").append(toIndentedString(authorId)).append("\n");
     sb.append("}");
     return sb.toString();
   }

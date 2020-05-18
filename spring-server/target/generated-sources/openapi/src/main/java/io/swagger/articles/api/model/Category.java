@@ -5,9 +5,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import io.swagger.articles.api.model.Tag;
-import java.util.ArrayList;
-import java.util.List;
 import org.openapitools.jackson.nullable.JsonNullable;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
@@ -15,7 +12,7 @@ import javax.validation.constraints.*;
 /**
  * Category
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2020-04-23T13:41:54.206239+02:00[Europe/Zurich]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2020-05-18T10:09:53.531853+02:00[Europe/Zurich]")
 
 public class Category   {
   @JsonProperty("id")
@@ -23,10 +20,6 @@ public class Category   {
 
   @JsonProperty("name")
   private String name;
-
-  @JsonProperty("children")
-  @Valid
-  private List<Tag> children = new ArrayList<Tag>();
 
   public Category id(Long id) {
     this.id = id;
@@ -37,7 +30,8 @@ public class Category   {
    * Get id
    * @return id
   */
-  @ApiModelProperty(value = "")
+  @ApiModelProperty(required = true, value = "")
+  @NotNull
 
 
   public Long getId() {
@@ -69,33 +63,6 @@ public class Category   {
     this.name = name;
   }
 
-  public Category children(List<Tag> children) {
-    this.children = children;
-    return this;
-  }
-
-  public Category addChildrenItem(Tag childrenItem) {
-    this.children.add(childrenItem);
-    return this;
-  }
-
-  /**
-   * Get children
-   * @return children
-  */
-  @ApiModelProperty(required = true, value = "")
-  @NotNull
-
-  @Valid
-
-  public List<Tag> getChildren() {
-    return children;
-  }
-
-  public void setChildren(List<Tag> children) {
-    this.children = children;
-  }
-
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -107,13 +74,12 @@ public class Category   {
     }
     Category category = (Category) o;
     return Objects.equals(this.id, category.id) &&
-        Objects.equals(this.name, category.name) &&
-        Objects.equals(this.children, category.children);
+        Objects.equals(this.name, category.name);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, name, children);
+    return Objects.hash(id, name);
   }
 
   @Override
@@ -123,7 +89,6 @@ public class Category   {
     
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
-    sb.append("    children: ").append(toIndentedString(children)).append("\n");
     sb.append("}");
     return sb.toString();
   }

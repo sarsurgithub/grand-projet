@@ -26,7 +26,7 @@ import javax.validation.constraints.*;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2020-04-23T13:41:54.206239+02:00[Europe/Zurich]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2020-05-18T10:09:53.531853+02:00[Europe/Zurich]")
 
 @Validated
 @Api(value = "categories", description = "the categories API")
@@ -81,7 +81,7 @@ public interface CategoriesApi {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"children\" : [ { \"name\" : \"name\", \"id\" : 6 }, { \"name\" : \"name\", \"id\" : 6 } ], \"name\" : \"name\", \"id\" : 0 }";
+                    String exampleString = "{ \"name\" : \"name\", \"id\" : 0 }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }

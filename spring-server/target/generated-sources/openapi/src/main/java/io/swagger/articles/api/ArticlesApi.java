@@ -5,9 +5,11 @@
  */
 package io.swagger.articles.api;
 
-import io.swagger.articles.api.model.Article;
 import io.swagger.articles.api.model.Category;
 import io.swagger.articles.api.model.Comment;
+import io.swagger.articles.api.model.CreateArticle;
+import io.swagger.articles.api.model.GetArticle;
+import io.swagger.articles.api.model.UpdateArticle;
 import io.swagger.annotations.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -28,7 +30,7 @@ import javax.validation.constraints.*;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2020-04-23T13:41:54.206239+02:00[Europe/Zurich]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2020-05-18T10:09:53.531853+02:00[Europe/Zurich]")
 
 @Validated
 @Api(value = "articles", description = "the articles API")
@@ -57,7 +59,7 @@ public interface ArticlesApi {
     @RequestMapping(value = "/articles",
         consumes = { "application/json" },
         method = RequestMethod.POST)
-    default ResponseEntity<Void> createArticle(@ApiParam(value = "Article that needs to be added" ,required=true )  @Valid @RequestBody Article article) {
+    default ResponseEntity<Void> createArticle(@ApiParam(value = "Article that needs to be added" ,required=true )  @Valid @RequestBody CreateArticle createArticle) {
         return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
 
     }
@@ -89,19 +91,19 @@ public interface ArticlesApi {
     }
 
 
-    @ApiOperation(value = "Find article by ID", nickname = "findArticleById", notes = "Returns a single article by ID", response = Article.class, tags={ "articles", })
+    @ApiOperation(value = "Find article by ID", nickname = "findArticleById", notes = "Returns a single article by ID", response = GetArticle.class, tags={ "articles", })
     @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "successful operation", response = Article.class),
+        @ApiResponse(code = 200, message = "successful operation", response = GetArticle.class),
         @ApiResponse(code = 400, message = "Invalid ID supplied"),
         @ApiResponse(code = 404, message = "Article not found") })
     @RequestMapping(value = "/articles/{articleId}",
         produces = { "application/json" }, 
         method = RequestMethod.GET)
-    default ResponseEntity<Article> findArticleById(@ApiParam(value = "ID of the article to return",required=true) @PathVariable("articleId") Long articleId) {
+    default ResponseEntity<GetArticle> findArticleById(@ApiParam(value = "ID of the article to return",required=true) @PathVariable("articleId") Long articleId) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"createdAt\" : \"12-02-2013H12-05\", \"photoUrls\" : [ \"photoUrls\", \"photoUrls\" ], \"author\" : { \"firstName\" : \"firstName\", \"lastName\" : \"lastName\", \"password\" : \"password\", \"id\" : 1, \"email\" : \"email\", \"username\" : \"username\" }, \"id\" : 0, \"lastUpdateAt\" : \"12-02-2013H12-05\", \"title\" : \"my super article\", \"content\" : \"Le Lorem Ipsum est simplement du faux texte employé dans la composition et la mise en page avant impression. Le Lorem Ipsum est le faux texte standard de l'imprimerie depuis les années 1500...\", \"views\" : 456, \"tags\" : [ { \"name\" : \"name\", \"id\" : 6 }, { \"name\" : \"name\", \"id\" : 6 } ] }";
+                    String exampleString = "{ \"createdAt\" : \"12-02-2013H12-05\", \"photoUrls\" : [ \"photoUrls\", \"photoUrls\" ], \"comments\" : [ { \"id\" : 1, \"title\" : \"article nul\", \"author_id\" : 5, \"content\" : \"tu pourrais faire mieux\" }, { \"id\" : 1, \"title\" : \"article nul\", \"author_id\" : 5, \"content\" : \"tu pourrais faire mieux\" } ], \"author\" : { \"firstName\" : \"firstName\", \"lastName\" : \"lastName\", \"id\" : 6, \"email\" : \"email\", \"username\" : \"username\" }, \"id\" : 0, \"lastUpdateAt\" : \"12-02-2013H12-05\", \"title\" : \"title\", \"content\" : \"content\", \"views\" : 456 }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
@@ -112,18 +114,18 @@ public interface ArticlesApi {
     }
 
 
-    @ApiOperation(value = "Finds articles by categories", nickname = "findArticlesByCategories", notes = "", response = Article.class, responseContainer = "List", tags={ "articles", })
+    @ApiOperation(value = "Finds articles by categories", nickname = "findArticlesByCategories", notes = "", response = GetArticle.class, responseContainer = "List", tags={ "articles", })
     @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "successful operation", response = Article.class, responseContainer = "List"),
+        @ApiResponse(code = 200, message = "successful operation", response = GetArticle.class, responseContainer = "List"),
         @ApiResponse(code = 400, message = "Invalid category") })
     @RequestMapping(value = "/articles/byCategories",
         produces = { "application/json" }, 
         method = RequestMethod.GET)
-    default ResponseEntity<List<Article>> findArticlesByCategories(@NotNull @ApiParam(value = "Categories to filter by", required = true) @Valid @RequestParam(value = "category", required = true) List<Category> category) {
+    default ResponseEntity<List<GetArticle>> findArticlesByCategories(@NotNull @ApiParam(value = "Categories to filter by", required = true) @Valid @RequestParam(value = "category", required = true) List<Category> category) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"createdAt\" : \"12-02-2013H12-05\", \"photoUrls\" : [ \"photoUrls\", \"photoUrls\" ], \"author\" : { \"firstName\" : \"firstName\", \"lastName\" : \"lastName\", \"password\" : \"password\", \"id\" : 1, \"email\" : \"email\", \"username\" : \"username\" }, \"id\" : 0, \"lastUpdateAt\" : \"12-02-2013H12-05\", \"title\" : \"my super article\", \"content\" : \"Le Lorem Ipsum est simplement du faux texte employé dans la composition et la mise en page avant impression. Le Lorem Ipsum est le faux texte standard de l'imprimerie depuis les années 1500...\", \"views\" : 456, \"tags\" : [ { \"name\" : \"name\", \"id\" : 6 }, { \"name\" : \"name\", \"id\" : 6 } ] }";
+                    String exampleString = "{ \"createdAt\" : \"12-02-2013H12-05\", \"photoUrls\" : [ \"photoUrls\", \"photoUrls\" ], \"comments\" : [ { \"id\" : 1, \"title\" : \"article nul\", \"author_id\" : 5, \"content\" : \"tu pourrais faire mieux\" }, { \"id\" : 1, \"title\" : \"article nul\", \"author_id\" : 5, \"content\" : \"tu pourrais faire mieux\" } ], \"author\" : { \"firstName\" : \"firstName\", \"lastName\" : \"lastName\", \"id\" : 6, \"email\" : \"email\", \"username\" : \"username\" }, \"id\" : 0, \"lastUpdateAt\" : \"12-02-2013H12-05\", \"title\" : \"title\", \"content\" : \"content\", \"views\" : 456 }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
@@ -134,18 +136,18 @@ public interface ArticlesApi {
     }
 
 
-    @ApiOperation(value = "Finds all articles by date", nickname = "findArticlesByDate", notes = "", response = Article.class, responseContainer = "List", tags={ "articles", })
+    @ApiOperation(value = "Finds all articles by date", nickname = "findArticlesByDate", notes = "", response = GetArticle.class, responseContainer = "List", tags={ "articles", })
     @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "successful operation", response = Article.class, responseContainer = "List"),
+        @ApiResponse(code = 200, message = "successful operation", response = GetArticle.class, responseContainer = "List"),
         @ApiResponse(code = 404, message = "Articles not found") })
     @RequestMapping(value = "/articles",
         produces = { "application/json" }, 
         method = RequestMethod.GET)
-    default ResponseEntity<List<Article>> findArticlesByDate() {
+    default ResponseEntity<List<GetArticle>> findArticlesByDate() {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"createdAt\" : \"12-02-2013H12-05\", \"photoUrls\" : [ \"photoUrls\", \"photoUrls\" ], \"author\" : { \"firstName\" : \"firstName\", \"lastName\" : \"lastName\", \"password\" : \"password\", \"id\" : 1, \"email\" : \"email\", \"username\" : \"username\" }, \"id\" : 0, \"lastUpdateAt\" : \"12-02-2013H12-05\", \"title\" : \"my super article\", \"content\" : \"Le Lorem Ipsum est simplement du faux texte employé dans la composition et la mise en page avant impression. Le Lorem Ipsum est le faux texte standard de l'imprimerie depuis les années 1500...\", \"views\" : 456, \"tags\" : [ { \"name\" : \"name\", \"id\" : 6 }, { \"name\" : \"name\", \"id\" : 6 } ] }";
+                    String exampleString = "{ \"createdAt\" : \"12-02-2013H12-05\", \"photoUrls\" : [ \"photoUrls\", \"photoUrls\" ], \"comments\" : [ { \"id\" : 1, \"title\" : \"article nul\", \"author_id\" : 5, \"content\" : \"tu pourrais faire mieux\" }, { \"id\" : 1, \"title\" : \"article nul\", \"author_id\" : 5, \"content\" : \"tu pourrais faire mieux\" } ], \"author\" : { \"firstName\" : \"firstName\", \"lastName\" : \"lastName\", \"id\" : 6, \"email\" : \"email\", \"username\" : \"username\" }, \"id\" : 0, \"lastUpdateAt\" : \"12-02-2013H12-05\", \"title\" : \"title\", \"content\" : \"content\", \"views\" : 456 }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
@@ -156,18 +158,18 @@ public interface ArticlesApi {
     }
 
 
-    @ApiOperation(value = "returns a comment by ID", nickname = "findCommentbyID", notes = "", response = Comment.class, responseContainer = "List", tags={ "comments", })
+    @ApiOperation(value = "returns a comment by ID", nickname = "findCommentbyID", notes = "", response = Comment.class, tags={ "comments", })
     @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "successful operation", response = Comment.class, responseContainer = "List"),
+        @ApiResponse(code = 200, message = "successful operation", response = Comment.class),
         @ApiResponse(code = 400, message = "Invalid tag value") })
     @RequestMapping(value = "/articles/{articleId}/comments/{commentId}",
         produces = { "application/json" }, 
         method = RequestMethod.GET)
-    default ResponseEntity<List<Comment>> findCommentbyID(@ApiParam(value = "ID of the comment",required=true) @PathVariable("commentId") Long commentId,@ApiParam(value = "ID of the article",required=true) @PathVariable("articleId") Long articleId) {
+    default ResponseEntity<Comment> findCommentbyID(@ApiParam(value = "ID of the comment",required=true) @PathVariable("commentId") Long commentId,@ApiParam(value = "ID of the article",required=true) @PathVariable("articleId") Long articleId) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"author\" : { \"firstName\" : \"firstName\", \"lastName\" : \"lastName\", \"password\" : \"password\", \"id\" : 1, \"email\" : \"email\", \"username\" : \"username\" }, \"id\" : 0, \"title\" : \"article nul\", \"content\" : \"tu pourrais faire mieux\", \"article\" : { \"createdAt\" : \"12-02-2013H12-05\", \"photoUrls\" : [ \"photoUrls\", \"photoUrls\" ], \"author\" : { \"firstName\" : \"firstName\", \"lastName\" : \"lastName\", \"password\" : \"password\", \"id\" : 1, \"email\" : \"email\", \"username\" : \"username\" }, \"id\" : 0, \"lastUpdateAt\" : \"12-02-2013H12-05\", \"title\" : \"my super article\", \"content\" : \"Le Lorem Ipsum est simplement du faux texte employé dans la composition et la mise en page avant impression. Le Lorem Ipsum est le faux texte standard de l'imprimerie depuis les années 1500...\", \"views\" : 456, \"tags\" : [ { \"name\" : \"name\", \"id\" : 6 }, { \"name\" : \"name\", \"id\" : 6 } ] } }";
+                    String exampleString = "{ \"id\" : 1, \"title\" : \"article nul\", \"author_id\" : 5, \"content\" : \"tu pourrais faire mieux\" }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
@@ -189,7 +191,7 @@ public interface ArticlesApi {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"author\" : { \"firstName\" : \"firstName\", \"lastName\" : \"lastName\", \"password\" : \"password\", \"id\" : 1, \"email\" : \"email\", \"username\" : \"username\" }, \"id\" : 0, \"title\" : \"article nul\", \"content\" : \"tu pourrais faire mieux\", \"article\" : { \"createdAt\" : \"12-02-2013H12-05\", \"photoUrls\" : [ \"photoUrls\", \"photoUrls\" ], \"author\" : { \"firstName\" : \"firstName\", \"lastName\" : \"lastName\", \"password\" : \"password\", \"id\" : 1, \"email\" : \"email\", \"username\" : \"username\" }, \"id\" : 0, \"lastUpdateAt\" : \"12-02-2013H12-05\", \"title\" : \"my super article\", \"content\" : \"Le Lorem Ipsum est simplement du faux texte employé dans la composition et la mise en page avant impression. Le Lorem Ipsum est le faux texte standard de l'imprimerie depuis les années 1500...\", \"views\" : 456, \"tags\" : [ { \"name\" : \"name\", \"id\" : 6 }, { \"name\" : \"name\", \"id\" : 6 } ] } }";
+                    String exampleString = "{ \"id\" : 1, \"title\" : \"article nul\", \"author_id\" : 5, \"content\" : \"tu pourrais faire mieux\" }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
@@ -207,7 +209,7 @@ public interface ArticlesApi {
     @RequestMapping(value = "/articles/{articleId}",
         consumes = { "application/json" },
         method = RequestMethod.PATCH)
-    default ResponseEntity<Void> updateArticleById(@ApiParam(value = "ID of article that needs to be updated",required=true) @PathVariable("articleId") Long articleId,@ApiParam(value = "updated article" ,required=true )  @Valid @RequestBody Article article) {
+    default ResponseEntity<Void> updateArticleById(@ApiParam(value = "ID of article that needs to be updated",required=true) @PathVariable("articleId") Long articleId,@ApiParam(value = "updated article" ,required=true )  @Valid @RequestBody UpdateArticle updateArticle) {
         return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
 
     }

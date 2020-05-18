@@ -1,7 +1,5 @@
 package io.swagger.entities;
 
-import io.swagger.articles.api.model.Article;
-import io.swagger.articles.api.model.User;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -15,8 +13,7 @@ public class CommentEntity implements Serializable{
 
     private String title;
     private String content;
-    @OneToOne
-    private UserEntity author;
+    private Long authorId;
 
 
     public long getId() {
@@ -39,12 +36,12 @@ public class CommentEntity implements Serializable{
         this.content = content;
     }
 
-    public UserEntity getAuthor() {
-        return author;
+    public Long getAuthorId() {
+        return authorId;
     }
 
-    public void setAuthor(UserEntity author) {
-        this.author = author;
+    public void setAuthorId(Long id) {
+        this.authorId = id;
     }
 
 }
