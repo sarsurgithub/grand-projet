@@ -13,8 +13,6 @@ public class CategoryEntity implements Serializable {
     private long id;
 
     private String name;
-    @OneToMany
-    private List<TagEntity> children = new ArrayList<TagEntity>();
 
     public long getId() {
         return id;
@@ -27,17 +25,6 @@ public class CategoryEntity implements Serializable {
     public void setName(String name) {
         this.name = name;
     }
-
-    public List<TagEntity> getChildren() {
-        return children;
-    }
-
-    public void setChildren(List<TagEntity> children) {
-        this.children = children;
-    }
-
-
-
 
 
 }

@@ -5,7 +5,8 @@
  */
 package io.swagger.articles.api;
 
-import io.swagger.articles.api.model.Category;
+import io.swagger.articles.api.model.CreateCategory;
+import io.swagger.articles.api.model.GetCategory;
 import io.swagger.annotations.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -26,7 +27,7 @@ import javax.validation.constraints.*;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2020-05-18T16:15:42.793756+02:00[Europe/Zurich]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2020-05-18T17:32:29.655545+02:00[Europe/Zurich]")
 
 @Validated
 @Api(value = "categories", description = "the categories API")
@@ -43,7 +44,7 @@ public interface CategoriesApi {
     @RequestMapping(value = "/categories",
         consumes = { "application/json" },
         method = RequestMethod.POST)
-    default ResponseEntity<Void> addCategory(@ApiParam(value = "Category that needs to be added" ,required=true )  @Valid @RequestBody Category category) {
+    default ResponseEntity<Void> addCategory(@ApiParam(value = "Category that needs to be added" ,required=true )  @Valid @RequestBody CreateCategory createCategory) {
         return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
 
     }
@@ -71,17 +72,17 @@ public interface CategoriesApi {
     }
 
 
-    @ApiOperation(value = "Finds all categories", nickname = "findCategories", notes = "", response = Category.class, responseContainer = "List", tags={ "categories", })
+    @ApiOperation(value = "Finds all categories", nickname = "findCategories", notes = "", response = GetCategory.class, responseContainer = "List", tags={ "categories", })
     @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "successful operation", response = Category.class, responseContainer = "List") })
+        @ApiResponse(code = 200, message = "successful operation", response = GetCategory.class, responseContainer = "List") })
     @RequestMapping(value = "/categories",
         produces = { "application/json" }, 
         method = RequestMethod.GET)
-    default ResponseEntity<List<Category>> findCategories() {
+    default ResponseEntity<List<GetCategory>> findCategories() {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"name\" : \"name\", \"id\" : 0 }";
+                    String exampleString = "{ \"name\" : \"name\", \"id\" : 5 }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
@@ -97,7 +98,7 @@ public interface CategoriesApi {
         @ApiResponse(code = 200, message = "successful operation") })
     @RequestMapping(value = "/categories/{categoryId}",
         method = RequestMethod.PATCH)
-    default ResponseEntity<Void> updateCategoryById(@ApiParam(value = "category to delete",required=true) @PathVariable("categoryId") String categoryId,@ApiParam(value = "updated category" ,required=true )  @Valid @RequestBody Category category) {
+    default ResponseEntity<Void> updateCategoryById(@ApiParam(value = "category to delete",required=true) @PathVariable("categoryId") String categoryId,@ApiParam(value = "updated category" ,required=true )  @Valid @RequestBody CreateCategory createCategory) {
         return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
 
     }

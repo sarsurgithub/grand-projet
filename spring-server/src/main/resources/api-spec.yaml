@@ -14,8 +14,7 @@ tags:
     description: Operations about users
   - name: categories
     description: Operartions about categories
-  - name: tags
-    description: Operations about tags
+
 paths:
   /articles:
     get:
@@ -67,7 +66,7 @@ paths:
           schema:
             type: array
             items:
-              $ref: '#/components/schemas/Category'
+              $ref: '#/components/schemas/GetCategory'
       responses:
         200:
           description: successful operation
@@ -422,7 +421,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Category'
+                  $ref: '#/components/schemas/GetCategory'
     post:
       tags:
         - categories
@@ -433,7 +432,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Category'
+              $ref: '#/components/schemas/CreateCategory'
         required: true
       responses:
         200:
@@ -474,7 +473,7 @@ paths:
         content:
           '*/*':
             schema:
-              $ref: '#/components/schemas/Category'
+              $ref: '#/components/schemas/CreateCategory'
         required: true
       responses:
         200:
@@ -495,93 +494,6 @@ paths:
         200:
           description: successful operation
 
-  /tags:
-    get:
-      tags:
-        - tags
-      summary: Finds all tags
-      operationId: findtags
-      responses:
-        200:
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Tag'
-
-    post:
-      tags:
-        - tags
-      summary: Add a new tag
-      operationId: addTag
-      requestBody:
-        description: Tag that needs to be added
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Tag'
-        required: true
-      responses:
-        200:
-          description: successful operation
-        405:
-          description: Invalid input
-          content: {}
-  /tags/{tagId}:
-    get:
-      tags:
-        - tags
-      summary: finds a tag by Id
-      operationId: findATagById
-      parameters:
-        - name: tagId
-          in: path
-          description: Tag to delete
-          required: true
-          schema:
-            type: string
-      responses:
-        200:
-          description: successful operation
-    patch:
-      tags:
-        - tags
-      summary: updates a tag by Id
-      operationId: updateTagById
-      parameters:
-        - name: tagId
-          in: path
-          description: tag to delete
-          required: true
-          schema:
-            type: string
-      requestBody:
-        description: updated tag
-        content:
-          '*/*':
-            schema:
-              $ref: '#/components/schemas/Tag'
-        required: true
-      responses:
-        200:
-          description: successful operation
-    delete:
-      tags:
-        - tags
-      parameters:
-        - name: tagId
-          in: path
-          description: tag to delete
-          required: true
-          schema:
-            type: string
-      summary: deletes a tag by ID
-      operationId: deleteAtag
-      responses:
-        200:
-          description: successful operation
 
 components:
   schemas:
@@ -696,13 +608,15 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/GetComment'
+        categories:
+          type: array
+          items:
+            $ref: '#/components/schemas/GetCategory'
     UpdateArticle:
       required:
         - id
         - title
         - content
-        - createdAt
-        - lastUpdateAt
         - views
       type: object
       properties:
@@ -717,15 +631,13 @@ components:
           type: array
           items:
             type: string
-        createdAt:
-          type: string
-          example: '12-02-2013H12-05'
-        lastUpdateAt:
-          type: string
-          example: '12-02-2013H12-05'
         views:
           type: integer
           example: 456
+        categories_ids:
+          type: array
+          items:
+            type: integer
     CreateComment:
       required:
         - content
@@ -743,6 +655,11 @@ components:
         author:
           type: integer
           format: int64
+        categories_ids:
+          type: array
+          items:
+            type: integer
+
     GetComment:
       required:
         - id
@@ -764,7 +681,7 @@ components:
         author:
           type: integer
           format: int64
-    Category:
+    GetCategory:
       required:
         - id
         - name
@@ -775,20 +692,10 @@ components:
           format: int64
         name:
           type: string
-    Tag:
+    CreateCategory:
       required:
-        - id
         - name
       type: object
       properties:
-        id:
-          type: integer
-          format: int64
         name:
           type: string
-        article_id:
-          type:  integer
-          format: int64
-        category_id:
-          type: integer
-          format: int64

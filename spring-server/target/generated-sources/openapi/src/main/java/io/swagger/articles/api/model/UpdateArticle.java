@@ -14,7 +14,7 @@ import javax.validation.constraints.*;
 /**
  * UpdateArticle
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2020-05-18T16:15:42.793756+02:00[Europe/Zurich]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2020-05-18T17:32:29.655545+02:00[Europe/Zurich]")
 
 public class UpdateArticle   {
   @JsonProperty("id")
@@ -30,14 +30,12 @@ public class UpdateArticle   {
   @Valid
   private List<String> photoUrls = null;
 
-  @JsonProperty("createdAt")
-  private String createdAt;
-
-  @JsonProperty("lastUpdateAt")
-  private String lastUpdateAt;
-
   @JsonProperty("views")
   private Integer views;
+
+  @JsonProperty("categories_ids")
+  @Valid
+  private List<Integer> categoriesIds = null;
 
   public UpdateArticle id(Long id) {
     this.id = id;
@@ -130,48 +128,6 @@ public class UpdateArticle   {
     this.photoUrls = photoUrls;
   }
 
-  public UpdateArticle createdAt(String createdAt) {
-    this.createdAt = createdAt;
-    return this;
-  }
-
-  /**
-   * Get createdAt
-   * @return createdAt
-  */
-  @ApiModelProperty(example = "12-02-2013H12-05", required = true, value = "")
-  @NotNull
-
-
-  public String getCreatedAt() {
-    return createdAt;
-  }
-
-  public void setCreatedAt(String createdAt) {
-    this.createdAt = createdAt;
-  }
-
-  public UpdateArticle lastUpdateAt(String lastUpdateAt) {
-    this.lastUpdateAt = lastUpdateAt;
-    return this;
-  }
-
-  /**
-   * Get lastUpdateAt
-   * @return lastUpdateAt
-  */
-  @ApiModelProperty(example = "12-02-2013H12-05", required = true, value = "")
-  @NotNull
-
-
-  public String getLastUpdateAt() {
-    return lastUpdateAt;
-  }
-
-  public void setLastUpdateAt(String lastUpdateAt) {
-    this.lastUpdateAt = lastUpdateAt;
-  }
-
   public UpdateArticle views(Integer views) {
     this.views = views;
     return this;
@@ -193,6 +149,34 @@ public class UpdateArticle   {
     this.views = views;
   }
 
+  public UpdateArticle categoriesIds(List<Integer> categoriesIds) {
+    this.categoriesIds = categoriesIds;
+    return this;
+  }
+
+  public UpdateArticle addCategoriesIdsItem(Integer categoriesIdsItem) {
+    if (this.categoriesIds == null) {
+      this.categoriesIds = new ArrayList<Integer>();
+    }
+    this.categoriesIds.add(categoriesIdsItem);
+    return this;
+  }
+
+  /**
+   * Get categoriesIds
+   * @return categoriesIds
+  */
+  @ApiModelProperty(value = "")
+
+
+  public List<Integer> getCategoriesIds() {
+    return categoriesIds;
+  }
+
+  public void setCategoriesIds(List<Integer> categoriesIds) {
+    this.categoriesIds = categoriesIds;
+  }
+
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -207,14 +191,13 @@ public class UpdateArticle   {
         Objects.equals(this.title, updateArticle.title) &&
         Objects.equals(this.content, updateArticle.content) &&
         Objects.equals(this.photoUrls, updateArticle.photoUrls) &&
-        Objects.equals(this.createdAt, updateArticle.createdAt) &&
-        Objects.equals(this.lastUpdateAt, updateArticle.lastUpdateAt) &&
-        Objects.equals(this.views, updateArticle.views);
+        Objects.equals(this.views, updateArticle.views) &&
+        Objects.equals(this.categoriesIds, updateArticle.categoriesIds);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, title, content, photoUrls, createdAt, lastUpdateAt, views);
+    return Objects.hash(id, title, content, photoUrls, views, categoriesIds);
   }
 
   @Override
@@ -226,9 +209,8 @@ public class UpdateArticle   {
     sb.append("    title: ").append(toIndentedString(title)).append("\n");
     sb.append("    content: ").append(toIndentedString(content)).append("\n");
     sb.append("    photoUrls: ").append(toIndentedString(photoUrls)).append("\n");
-    sb.append("    createdAt: ").append(toIndentedString(createdAt)).append("\n");
-    sb.append("    lastUpdateAt: ").append(toIndentedString(lastUpdateAt)).append("\n");
     sb.append("    views: ").append(toIndentedString(views)).append("\n");
+    sb.append("    categoriesIds: ").append(toIndentedString(categoriesIds)).append("\n");
     sb.append("}");
     return sb.toString();
   }

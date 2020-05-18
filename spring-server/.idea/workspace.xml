@@ -4,21 +4,25 @@
     <list default="true" id="3975b10b-04a0-4f1d-9688-fe9fa342e381" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/io/swagger/api/endpoints/ArticlesApiController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/swagger/api/endpoints/ArticlesApiController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/io/swagger/api/endpoints/UsersApiController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/swagger/api/endpoints/UsersApiController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/io/swagger/api/endpoints/TagsApiController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/io/swagger/entities/CategoryEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/swagger/entities/CategoryEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/io/swagger/entities/TagEntity.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/io/swagger/repositories/TagRepository.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/api-spec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/api-spec.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/api-spec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/api-spec.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/generated-sources/openapi/.openapi-generator/api-spec.yaml.sha256" beforeDir="false" afterPath="$PROJECT_DIR$/target/generated-sources/openapi/.openapi-generator/api-spec.yaml.sha256" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/generated-sources/openapi/src/main/java/io/swagger/articles/api/ArticlesApi.java" beforeDir="false" afterPath="$PROJECT_DIR$/target/generated-sources/openapi/src/main/java/io/swagger/articles/api/ArticlesApi.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/generated-sources/openapi/src/main/java/io/swagger/articles/api/CategoriesApi.java" beforeDir="false" afterPath="$PROJECT_DIR$/target/generated-sources/openapi/src/main/java/io/swagger/articles/api/CategoriesApi.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/generated-sources/openapi/src/main/java/io/swagger/articles/api/TagsApi.java" beforeDir="false" afterPath="$PROJECT_DIR$/target/generated-sources/openapi/src/main/java/io/swagger/articles/api/TagsApi.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/generated-sources/openapi/src/main/java/io/swagger/articles/api/TagsApi.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/generated-sources/openapi/src/main/java/io/swagger/articles/api/UsersApi.java" beforeDir="false" afterPath="$PROJECT_DIR$/target/generated-sources/openapi/src/main/java/io/swagger/articles/api/UsersApi.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/generated-sources/openapi/src/main/java/io/swagger/articles/api/model/Category.java" beforeDir="false" afterPath="$PROJECT_DIR$/target/generated-sources/openapi/src/main/java/io/swagger/articles/api/model/Category.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/generated-sources/openapi/src/main/java/io/swagger/articles/api/model/Comment.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/generated-sources/openapi/src/main/java/io/swagger/articles/api/model/Category.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/generated-sources/openapi/src/main/java/io/swagger/articles/api/model/CreateArticle.java" beforeDir="false" afterPath="$PROJECT_DIR$/target/generated-sources/openapi/src/main/java/io/swagger/articles/api/model/CreateArticle.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/generated-sources/openapi/src/main/java/io/swagger/articles/api/model/CreateComment.java" beforeDir="false" afterPath="$PROJECT_DIR$/target/generated-sources/openapi/src/main/java/io/swagger/articles/api/model/CreateComment.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/generated-sources/openapi/src/main/java/io/swagger/articles/api/model/CreateUser.java" beforeDir="false" afterPath="$PROJECT_DIR$/target/generated-sources/openapi/src/main/java/io/swagger/articles/api/model/CreateUser.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/generated-sources/openapi/src/main/java/io/swagger/articles/api/model/GetArticle.java" beforeDir="false" afterPath="$PROJECT_DIR$/target/generated-sources/openapi/src/main/java/io/swagger/articles/api/model/GetArticle.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/generated-sources/openapi/src/main/java/io/swagger/articles/api/model/GetComment.java" beforeDir="false" afterPath="$PROJECT_DIR$/target/generated-sources/openapi/src/main/java/io/swagger/articles/api/model/GetComment.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/generated-sources/openapi/src/main/java/io/swagger/articles/api/model/GetUser.java" beforeDir="false" afterPath="$PROJECT_DIR$/target/generated-sources/openapi/src/main/java/io/swagger/articles/api/model/GetUser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/generated-sources/openapi/src/main/java/io/swagger/articles/api/model/Tag.java" beforeDir="false" afterPath="$PROJECT_DIR$/target/generated-sources/openapi/src/main/java/io/swagger/articles/api/model/Tag.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/generated-sources/openapi/src/main/java/io/swagger/articles/api/model/Tag.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/generated-sources/openapi/src/main/java/io/swagger/articles/api/model/UpdateArticle.java" beforeDir="false" afterPath="$PROJECT_DIR$/target/generated-sources/openapi/src/main/java/io/swagger/articles/api/model/UpdateArticle.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/generated-sources/openapi/src/main/java/io/swagger/articles/api/model/UpdateUser.java" beforeDir="false" afterPath="$PROJECT_DIR$/target/generated-sources/openapi/src/main/java/io/swagger/articles/api/model/UpdateUser.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
@@ -99,7 +103,7 @@
       <workItem from="1588668707803" duration="3187000" />
       <workItem from="1588863494530" duration="4187000" />
       <workItem from="1589019063254" duration="242000" />
-      <workItem from="1589787485790" duration="11215000" />
+      <workItem from="1589787485790" duration="12279000" />
     </task>
     <servers />
   </component>
@@ -119,27 +123,27 @@
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
     <state x="653" y="216" key="#com.intellij.ide.util.MemberChooser/0.0.1680.1050@0.0.1680.1050" timestamp="1589801090279" />
-    <state x="578" y="279" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1586435485966">
+    <state x="578" y="279" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1589816110866">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state x="578" y="279" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1680.1050@0.0.1680.1050" timestamp="1586435485966" />
-    <state width="1638" height="403" key="GridCell.Tab.0.bottom" timestamp="1589811338219">
+    <state x="578" y="279" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1680.1050@0.0.1680.1050" timestamp="1589816110866" />
+    <state width="1638" height="247" key="GridCell.Tab.0.bottom" timestamp="1589816095466">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state width="1638" height="403" key="GridCell.Tab.0.bottom/0.0.1680.1050@0.0.1680.1050" timestamp="1589811338219" />
-    <state width="1638" height="403" key="GridCell.Tab.0.center" timestamp="1589811338217">
+    <state width="1638" height="247" key="GridCell.Tab.0.bottom/0.0.1680.1050@0.0.1680.1050" timestamp="1589816095466" />
+    <state width="1638" height="247" key="GridCell.Tab.0.center" timestamp="1589816095465">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state width="1638" height="403" key="GridCell.Tab.0.center/0.0.1680.1050@0.0.1680.1050" timestamp="1589811338217" />
-    <state width="1638" height="403" key="GridCell.Tab.0.left" timestamp="1589811338217">
+    <state width="1638" height="247" key="GridCell.Tab.0.center/0.0.1680.1050@0.0.1680.1050" timestamp="1589816095465" />
+    <state width="1638" height="247" key="GridCell.Tab.0.left" timestamp="1589816095464">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state width="1638" height="403" key="GridCell.Tab.0.left/0.0.1680.1050@0.0.1680.1050" timestamp="1589811338217" />
+    <state width="1638" height="247" key="GridCell.Tab.0.left/0.0.1680.1050@0.0.1680.1050" timestamp="1589816095464" />
     <state width="1638" height="403" key="GridCell.Tab.0.left/0.23.1680.979@0.23.1680.979" timestamp="1589017737802" />
-    <state width="1638" height="403" key="GridCell.Tab.0.right" timestamp="1589811338218">
+    <state width="1638" height="247" key="GridCell.Tab.0.right" timestamp="1589816095465">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state width="1638" height="403" key="GridCell.Tab.0.right/0.0.1680.1050@0.0.1680.1050" timestamp="1589811338218" />
+    <state width="1638" height="247" key="GridCell.Tab.0.right/0.0.1680.1050@0.0.1680.1050" timestamp="1589816095465" />
     <state width="1638" height="403" key="GridCell.Tab.1.bottom" timestamp="1587560362617">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>

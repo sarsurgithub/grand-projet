@@ -10,24 +10,18 @@ import javax.validation.Valid;
 import javax.validation.constraints.*;
 
 /**
- * Tag
+ * GetCategory
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2020-05-18T16:15:42.793756+02:00[Europe/Zurich]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2020-05-18T17:32:29.655545+02:00[Europe/Zurich]")
 
-public class Tag   {
+public class GetCategory   {
   @JsonProperty("id")
   private Long id;
 
   @JsonProperty("name")
   private String name;
 
-  @JsonProperty("article_id")
-  private Long articleId;
-
-  @JsonProperty("category_id")
-  private Long categoryId;
-
-  public Tag id(Long id) {
+  public GetCategory id(Long id) {
     this.id = id;
     return this;
   }
@@ -48,7 +42,7 @@ public class Tag   {
     this.id = id;
   }
 
-  public Tag name(String name) {
+  public GetCategory name(String name) {
     this.name = name;
     return this;
   }
@@ -69,46 +63,6 @@ public class Tag   {
     this.name = name;
   }
 
-  public Tag articleId(Long articleId) {
-    this.articleId = articleId;
-    return this;
-  }
-
-  /**
-   * Get articleId
-   * @return articleId
-  */
-  @ApiModelProperty(value = "")
-
-
-  public Long getArticleId() {
-    return articleId;
-  }
-
-  public void setArticleId(Long articleId) {
-    this.articleId = articleId;
-  }
-
-  public Tag categoryId(Long categoryId) {
-    this.categoryId = categoryId;
-    return this;
-  }
-
-  /**
-   * Get categoryId
-   * @return categoryId
-  */
-  @ApiModelProperty(value = "")
-
-
-  public Long getCategoryId() {
-    return categoryId;
-  }
-
-  public void setCategoryId(Long categoryId) {
-    this.categoryId = categoryId;
-  }
-
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -118,27 +72,23 @@ public class Tag   {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    Tag tag = (Tag) o;
-    return Objects.equals(this.id, tag.id) &&
-        Objects.equals(this.name, tag.name) &&
-        Objects.equals(this.articleId, tag.articleId) &&
-        Objects.equals(this.categoryId, tag.categoryId);
+    GetCategory getCategory = (GetCategory) o;
+    return Objects.equals(this.id, getCategory.id) &&
+        Objects.equals(this.name, getCategory.name);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, name, articleId, categoryId);
+    return Objects.hash(id, name);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class Tag {\n");
+    sb.append("class GetCategory {\n");
     
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
-    sb.append("    articleId: ").append(toIndentedString(articleId)).append("\n");
-    sb.append("    categoryId: ").append(toIndentedString(categoryId)).append("\n");
     sb.append("}");
     return sb.toString();
   }

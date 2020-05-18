@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import java.util.ArrayList;
+import java.util.List;
 import org.openapitools.jackson.nullable.JsonNullable;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
@@ -12,7 +14,7 @@ import javax.validation.constraints.*;
 /**
  * CreateComment
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2020-05-18T16:15:42.793756+02:00[Europe/Zurich]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2020-05-18T17:32:29.655545+02:00[Europe/Zurich]")
 
 public class CreateComment   {
   @JsonProperty("title")
@@ -23,6 +25,10 @@ public class CreateComment   {
 
   @JsonProperty("author")
   private Long author;
+
+  @JsonProperty("categories_ids")
+  @Valid
+  private List<Integer> categoriesIds = null;
 
   public CreateComment title(String title) {
     this.title = title;
@@ -86,6 +92,34 @@ public class CreateComment   {
     this.author = author;
   }
 
+  public CreateComment categoriesIds(List<Integer> categoriesIds) {
+    this.categoriesIds = categoriesIds;
+    return this;
+  }
+
+  public CreateComment addCategoriesIdsItem(Integer categoriesIdsItem) {
+    if (this.categoriesIds == null) {
+      this.categoriesIds = new ArrayList<Integer>();
+    }
+    this.categoriesIds.add(categoriesIdsItem);
+    return this;
+  }
+
+  /**
+   * Get categoriesIds
+   * @return categoriesIds
+  */
+  @ApiModelProperty(value = "")
+
+
+  public List<Integer> getCategoriesIds() {
+    return categoriesIds;
+  }
+
+  public void setCategoriesIds(List<Integer> categoriesIds) {
+    this.categoriesIds = categoriesIds;
+  }
+
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -98,12 +132,13 @@ public class CreateComment   {
     CreateComment createComment = (CreateComment) o;
     return Objects.equals(this.title, createComment.title) &&
         Objects.equals(this.content, createComment.content) &&
-        Objects.equals(this.author, createComment.author);
+        Objects.equals(this.author, createComment.author) &&
+        Objects.equals(this.categoriesIds, createComment.categoriesIds);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(title, content, author);
+    return Objects.hash(title, content, author, categoriesIds);
   }
 
   @Override
@@ -114,6 +149,7 @@ public class CreateComment   {
     sb.append("    title: ").append(toIndentedString(title)).append("\n");
     sb.append("    content: ").append(toIndentedString(content)).append("\n");
     sb.append("    author: ").append(toIndentedString(author)).append("\n");
+    sb.append("    categoriesIds: ").append(toIndentedString(categoriesIds)).append("\n");
     sb.append("}");
     return sb.toString();
   }

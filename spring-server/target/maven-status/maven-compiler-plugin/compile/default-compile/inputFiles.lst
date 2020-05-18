@@ -1,16 +1,16 @@
 /Users/sar/Documents/Stage/F_GRAND-PROJET/spring-server/src/main/java/io/swagger/repositories/CategoryRepository.java
 /Users/sar/Documents/Stage/F_GRAND-PROJET/spring-server/target/generated-sources/openapi/src/main/java/io/swagger/articles/api/ApiUtil.java
 /Users/sar/Documents/Stage/F_GRAND-PROJET/spring-server/target/generated-sources/openapi/src/main/java/io/swagger/articles/api/model/GetComment.java
-/Users/sar/Documents/Stage/F_GRAND-PROJET/spring-server/target/generated-sources/openapi/src/main/java/io/swagger/articles/api/model/Tag.java
 /Users/sar/Documents/Stage/F_GRAND-PROJET/spring-server/target/generated-sources/openapi/src/main/java/io/swagger/articles/api/model/CreateComment.java
 /Users/sar/Documents/Stage/F_GRAND-PROJET/spring-server/src/main/java/io/swagger/repositories/ArticleRepository.java
 /Users/sar/Documents/Stage/F_GRAND-PROJET/spring-server/src/main/java/io/swagger/configuration/HomeController.java
 /Users/sar/Documents/Stage/F_GRAND-PROJET/spring-server/src/main/java/io/swagger/repositories/UserRepository.java
+/Users/sar/Documents/Stage/F_GRAND-PROJET/spring-server/target/generated-sources/openapi/src/main/java/io/swagger/articles/api/model/CreateCategory.java
 /Users/sar/Documents/Stage/F_GRAND-PROJET/spring-server/target/generated-sources/openapi/src/main/java/io/swagger/articles/api/model/CreateUser.java
 /Users/sar/Documents/Stage/F_GRAND-PROJET/spring-server/src/main/java/io/swagger/entities/ArticleEntity.java
 /Users/sar/Documents/Stage/F_GRAND-PROJET/spring-server/src/main/java/io/swagger/api/exceptions/NotFoundException.java
-/Users/sar/Documents/Stage/F_GRAND-PROJET/spring-server/target/generated-sources/openapi/src/main/java/io/swagger/articles/api/TagsApi.java
 /Users/sar/Documents/Stage/F_GRAND-PROJET/spring-server/src/main/java/io/swagger/entities/TagEntity.java
+/Users/sar/Documents/Stage/F_GRAND-PROJET/spring-server/target/generated-sources/openapi/src/main/java/io/swagger/articles/api/model/GetCategory.java
 /Users/sar/Documents/Stage/F_GRAND-PROJET/spring-server/src/main/java/io/swagger/entities/CategoryEntity.java
 /Users/sar/Documents/Stage/F_GRAND-PROJET/spring-server/src/main/java/io/swagger/configuration/SwaggerDocumentationConfig.java
 /Users/sar/Documents/Stage/F_GRAND-PROJET/spring-server/src/main/java/io/swagger/repositories/CommentRepository.java
@@ -29,7 +29,6 @@
 /Users/sar/Documents/Stage/F_GRAND-PROJET/spring-server/src/main/java/io/swagger/api/endpoints/TagsApiController.java
 /Users/sar/Documents/Stage/F_GRAND-PROJET/spring-server/src/main/java/io/swagger/entities/CommentEntity.java
 /Users/sar/Documents/Stage/F_GRAND-PROJET/spring-server/src/main/java/io/swagger/api/exceptions/ApiException.java
-/Users/sar/Documents/Stage/F_GRAND-PROJET/spring-server/target/generated-sources/openapi/src/main/java/io/swagger/articles/api/model/Category.java
 /Users/sar/Documents/Stage/F_GRAND-PROJET/spring-server/src/main/java/io/swagger/RFC3339DateFormat.java
 /Users/sar/Documents/Stage/F_GRAND-PROJET/spring-server/target/generated-sources/openapi/src/main/java/io/swagger/articles/api/model/CreateArticle.java
 /Users/sar/Documents/Stage/F_GRAND-PROJET/spring-server/src/main/java/io/swagger/api/util/ApiOriginFilter.java
