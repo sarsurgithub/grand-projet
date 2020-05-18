@@ -74,9 +74,8 @@ public class UsersApiController implements UsersApi {
     }
 
     public ResponseEntity<Void> registerUser(@ApiParam(value = "Created user object" ,required=true )  @Valid @RequestBody CreateUser createUser) {
-        UserEntity userEntity = new UserEntity();
 
-        userEntity = fromCreateUsertoUserEntity(createUser);
+        UserEntity userEntity = fromCreateUsertoUserEntity(createUser);
 
         userRepository.save(userEntity);
 
@@ -91,12 +90,8 @@ public class UsersApiController implements UsersApi {
     public ResponseEntity<Void> updateUser(@ApiParam(value = "name that need to be updated",required=true) @PathVariable("userId") Long userId,@ApiParam(value = "Updated user object" ,required=true )  @Valid @RequestBody UpdateUser updateUser) {
         UserEntity userEntity = userRepository.findById(userId).get();
 
-        updateUser.setId(userEntity.getId());
-        updateUser.setEmail(userEntity.getEmail());
-        updateUser.setFirstName(userEntity.getFirstName());
-        updateUser.setLastName(userEntity.getEmail());
-        updateUser.setPassword(userEntity.getPassword());
-        updateUser.setUsername(userEntity.getUsername());
+        userEntity = updateUser(updateUser, userEntity);
+
 
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest().build().toUri();
@@ -142,6 +137,15 @@ public class UsersApiController implements UsersApi {
         entity.setLastName(user.getLastName());
         entity.setFirstName(user.getFirstName());
         entity.setEmail(user.getEmail());
+        return entity;
+    }
+
+    private UserEntity updateUser(UpdateUser user, UserEntity entity){
+        entity.setUsername(user.getUsername());
+        entity.setLastName(user.getLastName());
+        entity.setFirstName(user.getFirstName());
+        entity.setEmail(user.getEmail());
+        entity.setPassword(user.getPassword());
         return entity;
     }
 

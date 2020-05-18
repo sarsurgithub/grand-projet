@@ -21,6 +21,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.persistence.EntityNotFoundException;
 import javax.validation.constraints.*;
 import javax.validation.Valid;
 import javax.servlet.http.HttpServletRequest;
@@ -33,7 +34,9 @@ import java.util.List;
 public class ArticlesApiController implements ArticlesApi {
     @Autowired
     ArticleRepository articleRepository;
+    @Autowired
     CommentRepository commentRepository;
+    @Autowired
     UserRepository userRepository;
 
     private static final Logger log = LoggerFactory.getLogger(ArticlesApiController.class);
@@ -49,30 +52,13 @@ public class ArticlesApiController implements ArticlesApi {
     }
 
 
-    public ResponseEntity<List<GetArticle>> findArticlesByCategories(@NotNull @ApiParam(value = "Categories to filter by", required = true) @Valid @RequestParam(value = "category", required = true) List<Category> category) {
-
-        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
-
-    }
-
-    public ResponseEntity<Void> updateArticleById(@ApiParam(value = "ID of article that needs to be updated",required=true) @PathVariable("articleId") Long articleId,@ApiParam(value = "updated article" ,required=true )  @Valid @RequestBody UpdateArticle updateArticle) {
-        ArticleEntity articleEntity = articleRepository.findById(articleId).get();
-
-        articleEntity = fromUpdateArticleToArticleEntity(updateArticle);
-        //ici on n'update pas l'auteur puisque celui-ci ne peut pas changer, est-ce que c'est possible de le faire comme ça ?
-
-        URI location = ServletUriComponentsBuilder
-                .fromCurrentRequest().build().toUri();
-
-        articleRepository.save(articleEntity);
-
-        return ResponseEntity.created(location).build();
-    }
+    // ARTICLES
+    // CREATE
 
     public ResponseEntity<Void> createArticle(@ApiParam(value = "Article that needs to be added" ,required=true )  @Valid @RequestBody CreateArticle createArticle) {
         ArticleEntity articleEntity = new ArticleEntity();
 
-        UserEntity author = userRepository.findById(createArticle.getAuthorId()).get();
+        UserEntity author = userRepository.findById(createArticle.getAuthorId()).orElseThrow(() -> new EntityNotFoundException("This user does not exist"));
         // y'a sûrement un moyen beaucoup plus propre de faire ça but it will do for now
         //j'ai trouvé ça c'est mieux :
         articleEntity = fromCreateArticleToArticleEntity(createArticle);
@@ -87,23 +73,16 @@ public class ArticlesApiController implements ArticlesApi {
         return ResponseEntity.created(location).build();
     }
 
-    public ResponseEntity<Void> deleteArticleById(@ApiParam(value = "Article id to delete",required=true) @PathVariable("articleId") Long articleId) {
-        articleRepository.deleteById(articleId);
-        return ResponseEntity.ok().build();
-    }
+    //FIND
 
-    public ResponseEntity<Void> deleteComment(@ApiParam(value = "ID of the comment to delete",required=true) @PathVariable("commentId") Long commentId,@ApiParam(value = "Article ID",required=true) @PathVariable("articleId") Long articleId) {
-        commentRepository.deleteById(commentId);
-        return ResponseEntity.ok().build();
-    }
+    public ResponseEntity<List<GetArticle>> findArticlesByCategories(@NotNull @ApiParam(value = "Categories to filter by", required = true) @Valid @RequestParam(value = "category", required = true) List<Category> category) {
 
-    public ResponseEntity<Void> addCommentToAnArticle(@ApiParam(value = "",required=true) @PathVariable("commentId") Long commentId,@ApiParam(value = "ID of the article",required=true) @PathVariable("articleId") Long articleId,@ApiParam(value = "comment to add to the article"  )  @Valid @RequestBody Comment comment) {
         return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
 
     }
 
     public ResponseEntity<GetArticle> findArticleById(@ApiParam(value = "ID of the article to return",required=true) @PathVariable("articleId") Long articleId) {
-        ArticleEntity articleEntity = articleRepository.findById(articleId).get();
+        ArticleEntity articleEntity = articleRepository.findById(articleId).orElseThrow(() -> new EntityNotFoundException("This article does not exist"));;
         GetArticle article = toGetArticle(articleEntity);
         return ResponseEntity.ok(article);
     }
@@ -120,28 +99,66 @@ public class ArticlesApiController implements ArticlesApi {
 
     }
 
+    // UPDATE-DELETE
 
-    public  ResponseEntity<Comment> findCommentbyID(@ApiParam(value = "ID of the comment",required=true) @PathVariable("commentId") Long commentId,@ApiParam(value = "ID of the article",required=true) @PathVariable("articleId") Long articleId) {
-        CommentEntity commentEntity = commentRepository.findById(commentId).get();
-        Comment comment = toComment(commentEntity);
+    public ResponseEntity<Void> updateArticleById(@ApiParam(value = "ID of article that needs to be updated",required=true) @PathVariable("articleId") Long articleId,@ApiParam(value = "updated article" ,required=true )  @Valid @RequestBody UpdateArticle updateArticle) {
+        ArticleEntity articleEntity = articleRepository.findById(articleId).orElseThrow(() -> new EntityNotFoundException("This article does not exist"));
+
+        articleEntity = updateArticle(updateArticle, articleEntity);
+        //ici on n'update pas l'auteur puisque celui-ci ne peut pas changer, est-ce que c'est possible de le faire comme ça ?
+
+        URI location = ServletUriComponentsBuilder
+                .fromCurrentRequest().build().toUri();
+
+        articleRepository.save(articleEntity);
+
+        return ResponseEntity.created(location).build();
+    }
+
+
+    public ResponseEntity<Void> deleteArticleById(@ApiParam(value = "Article id to delete",required=true) @PathVariable("articleId") Long articleId) {
+        articleRepository.deleteById(articleId);
+        return ResponseEntity.ok().build();
+    }
+
+
+
+    // COMMENTS
+
+    public ResponseEntity<Void> addCommentToAnArticle(@ApiParam(value = "ID of the article",required=true) @PathVariable("articleId") Long articleId,@ApiParam(value = "comment to add to the article"  )  @Valid @RequestBody CreateComment createComment) {
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
+
+
+    public ResponseEntity<Void> deleteComment(@ApiParam(value = "ID of the comment to delete",required=true) @PathVariable("commentId") Long commentId,@ApiParam(value = "Article ID",required=true) @PathVariable("articleId") Long articleId) {
+        commentRepository.deleteById(commentId);
+        return ResponseEntity.ok().build();
+
+    }
+
+
+    public ResponseEntity<GetComment> findCommentbyID(@ApiParam(value = "ID of the comment",required=true) @PathVariable("commentId") Long commentId,@ApiParam(value = "ID of the article",required=true) @PathVariable("articleId") Long articleId) {
+        CommentEntity commentEntity = commentRepository.findById(commentId).orElseThrow(() -> new EntityNotFoundException("This comment does not exist"));;
+        GetComment comment = toGetComment(commentEntity);
         return ResponseEntity.ok(comment);
 
     }
 
-    public ResponseEntity<List<Comment>> findCommentsByArticle(@ApiParam(value = "Id of the article",required=true) @PathVariable("articleId") Long articleId) {
-        ArticleEntity articleEntity = articleRepository.findById(articleId).get();
-        GetArticle article = toGetArticle(articleEntity);
-        List<Comment> comments = article.getComments();
-        return ResponseEntity.ok(comments);
 
+    public ResponseEntity<List<GetComment>> findCommentsByArticle(@ApiParam(value = "Id of the article",required=true) @PathVariable("articleId") Long articleId) {
+        ArticleEntity articleEntity = articleRepository.findById(articleId).orElseThrow(() -> new EntityNotFoundException("This article does not exist"));
+        GetArticle article = toGetArticle(articleEntity);
+        List<GetComment> comments = article.getComments();
+        return ResponseEntity.ok(comments);
     }
 
 
-    public ResponseEntity<Void> updateCommentbyId(@ApiParam(value = "ID of the comment that needs to be updated",required=true) @PathVariable("commentId") Long commentId,@ApiParam(value = "ID of the article",required=true) @PathVariable("articleId") Long articleId,@ApiParam(value = "updated comment"  )  @Valid @RequestBody Comment comment) {
+    public ResponseEntity<Void> updateCommentbyId(@ApiParam(value = "ID of the comment that needs to be updated",required=true) @PathVariable("commentId") Long commentId,@ApiParam(value = "ID of the article",required=true) @PathVariable("articleId") Long articleId,@ApiParam(value = "updated comment"  )  @Valid @RequestBody CreateComment createComment) {
         CommentEntity commentEntitytoUpdate = commentRepository.findById(commentId).get();
 
-        commentEntitytoUpdate.setTitle(comment.getTitle());
-        commentEntitytoUpdate.setContent(comment.getContent());
+        commentEntitytoUpdate.setTitle(createComment.getTitle());
+        commentEntitytoUpdate.setContent(createComment.getContent());
 
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest().build().toUri();
@@ -152,12 +169,12 @@ public class ArticlesApiController implements ArticlesApi {
 
     }
 
+    // fonctions pour passer de model à entity et inversément
 
     private ArticleEntity fromCreateArticleToArticleEntity(CreateArticle article) {
         ArticleEntity entity = new ArticleEntity();
         entity.setTitle(article.getTitle());
         entity.setPhotoUrls(article.getPhotoUrls());
-        entity.setCreatedAt(article.getCreatedAt());
         entity.setContent(article.getContent());
         return entity;
     }
@@ -174,13 +191,10 @@ public class ArticlesApiController implements ArticlesApi {
         return entity;
     }
 
-    private ArticleEntity fromUpdateArticleToArticleEntity(UpdateArticle article) {
-        ArticleEntity entity = new ArticleEntity();
+    private ArticleEntity updateArticle(UpdateArticle article, ArticleEntity entity) {
         entity.setViews(article.getViews());
         entity.setTitle(article.getTitle());
         entity.setPhotoUrls(article.getPhotoUrls());
-        entity.setLastUpdateAt(article.getLastUpdateAt());
-        entity.setCreatedAt(article.getCreatedAt());
         entity.setContent(article.getContent());
         return entity;
     }
@@ -229,17 +243,17 @@ public class ArticlesApiController implements ArticlesApi {
         return entity;
     }
 
-    private Comment toComment(CommentEntity entity) {
-        Comment comment = new Comment();
+    private GetComment toGetComment(CommentEntity entity) {
+        GetComment comment = new GetComment();
         comment.setContent(entity.getContent());
         comment.setTitle(entity.getTitle());
-        comment.setAuthorId(entity.getAuthorId());
+        comment.setAuthor(entity.getAuthorId());
         return comment ;
     }
 
-    private CommentEntity toCommentEntity( Comment comment){
+    private CommentEntity fromCreatetoCommentEntity( CreateComment comment){
         CommentEntity entity = new CommentEntity();
-        entity.setAuthorId(comment.getAuthorId());
+        entity.setAuthorId(comment.getAuthor());
         entity.setContent(comment.getContent());
         entity.setTitle(comment.getTitle());
         return entity;

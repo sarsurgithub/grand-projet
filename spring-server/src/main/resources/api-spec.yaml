@@ -178,7 +178,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Comment'
+                  $ref: '#/components/schemas/GetComment'
         400:
           description: Invalid tag value
           content: {}
@@ -188,12 +188,6 @@ paths:
       summary: add a new comment to an article
       operationId: addCommentToAnArticle
       parameters:
-        - name: commentId
-          in: path
-          required: true
-          schema:
-            type: integer
-            format: int64
         - name: articleId
           in: path
           description: ID of the article
@@ -206,7 +200,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Comment'
+              $ref: '#/components/schemas/CreateComment'
       responses:
         200:
           description: added successfully
@@ -240,7 +234,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Comment'
+                $ref: '#/components/schemas/GetComment'
         400:
           description: Invalid tag value
           content: {}
@@ -269,7 +263,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Comment'
+              $ref: '#/components/schemas/CreateComment'
       responses:
         200:
           description: updated successfully
@@ -651,7 +645,6 @@ components:
         - title
         - author_id
         - content
-        - author
         - createdAt
       type: object
       properties:
@@ -667,9 +660,6 @@ components:
         author_id:
           type: integer
           format: int64
-        createdAt:
-          type: string
-          example: '12-02-2013H12-05'
     GetArticle:
       required:
         - id
@@ -705,7 +695,7 @@ components:
         comments:
           type: array
           items:
-            $ref: '#/components/schemas/Comment'
+            $ref: '#/components/schemas/GetComment'
     UpdateArticle:
       required:
         - id
@@ -736,12 +726,29 @@ components:
         views:
           type: integer
           example: 456
-    Comment:
+    CreateComment:
       required:
         - content
         - article
         - title
+        - author_id
+      type: object
+      properties:
+        title:
+          type: string
+          example: article nul
+        content:
+          type: string
+          example: tu pourrais faire mieux
+        author:
+          type: integer
+          format: int64
+    GetComment:
+      required:
         - id
+        - content
+        - article
+        - title
         - author_id
       type: object
       properties:
@@ -754,7 +761,7 @@ components:
         content:
           type: string
           example: tu pourrais faire mieux
-        author_id:
+        author:
           type: integer
           format: int64
     Category:

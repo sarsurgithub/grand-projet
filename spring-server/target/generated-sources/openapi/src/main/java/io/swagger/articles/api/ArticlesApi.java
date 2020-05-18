@@ -6,9 +6,10 @@
 package io.swagger.articles.api;
 
 import io.swagger.articles.api.model.Category;
-import io.swagger.articles.api.model.Comment;
 import io.swagger.articles.api.model.CreateArticle;
+import io.swagger.articles.api.model.CreateComment;
 import io.swagger.articles.api.model.GetArticle;
+import io.swagger.articles.api.model.GetComment;
 import io.swagger.articles.api.model.UpdateArticle;
 import io.swagger.annotations.*;
 import org.springframework.http.HttpStatus;
@@ -30,7 +31,7 @@ import javax.validation.constraints.*;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2020-05-18T12:49:02.570994+02:00[Europe/Zurich]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2020-05-18T16:15:42.793756+02:00[Europe/Zurich]")
 
 @Validated
 @Api(value = "articles", description = "the articles API")
@@ -47,7 +48,7 @@ public interface ArticlesApi {
     @RequestMapping(value = "/articles/{articleId}/comments",
         consumes = { "application/json" },
         method = RequestMethod.POST)
-    default ResponseEntity<Void> addCommentToAnArticle(@ApiParam(value = "",required=true) @PathVariable("commentId") Long commentId,@ApiParam(value = "ID of the article",required=true) @PathVariable("articleId") Long articleId,@ApiParam(value = "comment to add to the article"  )  @Valid @RequestBody Comment comment) {
+    default ResponseEntity<Void> addCommentToAnArticle(@ApiParam(value = "ID of the article",required=true) @PathVariable("articleId") Long articleId,@ApiParam(value = "comment to add to the article"  )  @Valid @RequestBody CreateComment createComment) {
         return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
 
     }
@@ -103,7 +104,7 @@ public interface ArticlesApi {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"createdAt\" : \"12-02-2013H12-05\", \"photoUrls\" : [ \"photoUrls\", \"photoUrls\" ], \"comments\" : [ { \"id\" : 1, \"title\" : \"article nul\", \"author_id\" : 5, \"content\" : \"tu pourrais faire mieux\" }, { \"id\" : 1, \"title\" : \"article nul\", \"author_id\" : 5, \"content\" : \"tu pourrais faire mieux\" } ], \"author\" : { \"firstName\" : \"firstName\", \"lastName\" : \"lastName\", \"id\" : 6, \"email\" : \"email\", \"username\" : \"username\" }, \"id\" : 0, \"lastUpdateAt\" : \"12-02-2013H12-05\", \"title\" : \"title\", \"content\" : \"content\", \"views\" : 456 }";
+                    String exampleString = "{ \"createdAt\" : \"12-02-2013H12-05\", \"photoUrls\" : [ \"photoUrls\", \"photoUrls\" ], \"comments\" : [ { \"author\" : 5, \"id\" : 1, \"title\" : \"article nul\", \"content\" : \"tu pourrais faire mieux\" }, { \"author\" : 5, \"id\" : 1, \"title\" : \"article nul\", \"content\" : \"tu pourrais faire mieux\" } ], \"author\" : { \"firstName\" : \"firstName\", \"lastName\" : \"lastName\", \"id\" : 6, \"email\" : \"email\", \"username\" : \"username\" }, \"id\" : 0, \"lastUpdateAt\" : \"12-02-2013H12-05\", \"title\" : \"title\", \"content\" : \"content\", \"views\" : 456 }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
@@ -125,7 +126,7 @@ public interface ArticlesApi {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"createdAt\" : \"12-02-2013H12-05\", \"photoUrls\" : [ \"photoUrls\", \"photoUrls\" ], \"comments\" : [ { \"id\" : 1, \"title\" : \"article nul\", \"author_id\" : 5, \"content\" : \"tu pourrais faire mieux\" }, { \"id\" : 1, \"title\" : \"article nul\", \"author_id\" : 5, \"content\" : \"tu pourrais faire mieux\" } ], \"author\" : { \"firstName\" : \"firstName\", \"lastName\" : \"lastName\", \"id\" : 6, \"email\" : \"email\", \"username\" : \"username\" }, \"id\" : 0, \"lastUpdateAt\" : \"12-02-2013H12-05\", \"title\" : \"title\", \"content\" : \"content\", \"views\" : 456 }";
+                    String exampleString = "{ \"createdAt\" : \"12-02-2013H12-05\", \"photoUrls\" : [ \"photoUrls\", \"photoUrls\" ], \"comments\" : [ { \"author\" : 5, \"id\" : 1, \"title\" : \"article nul\", \"content\" : \"tu pourrais faire mieux\" }, { \"author\" : 5, \"id\" : 1, \"title\" : \"article nul\", \"content\" : \"tu pourrais faire mieux\" } ], \"author\" : { \"firstName\" : \"firstName\", \"lastName\" : \"lastName\", \"id\" : 6, \"email\" : \"email\", \"username\" : \"username\" }, \"id\" : 0, \"lastUpdateAt\" : \"12-02-2013H12-05\", \"title\" : \"title\", \"content\" : \"content\", \"views\" : 456 }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
@@ -147,7 +148,7 @@ public interface ArticlesApi {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"createdAt\" : \"12-02-2013H12-05\", \"photoUrls\" : [ \"photoUrls\", \"photoUrls\" ], \"comments\" : [ { \"id\" : 1, \"title\" : \"article nul\", \"author_id\" : 5, \"content\" : \"tu pourrais faire mieux\" }, { \"id\" : 1, \"title\" : \"article nul\", \"author_id\" : 5, \"content\" : \"tu pourrais faire mieux\" } ], \"author\" : { \"firstName\" : \"firstName\", \"lastName\" : \"lastName\", \"id\" : 6, \"email\" : \"email\", \"username\" : \"username\" }, \"id\" : 0, \"lastUpdateAt\" : \"12-02-2013H12-05\", \"title\" : \"title\", \"content\" : \"content\", \"views\" : 456 }";
+                    String exampleString = "{ \"createdAt\" : \"12-02-2013H12-05\", \"photoUrls\" : [ \"photoUrls\", \"photoUrls\" ], \"comments\" : [ { \"author\" : 5, \"id\" : 1, \"title\" : \"article nul\", \"content\" : \"tu pourrais faire mieux\" }, { \"author\" : 5, \"id\" : 1, \"title\" : \"article nul\", \"content\" : \"tu pourrais faire mieux\" } ], \"author\" : { \"firstName\" : \"firstName\", \"lastName\" : \"lastName\", \"id\" : 6, \"email\" : \"email\", \"username\" : \"username\" }, \"id\" : 0, \"lastUpdateAt\" : \"12-02-2013H12-05\", \"title\" : \"title\", \"content\" : \"content\", \"views\" : 456 }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
@@ -158,18 +159,18 @@ public interface ArticlesApi {
     }
 
 
-    @ApiOperation(value = "returns a comment by ID", nickname = "findCommentbyID", notes = "", response = Comment.class, tags={ "comments", })
+    @ApiOperation(value = "returns a comment by ID", nickname = "findCommentbyID", notes = "", response = GetComment.class, tags={ "comments", })
     @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "successful operation", response = Comment.class),
+        @ApiResponse(code = 200, message = "successful operation", response = GetComment.class),
         @ApiResponse(code = 400, message = "Invalid tag value") })
     @RequestMapping(value = "/articles/{articleId}/comments/{commentId}",
         produces = { "application/json" }, 
         method = RequestMethod.GET)
-    default ResponseEntity<Comment> findCommentbyID(@ApiParam(value = "ID of the comment",required=true) @PathVariable("commentId") Long commentId,@ApiParam(value = "ID of the article",required=true) @PathVariable("articleId") Long articleId) {
+    default ResponseEntity<GetComment> findCommentbyID(@ApiParam(value = "ID of the comment",required=true) @PathVariable("commentId") Long commentId,@ApiParam(value = "ID of the article",required=true) @PathVariable("articleId") Long articleId) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"id\" : 1, \"title\" : \"article nul\", \"author_id\" : 5, \"content\" : \"tu pourrais faire mieux\" }";
+                    String exampleString = "{ \"author\" : 5, \"id\" : 1, \"title\" : \"article nul\", \"content\" : \"tu pourrais faire mieux\" }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
@@ -180,18 +181,18 @@ public interface ArticlesApi {
     }
 
 
-    @ApiOperation(value = "returns an array of comments for a particular article", nickname = "findCommentsByArticle", notes = "", response = Comment.class, responseContainer = "List", tags={ "comments", })
+    @ApiOperation(value = "returns an array of comments for a particular article", nickname = "findCommentsByArticle", notes = "", response = GetComment.class, responseContainer = "List", tags={ "comments", })
     @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "successful operation", response = Comment.class, responseContainer = "List"),
+        @ApiResponse(code = 200, message = "successful operation", response = GetComment.class, responseContainer = "List"),
         @ApiResponse(code = 400, message = "Invalid tag value") })
     @RequestMapping(value = "/articles/{articleId}/comments",
         produces = { "application/json" }, 
         method = RequestMethod.GET)
-    default ResponseEntity<List<Comment>> findCommentsByArticle(@ApiParam(value = "Id of the article",required=true) @PathVariable("articleId") Long articleId) {
+    default ResponseEntity<List<GetComment>> findCommentsByArticle(@ApiParam(value = "Id of the article",required=true) @PathVariable("articleId") Long articleId) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"id\" : 1, \"title\" : \"article nul\", \"author_id\" : 5, \"content\" : \"tu pourrais faire mieux\" }";
+                    String exampleString = "{ \"author\" : 5, \"id\" : 1, \"title\" : \"article nul\", \"content\" : \"tu pourrais faire mieux\" }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
@@ -222,7 +223,7 @@ public interface ArticlesApi {
     @RequestMapping(value = "/articles/{articleId}/comments/{commentId}",
         consumes = { "application/json" },
         method = RequestMethod.PATCH)
-    default ResponseEntity<Void> updateCommentbyId(@ApiParam(value = "ID of the comment that needs to be updated",required=true) @PathVariable("commentId") Long commentId,@ApiParam(value = "ID of the article",required=true) @PathVariable("articleId") Long articleId,@ApiParam(value = "updated comment"  )  @Valid @RequestBody Comment comment) {
+    default ResponseEntity<Void> updateCommentbyId(@ApiParam(value = "ID of the comment that needs to be updated",required=true) @PathVariable("commentId") Long commentId,@ApiParam(value = "ID of the article",required=true) @PathVariable("articleId") Long articleId,@ApiParam(value = "updated comment"  )  @Valid @RequestBody CreateComment createComment) {
         return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
 
     }

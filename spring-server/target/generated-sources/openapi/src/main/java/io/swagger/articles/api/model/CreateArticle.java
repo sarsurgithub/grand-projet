@@ -14,7 +14,7 @@ import javax.validation.constraints.*;
 /**
  * CreateArticle
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2020-05-18T12:49:02.570994+02:00[Europe/Zurich]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2020-05-18T16:15:42.793756+02:00[Europe/Zurich]")
 
 public class CreateArticle   {
   @JsonProperty("title")
@@ -29,9 +29,6 @@ public class CreateArticle   {
 
   @JsonProperty("author_id")
   private Long authorId;
-
-  @JsonProperty("createdAt")
-  private String createdAt;
 
   public CreateArticle title(String title) {
     this.title = title;
@@ -124,27 +121,6 @@ public class CreateArticle   {
     this.authorId = authorId;
   }
 
-  public CreateArticle createdAt(String createdAt) {
-    this.createdAt = createdAt;
-    return this;
-  }
-
-  /**
-   * Get createdAt
-   * @return createdAt
-  */
-  @ApiModelProperty(example = "12-02-2013H12-05", required = true, value = "")
-  @NotNull
-
-
-  public String getCreatedAt() {
-    return createdAt;
-  }
-
-  public void setCreatedAt(String createdAt) {
-    this.createdAt = createdAt;
-  }
-
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -158,13 +134,12 @@ public class CreateArticle   {
     return Objects.equals(this.title, createArticle.title) &&
         Objects.equals(this.content, createArticle.content) &&
         Objects.equals(this.photoUrls, createArticle.photoUrls) &&
-        Objects.equals(this.authorId, createArticle.authorId) &&
-        Objects.equals(this.createdAt, createArticle.createdAt);
+        Objects.equals(this.authorId, createArticle.authorId);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(title, content, photoUrls, authorId, createdAt);
+    return Objects.hash(title, content, photoUrls, authorId);
   }
 
   @Override
@@ -176,7 +151,6 @@ public class CreateArticle   {
     sb.append("    content: ").append(toIndentedString(content)).append("\n");
     sb.append("    photoUrls: ").append(toIndentedString(photoUrls)).append("\n");
     sb.append("    authorId: ").append(toIndentedString(authorId)).append("\n");
-    sb.append("    createdAt: ").append(toIndentedString(createdAt)).append("\n");
     sb.append("}");
     return sb.toString();
   }

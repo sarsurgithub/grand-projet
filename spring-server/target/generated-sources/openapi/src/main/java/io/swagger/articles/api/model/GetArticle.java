@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import io.swagger.articles.api.model.Comment;
+import io.swagger.articles.api.model.GetComment;
 import io.swagger.articles.api.model.GetUser;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +16,7 @@ import javax.validation.constraints.*;
 /**
  * GetArticle
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2020-05-18T12:49:02.570994+02:00[Europe/Zurich]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2020-05-18T16:15:42.793756+02:00[Europe/Zurich]")
 
 public class GetArticle   {
   @JsonProperty("id")
@@ -46,7 +46,7 @@ public class GetArticle   {
 
   @JsonProperty("comments")
   @Valid
-  private List<Comment> comments = null;
+  private List<GetComment> comments = null;
 
   public GetArticle id(Long id) {
     this.id = id;
@@ -223,14 +223,14 @@ public class GetArticle   {
     this.views = views;
   }
 
-  public GetArticle comments(List<Comment> comments) {
+  public GetArticle comments(List<GetComment> comments) {
     this.comments = comments;
     return this;
   }
 
-  public GetArticle addCommentsItem(Comment commentsItem) {
+  public GetArticle addCommentsItem(GetComment commentsItem) {
     if (this.comments == null) {
-      this.comments = new ArrayList<Comment>();
+      this.comments = new ArrayList<GetComment>();
     }
     this.comments.add(commentsItem);
     return this;
@@ -244,11 +244,11 @@ public class GetArticle   {
 
   @Valid
 
-  public List<Comment> getComments() {
+  public List<GetComment> getComments() {
     return comments;
   }
 
-  public void setComments(List<Comment> comments) {
+  public void setComments(List<GetComment> comments) {
     this.comments = comments;
   }
 

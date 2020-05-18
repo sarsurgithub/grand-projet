@@ -10,24 +10,24 @@ import javax.validation.Valid;
 import javax.validation.constraints.*;
 
 /**
- * Tag
+ * GetComment
  */
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2020-05-18T16:15:42.793756+02:00[Europe/Zurich]")
 
-public class Tag   {
+public class GetComment   {
   @JsonProperty("id")
   private Long id;
 
-  @JsonProperty("name")
-  private String name;
+  @JsonProperty("title")
+  private String title;
 
-  @JsonProperty("article_id")
-  private Long articleId;
+  @JsonProperty("content")
+  private String content;
 
-  @JsonProperty("category_id")
-  private Long categoryId;
+  @JsonProperty("author")
+  private Long author;
 
-  public Tag id(Long id) {
+  public GetComment id(Long id) {
     this.id = id;
     return this;
   }
@@ -48,65 +48,66 @@ public class Tag   {
     this.id = id;
   }
 
-  public Tag name(String name) {
-    this.name = name;
+  public GetComment title(String title) {
+    this.title = title;
     return this;
   }
 
   /**
-   * Get name
-   * @return name
+   * Get title
+   * @return title
   */
-  @ApiModelProperty(required = true, value = "")
+  @ApiModelProperty(example = "article nul", required = true, value = "")
   @NotNull
 
 
-  public String getName() {
-    return name;
+  public String getTitle() {
+    return title;
   }
 
-  public void setName(String name) {
-    this.name = name;
+  public void setTitle(String title) {
+    this.title = title;
   }
 
-  public Tag articleId(Long articleId) {
-    this.articleId = articleId;
+  public GetComment content(String content) {
+    this.content = content;
     return this;
   }
 
   /**
-   * Get articleId
-   * @return articleId
+   * Get content
+   * @return content
   */
-  @ApiModelProperty(value = "")
+  @ApiModelProperty(example = "tu pourrais faire mieux", required = true, value = "")
+  @NotNull
 
 
-  public Long getArticleId() {
-    return articleId;
+  public String getContent() {
+    return content;
   }
 
-  public void setArticleId(Long articleId) {
-    this.articleId = articleId;
+  public void setContent(String content) {
+    this.content = content;
   }
 
-  public Tag categoryId(Long categoryId) {
-    this.categoryId = categoryId;
+  public GetComment author(Long author) {
+    this.author = author;
     return this;
   }
 
   /**
-   * Get categoryId
-   * @return categoryId
+   * Get author
+   * @return author
   */
   @ApiModelProperty(value = "")
 
 
-  public Long getCategoryId() {
-    return categoryId;
+  public Long getAuthor() {
+    return author;
   }
 
-  public void setCategoryId(Long categoryId) {
-    this.categoryId = categoryId;
+  public void setAuthor(Long author) {
+    this.author = author;
   }
 
 
@@ -118,27 +119,27 @@ public class Tag   {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    Tag tag = (Tag) o;
-    return Objects.equals(this.id, tag.id) &&
-        Objects.equals(this.name, tag.name) &&
-        Objects.equals(this.articleId, tag.articleId) &&
-        Objects.equals(this.categoryId, tag.categoryId);
+    GetComment getComment = (GetComment) o;
+    return Objects.equals(this.id, getComment.id) &&
+        Objects.equals(this.title, getComment.title) &&
+        Objects.equals(this.content, getComment.content) &&
+        Objects.equals(this.author, getComment.author);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, name, articleId, categoryId);
+    return Objects.hash(id, title, content, author);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class Tag {\n");
+    sb.append("class GetComment {\n");
     
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
-    sb.append("    name: ").append(toIndentedString(name)).append("\n");
-    sb.append("    articleId: ").append(toIndentedString(articleId)).append("\n");
-    sb.append("    categoryId: ").append(toIndentedString(categoryId)).append("\n");
+    sb.append("    title: ").append(toIndentedString(title)).append("\n");
+    sb.append("    content: ").append(toIndentedString(content)).append("\n");
+    sb.append("    author: ").append(toIndentedString(author)).append("\n");
     sb.append("}");
     return sb.toString();
   }
