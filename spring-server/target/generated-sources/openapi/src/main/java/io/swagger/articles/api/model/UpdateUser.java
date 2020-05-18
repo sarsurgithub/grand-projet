@@ -10,11 +10,11 @@ import javax.validation.Valid;
 import javax.validation.constraints.*;
 
 /**
- * GetUser
+ * UpdateUser
  */
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2020-05-18T12:49:02.570994+02:00[Europe/Zurich]")
 
-public class GetUser   {
+public class UpdateUser   {
   @JsonProperty("id")
   private Long id;
 
@@ -30,7 +30,10 @@ public class GetUser   {
   @JsonProperty("email")
   private String email;
 
-  public GetUser id(Long id) {
+  @JsonProperty("password")
+  private String password;
+
+  public UpdateUser id(Long id) {
     this.id = id;
     return this;
   }
@@ -39,8 +42,7 @@ public class GetUser   {
    * Get id
    * @return id
   */
-  @ApiModelProperty(required = true, value = "")
-  @NotNull
+  @ApiModelProperty(value = "")
 
 
   public Long getId() {
@@ -51,7 +53,7 @@ public class GetUser   {
     this.id = id;
   }
 
-  public GetUser username(String username) {
+  public UpdateUser username(String username) {
     this.username = username;
     return this;
   }
@@ -60,8 +62,7 @@ public class GetUser   {
    * Get username
    * @return username
   */
-  @ApiModelProperty(required = true, value = "")
-  @NotNull
+  @ApiModelProperty(value = "")
 
 
   public String getUsername() {
@@ -72,7 +73,7 @@ public class GetUser   {
     this.username = username;
   }
 
-  public GetUser firstName(String firstName) {
+  public UpdateUser firstName(String firstName) {
     this.firstName = firstName;
     return this;
   }
@@ -81,8 +82,7 @@ public class GetUser   {
    * Get firstName
    * @return firstName
   */
-  @ApiModelProperty(required = true, value = "")
-  @NotNull
+  @ApiModelProperty(value = "")
 
 
   public String getFirstName() {
@@ -93,7 +93,7 @@ public class GetUser   {
     this.firstName = firstName;
   }
 
-  public GetUser lastName(String lastName) {
+  public UpdateUser lastName(String lastName) {
     this.lastName = lastName;
     return this;
   }
@@ -102,8 +102,7 @@ public class GetUser   {
    * Get lastName
    * @return lastName
   */
-  @ApiModelProperty(required = true, value = "")
-  @NotNull
+  @ApiModelProperty(value = "")
 
 
   public String getLastName() {
@@ -114,7 +113,7 @@ public class GetUser   {
     this.lastName = lastName;
   }
 
-  public GetUser email(String email) {
+  public UpdateUser email(String email) {
     this.email = email;
     return this;
   }
@@ -123,8 +122,7 @@ public class GetUser   {
    * Get email
    * @return email
   */
-  @ApiModelProperty(required = true, value = "")
-  @NotNull
+  @ApiModelProperty(value = "")
 
 
   public String getEmail() {
@@ -133,6 +131,26 @@ public class GetUser   {
 
   public void setEmail(String email) {
     this.email = email;
+  }
+
+  public UpdateUser password(String password) {
+    this.password = password;
+    return this;
+  }
+
+  /**
+   * Get password
+   * @return password
+  */
+  @ApiModelProperty(value = "")
+
+
+  public String getPassword() {
+    return password;
+  }
+
+  public void setPassword(String password) {
+    this.password = password;
   }
 
 
@@ -144,29 +162,31 @@ public class GetUser   {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    GetUser getUser = (GetUser) o;
-    return Objects.equals(this.id, getUser.id) &&
-        Objects.equals(this.username, getUser.username) &&
-        Objects.equals(this.firstName, getUser.firstName) &&
-        Objects.equals(this.lastName, getUser.lastName) &&
-        Objects.equals(this.email, getUser.email);
+    UpdateUser updateUser = (UpdateUser) o;
+    return Objects.equals(this.id, updateUser.id) &&
+        Objects.equals(this.username, updateUser.username) &&
+        Objects.equals(this.firstName, updateUser.firstName) &&
+        Objects.equals(this.lastName, updateUser.lastName) &&
+        Objects.equals(this.email, updateUser.email) &&
+        Objects.equals(this.password, updateUser.password);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, username, firstName, lastName, email);
+    return Objects.hash(id, username, firstName, lastName, email, password);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class GetUser {\n");
+    sb.append("class UpdateUser {\n");
     
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    username: ").append(toIndentedString(username)).append("\n");
     sb.append("    firstName: ").append(toIndentedString(firstName)).append("\n");
     sb.append("    lastName: ").append(toIndentedString(lastName)).append("\n");
     sb.append("    email: ").append(toIndentedString(email)).append("\n");
+    sb.append("    password: ").append(toIndentedString(password)).append("\n");
     sb.append("}");
     return sb.toString();
   }

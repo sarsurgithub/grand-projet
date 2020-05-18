@@ -7,6 +7,7 @@ package io.swagger.articles.api;
 
 import io.swagger.articles.api.model.CreateUser;
 import io.swagger.articles.api.model.GetUser;
+import io.swagger.articles.api.model.UpdateUser;
 import io.swagger.annotations.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -27,7 +28,7 @@ import javax.validation.constraints.*;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2020-05-18T10:09:53.531853+02:00[Europe/Zurich]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2020-05-18T12:49:02.570994+02:00[Europe/Zurich]")
 
 @Validated
 @Api(value = "users", description = "the users API")
@@ -110,7 +111,7 @@ public interface UsersApi {
         @ApiResponse(code = 404, message = "User not found") })
     @RequestMapping(value = "/users/{userId}",
         method = RequestMethod.PATCH)
-    default ResponseEntity<Void> updateUser(@ApiParam(value = "name that need to be updated",required=true) @PathVariable("userId") Long userId,@ApiParam(value = "Updated user object" ,required=true )  @Valid @RequestBody CreateUser createUser) {
+    default ResponseEntity<Void> updateUser(@ApiParam(value = "name that need to be updated",required=true) @PathVariable("userId") Long userId,@ApiParam(value = "Updated user object" ,required=true )  @Valid @RequestBody UpdateUser updateUser) {
         return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
 
     }

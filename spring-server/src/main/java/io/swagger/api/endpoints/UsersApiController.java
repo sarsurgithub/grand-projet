@@ -1,26 +1,41 @@
 package io.swagger.api.endpoints;
 
+import io.swagger.articles.api.ApiUtil;
 import io.swagger.articles.api.UsersApi;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.annotations.*;
+import io.swagger.articles.api.model.CreateUser;
+import io.swagger.articles.api.model.GetUser;
+import io.swagger.articles.api.model.UpdateUser;
+import io.swagger.entities.ArticleEntity;
+import io.swagger.entities.UserEntity;
+import io.swagger.repositories.UserRepository;
+import org.h2.engine.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.constraints.*;
 import javax.validation.Valid;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.net.URI;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2020-04-08T14:21:38.963Z[GMT]")
 @Controller
 public class UsersApiController implements UsersApi {
+    @Autowired
+    UserRepository userRepository;
 
     private static final Logger log = LoggerFactory.getLogger(UsersApiController.class);
 
@@ -34,70 +49,100 @@ public class UsersApiController implements UsersApi {
         this.request = request;
     }
 
-    public ResponseEntity<Void> createUser(@ApiParam(value = "Created user object" ,required=true )  @Valid @RequestBody User body
-) {
-        String accept = request.getHeader("Accept");
-        return new ResponseEntity<Void>(HttpStatus.NOT_IMPLEMENTED);
+    public ResponseEntity<Void> deleteUser(@ApiParam(value = "The name that needs to be deleted",required=true) @PathVariable("userId") Long userId) {
+        userRepository.deleteById(userId);
+        return ResponseEntity.ok().build();
+
     }
 
-    public ResponseEntity<Void> deleteUser(@ApiParam(value = "The name that needs to be deleted",required=true) @PathVariable("userId") String userId
-) {
-        String accept = request.getHeader("Accept");
-        return new ResponseEntity<Void>(HttpStatus.NOT_IMPLEMENTED);
+    public ResponseEntity<GetUser> getUserById(@ApiParam(value = "The name that needs to be fetched.",required=true) @PathVariable("userId") Long userId) {
+        UserEntity userEntity = userRepository.findById(userId).get();
+        GetUser user = toGetUser(userEntity);
+        return  ResponseEntity.ok(user);
+
     }
 
-    public ResponseEntity<User> getUserByName(@ApiParam(value = "The name that needs to be fetched.",required=true) @PathVariable("userId") String userId
-) {
-        String accept = request.getHeader("Accept");
-        if (accept != null && accept.contains("application/json")) {
-            try {
-                return new ResponseEntity<User>(objectMapper.readValue("{\n  \"firstName\" : \"firstName\",\n  \"lastName\" : \"lastName\",\n  \"password\" : \"password\",\n  \"id\" : 1,\n  \"email\" : \"email\",\n  \"username\" : \"username\"\n}", User.class), HttpStatus.NOT_IMPLEMENTED);
-            } catch (IOException e) {
-                log.error("Couldn't serialize response for content type application/json", e);
-                return new ResponseEntity<User>(HttpStatus.INTERNAL_SERVER_ERROR);
-            }
+    public ResponseEntity<List<GetUser>> getUsers() {
+        List<GetUser> users = new ArrayList<>();
+
+        for (UserEntity userEntity : userRepository.findAll()) {
+            users.add(toGetUser(userEntity));
         }
 
-        return new ResponseEntity<User>(HttpStatus.NOT_IMPLEMENTED);
+        return ResponseEntity.ok(users);
+
     }
 
-    public ResponseEntity<Void> loginUser(@ApiParam(value = "infos about the user to log in"  )  @Valid @RequestBody User body
-) {
-        String accept = request.getHeader("Accept");
-        return new ResponseEntity<Void>(HttpStatus.NOT_IMPLEMENTED);
+    public ResponseEntity<Void> registerUser(@ApiParam(value = "Created user object" ,required=true )  @Valid @RequestBody CreateUser createUser) {
+        UserEntity userEntity = new UserEntity();
+
+        userEntity = fromCreateUsertoUserEntity(createUser);
+
+        userRepository.save(userEntity);
+
+        URI location = ServletUriComponentsBuilder
+                .fromCurrentRequest().path("/{id}")
+                .buildAndExpand(userEntity.getId()).toUri();
+
+        return ResponseEntity.created(location).build();
+
     }
 
-    public ResponseEntity<Void> logoutUser() {
-        String accept = request.getHeader("Accept");
-        return new ResponseEntity<Void>(HttpStatus.NOT_IMPLEMENTED);
+    public ResponseEntity<Void> updateUser(@ApiParam(value = "name that need to be updated",required=true) @PathVariable("userId") Long userId,@ApiParam(value = "Updated user object" ,required=true )  @Valid @RequestBody UpdateUser updateUser) {
+        UserEntity userEntity = userRepository.findById(userId).get();
+
+        updateUser.setId(userEntity.getId());
+        updateUser.setEmail(userEntity.getEmail());
+        updateUser.setFirstName(userEntity.getFirstName());
+        updateUser.setLastName(userEntity.getEmail());
+        updateUser.setPassword(userEntity.getPassword());
+        updateUser.setUsername(userEntity.getUsername());
+
+        URI location = ServletUriComponentsBuilder
+                .fromCurrentRequest().build().toUri();
+
+        userRepository.save(userEntity);
+
+        return ResponseEntity.created(location).build();
     }
 
-    public ResponseEntity<Void> registerUser(@ApiParam(value = "infos about the new user"  )  @Valid @RequestBody User body
-) {
-        String accept = request.getHeader("Accept");
-        return new ResponseEntity<Void>(HttpStatus.NOT_IMPLEMENTED);
+    private GetUser toGetUser(UserEntity entity){
+        GetUser user = new GetUser();
+        user.setId(entity.getId());
+        user.setUsername(entity.getUsername());
+        user.setLastName(entity.getLastName());
+        user.setFirstName(entity.getFirstName());
+        user.setEmail(entity.getEmail());
+        return user;
     }
 
-    public ResponseEntity<User> searchUser(@NotNull @ApiParam(value = "The word for the research", required = true) @Valid @RequestParam(value = "search", required = true) String search
-) {
-        String accept = request.getHeader("Accept");
-        if (accept != null && accept.contains("application/json")) {
-            try {
-                return new ResponseEntity<User>(objectMapper.readValue("{\n  \"firstName\" : \"firstName\",\n  \"lastName\" : \"lastName\",\n  \"password\" : \"password\",\n  \"id\" : 1,\n  \"email\" : \"email\",\n  \"username\" : \"username\"\n}", User.class), HttpStatus.NOT_IMPLEMENTED);
-            } catch (IOException e) {
-                log.error("Couldn't serialize response for content type application/json", e);
-                return new ResponseEntity<User>(HttpStatus.INTERNAL_SERVER_ERROR);
-            }
-        }
-
-        return new ResponseEntity<User>(HttpStatus.NOT_IMPLEMENTED);
+    private CreateUser toCreateUser(UserEntity entity) {
+        CreateUser user = new CreateUser();
+        user.setUsername(entity.getUsername());
+        user.setFirstName(entity.getFirstName());
+        user.setLastName(entity.getLastName());
+        user.setEmail(entity.getEmail());
+        user.setPassword(entity.getPassword());
+        return user;
     }
 
-    public ResponseEntity<Void> updateUser(@ApiParam(value = "Updated user object" ,required=true )  @Valid @RequestBody User body
-,@ApiParam(value = "name that need to be updated",required=true) @PathVariable("userId") String userId
-) {
-        String accept = request.getHeader("Accept");
-        return new ResponseEntity<Void>(HttpStatus.NOT_IMPLEMENTED);
+    private UserEntity fromCreateUsertoUserEntity(CreateUser user){
+        UserEntity entity = new UserEntity();
+        entity.setPassword(user.getPassword());
+        entity.setUsername(user.getUsername());
+        entity.setLastName(user.getLastName());
+        entity.setFirstName(user.getFirstName());
+        entity.setEmail(user.getEmail());
+        return entity;
+    }
+
+    private UserEntity fromGetUserToUserEntity(GetUser user){
+        UserEntity entity = new UserEntity();
+        entity.setUsername(user.getUsername());
+        entity.setLastName(user.getLastName());
+        entity.setFirstName(user.getFirstName());
+        entity.setEmail(user.getEmail());
+        return entity;
     }
 
 }

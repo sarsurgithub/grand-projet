@@ -1,5 +1,6 @@
 package io.swagger.api.endpoints;
 
+import io.swagger.articles.api.ApiUtil;
 import io.swagger.articles.api.ArticlesApi;
 import io.swagger.articles.api.model.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -14,6 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -46,6 +48,12 @@ public class ArticlesApiController implements ArticlesApi {
         this.request = request;
     }
 
+
+    public ResponseEntity<List<GetArticle>> findArticlesByCategories(@NotNull @ApiParam(value = "Categories to filter by", required = true) @Valid @RequestParam(value = "category", required = true) List<Category> category) {
+
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
 
     public ResponseEntity<Void> updateArticleById(@ApiParam(value = "ID of article that needs to be updated",required=true) @PathVariable("articleId") Long articleId,@ApiParam(value = "updated article" ,required=true )  @Valid @RequestBody UpdateArticle updateArticle) {
         ArticleEntity articleEntity = articleRepository.findById(articleId).get();
@@ -87,6 +95,11 @@ public class ArticlesApiController implements ArticlesApi {
     public ResponseEntity<Void> deleteComment(@ApiParam(value = "ID of the comment to delete",required=true) @PathVariable("commentId") Long commentId,@ApiParam(value = "Article ID",required=true) @PathVariable("articleId") Long articleId) {
         commentRepository.deleteById(commentId);
         return ResponseEntity.ok().build();
+    }
+
+    public ResponseEntity<Void> addCommentToAnArticle(@ApiParam(value = "",required=true) @PathVariable("commentId") Long commentId,@ApiParam(value = "ID of the article",required=true) @PathVariable("articleId") Long articleId,@ApiParam(value = "comment to add to the article"  )  @Valid @RequestBody Comment comment) {
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
     }
 
     public ResponseEntity<GetArticle> findArticleById(@ApiParam(value = "ID of the article to return",required=true) @PathVariable("articleId") Long articleId) {
