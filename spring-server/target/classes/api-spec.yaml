@@ -57,7 +57,7 @@ paths:
       summary: Finds articles by categories
       operationId: findArticlesByCategories
       parameters:
-        - name: category
+        - name: categories
           in: query
           description: Categories to filter by
           required: true
@@ -445,17 +445,22 @@ paths:
       tags:
         - categories
       summary: finds a category by Id
-      operationId: findACategoryById
+      operationId: findCategoryById
       parameters:
         - name: categoryId
           in: path
-          description: category to delete
+          description: category to find
           required: true
           schema:
-            type: string
+            type: integer
+            format: int64
       responses:
         200:
           description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetCategory'
     patch:
       tags:
         - categories
@@ -464,10 +469,11 @@ paths:
       parameters:
         - name: categoryId
           in: path
-          description: category to delete
+          description: category to update
           required: true
           schema:
-            type: string
+            type: integer
+            format: int64
       requestBody:
         description: updated category
         content:
@@ -487,7 +493,8 @@ paths:
           description: category to delete
           required: true
           schema:
-            type: string
+            type: integer
+            format: int64
       summary: deletes a category by ID
       operationId: deleteACategory
       responses:
@@ -572,6 +579,11 @@ components:
         author_id:
           type: integer
           format: int64
+        categories_ids:
+          type: array
+          items:
+            type: integer
+            format: int64
     GetArticle:
       required:
         - id
@@ -635,6 +647,10 @@ components:
           type: integer
           example: 456
         categories_ids:
+          type: array
+          items:
+            type: integer
+        comments_ids:
           type: array
           items:
             type: integer

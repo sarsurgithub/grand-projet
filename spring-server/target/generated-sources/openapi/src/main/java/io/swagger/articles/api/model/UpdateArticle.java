@@ -14,7 +14,7 @@ import javax.validation.constraints.*;
 /**
  * UpdateArticle
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2020-05-18T17:32:29.655545+02:00[Europe/Zurich]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2020-05-20T11:50:33.217718+02:00[Europe/Zurich]")
 
 public class UpdateArticle   {
   @JsonProperty("id")
@@ -36,6 +36,10 @@ public class UpdateArticle   {
   @JsonProperty("categories_ids")
   @Valid
   private List<Integer> categoriesIds = null;
+
+  @JsonProperty("comments_ids")
+  @Valid
+  private List<Integer> commentsIds = null;
 
   public UpdateArticle id(Long id) {
     this.id = id;
@@ -177,6 +181,34 @@ public class UpdateArticle   {
     this.categoriesIds = categoriesIds;
   }
 
+  public UpdateArticle commentsIds(List<Integer> commentsIds) {
+    this.commentsIds = commentsIds;
+    return this;
+  }
+
+  public UpdateArticle addCommentsIdsItem(Integer commentsIdsItem) {
+    if (this.commentsIds == null) {
+      this.commentsIds = new ArrayList<Integer>();
+    }
+    this.commentsIds.add(commentsIdsItem);
+    return this;
+  }
+
+  /**
+   * Get commentsIds
+   * @return commentsIds
+  */
+  @ApiModelProperty(value = "")
+
+
+  public List<Integer> getCommentsIds() {
+    return commentsIds;
+  }
+
+  public void setCommentsIds(List<Integer> commentsIds) {
+    this.commentsIds = commentsIds;
+  }
+
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -192,12 +224,13 @@ public class UpdateArticle   {
         Objects.equals(this.content, updateArticle.content) &&
         Objects.equals(this.photoUrls, updateArticle.photoUrls) &&
         Objects.equals(this.views, updateArticle.views) &&
-        Objects.equals(this.categoriesIds, updateArticle.categoriesIds);
+        Objects.equals(this.categoriesIds, updateArticle.categoriesIds) &&
+        Objects.equals(this.commentsIds, updateArticle.commentsIds);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, title, content, photoUrls, views, categoriesIds);
+    return Objects.hash(id, title, content, photoUrls, views, categoriesIds, commentsIds);
   }
 
   @Override
@@ -211,6 +244,7 @@ public class UpdateArticle   {
     sb.append("    photoUrls: ").append(toIndentedString(photoUrls)).append("\n");
     sb.append("    views: ").append(toIndentedString(views)).append("\n");
     sb.append("    categoriesIds: ").append(toIndentedString(categoriesIds)).append("\n");
+    sb.append("    commentsIds: ").append(toIndentedString(commentsIds)).append("\n");
     sb.append("}");
     return sb.toString();
   }

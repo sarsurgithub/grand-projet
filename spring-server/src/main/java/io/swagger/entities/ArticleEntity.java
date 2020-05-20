@@ -1,6 +1,8 @@
 package io.swagger.entities;
 
 
+import io.swagger.articles.api.model.GetCategory;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -18,6 +20,10 @@ public class ArticleEntity implements Serializable{
     private List<String> photoUrls = null;
     @OneToOne
     private UserEntity author;
+    @OneToMany
+    private List<CommentEntity> comments = null;
+    @OneToMany
+    private List<CategoryEntity> categories = null;
     private String createdAt;
     private String lastUpdateAt;
     private Integer views;
@@ -82,8 +88,20 @@ public class ArticleEntity implements Serializable{
         this.views = views;
     }
 
+    public List<CommentEntity> getComments() {
+        return comments;
+    }
 
+    public void setComments(List<CommentEntity> comments) {
+        this.comments = comments;
+    }
 
+    public List<CategoryEntity> getCategories() {
+        return categories;
+    }
 
+    public void setCategories(List<CategoryEntity> categories) {
+        this.categories = categories;
+    }
 
 }

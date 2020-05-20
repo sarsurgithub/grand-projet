@@ -6,9 +6,11 @@ import io.swagger.articles.api.model.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.annotations.*;
 import io.swagger.entities.ArticleEntity;
+import io.swagger.entities.CategoryEntity;
 import io.swagger.entities.CommentEntity;
 import io.swagger.entities.UserEntity;
 import io.swagger.repositories.ArticleRepository;
+import io.swagger.repositories.CategoryRepository;
 import io.swagger.repositories.CommentRepository;
 import io.swagger.repositories.UserRepository;
 import org.slf4j.Logger;
@@ -28,6 +30,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2020-04-08T14:21:38.963Z[GMT]")
 @Controller
@@ -38,6 +41,8 @@ public class ArticlesApiController implements ArticlesApi {
     CommentRepository commentRepository;
     @Autowired
     UserRepository userRepository;
+    @Autowired
+    CategoryRepository categoryRepository;
 
     private static final Logger log = LoggerFactory.getLogger(ArticlesApiController.class);
 
@@ -75,9 +80,33 @@ public class ArticlesApiController implements ArticlesApi {
 
     //FIND
 
-    public ResponseEntity<List<GetArticle>> findArticlesByCategories(@NotNull @ApiParam(value = "Categories to filter by", required = true) @Valid @RequestParam(value = "category", required = true) List<GetCategory> category) {
+    public ResponseEntity<List<GetArticle>> findArticlesByCategories(@NotNull @ApiParam(value = "Categories to filter by", required = true) @Valid @RequestParam(value = "categories", required = true) List<GetCategory> categories) {
+        //trouver tous les articles qui ont une catégorie en commun avec l'array de catégories passée en param
+        List<CategoryEntity> listOfTheCategoriesOfTheArticleWeAreWorkkingOnAsEntities;
+        List<GetArticle> listOfTheArticlesToReturnAsGetArticles = null;
+        // pour chaque catégorie passée en arg
+        for (GetCategory category : categories){
 
-        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+            //chercher chaque article et pour chaque catégorie et la comparer à la catégorie actuelle
+            for (ArticleEntity articleEntity : articleRepository.findAll()) {
+
+                GetArticle article = toGetArticle(articleEntity);
+                listOfTheCategoriesOfTheArticleWeAreWorkkingOnAsEntities = articleEntity.getCategories();
+                // Lorsqu'une catégorie recherchée est trouvée dans un article
+                if ( listOfTheCategoriesOfTheArticleWeAreWorkkingOnAsEntities.contains(fromGetCategoryToCategoryEntity(category))){
+
+                    // si l'article n'a pas encore été mis dans les articles à retourner
+                    if(!listOfTheArticlesToReturnAsGetArticles.contains(toGetArticle(articleEntity))){
+
+                        //on l'ajoute
+                        listOfTheArticlesToReturnAsGetArticles.add(toGetArticle(articleEntity));
+                    }
+                }
+
+            }
+        }
+
+        return ResponseEntity.ok(listOfTheArticlesToReturnAsGetArticles);
 
     }
 
@@ -126,7 +155,19 @@ public class ArticlesApiController implements ArticlesApi {
     // COMMENTS
 
     public ResponseEntity<Void> addCommentToAnArticle(@ApiParam(value = "ID of the article",required=true) @PathVariable("articleId") Long articleId,@ApiParam(value = "comment to add to the article"  )  @Valid @RequestBody CreateComment createComment) {
-        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+        CommentEntity comment = fromCreatetoCommentEntity(createComment);
+        ArticleEntity article = articleRepository.findById(articleId).orElseThrow(() -> new EntityNotFoundException("This article does not exist"));
+
+        List<CommentEntity> comments = article.getComments();
+        comments.add(comment);
+        article.setComments(comments);
+
+        URI location = ServletUriComponentsBuilder
+                .fromCurrentRequest().build().toUri();
+
+        articleRepository.save(article);
+
+        return ResponseEntity.created(location).build();
 
     }
 
@@ -199,8 +240,6 @@ public class ArticlesApiController implements ArticlesApi {
         return entity;
     }
 
-
-
     private GetArticle toGetArticle(ArticleEntity entity) {
         GetArticle article = new GetArticle();
         article.setId(entity.getId());
@@ -256,6 +295,20 @@ public class ArticlesApiController implements ArticlesApi {
         entity.setAuthorId(comment.getAuthor());
         entity.setContent(comment.getContent());
         entity.setTitle(comment.getTitle());
+        return entity;
+    }
+
+    private GetCategory toGetCategory (CategoryEntity entity) {
+        GetCategory category = new GetCategory();
+        category.setId(entity.getId());
+        category.setName(entity.getName());
+        return category ;
+    }
+
+    private CategoryEntity fromGetCategoryToCategoryEntity( GetCategory category){
+        CategoryEntity entity = new CategoryEntity();
+        entity.setName(category.getName());
+
         return entity;
     }
 

@@ -9,7 +9,6 @@
 /Users/sar/Documents/Stage/F_GRAND-PROJET/spring-server/target/generated-sources/openapi/src/main/java/io/swagger/articles/api/model/CreateUser.java
 /Users/sar/Documents/Stage/F_GRAND-PROJET/spring-server/src/main/java/io/swagger/entities/ArticleEntity.java
 /Users/sar/Documents/Stage/F_GRAND-PROJET/spring-server/src/main/java/io/swagger/api/exceptions/NotFoundException.java
-/Users/sar/Documents/Stage/F_GRAND-PROJET/spring-server/src/main/java/io/swagger/entities/TagEntity.java
 /Users/sar/Documents/Stage/F_GRAND-PROJET/spring-server/target/generated-sources/openapi/src/main/java/io/swagger/articles/api/model/GetCategory.java
 /Users/sar/Documents/Stage/F_GRAND-PROJET/spring-server/src/main/java/io/swagger/entities/CategoryEntity.java
 /Users/sar/Documents/Stage/F_GRAND-PROJET/spring-server/src/main/java/io/swagger/configuration/SwaggerDocumentationConfig.java
@@ -22,11 +21,9 @@
 /Users/sar/Documents/Stage/F_GRAND-PROJET/spring-server/src/main/java/io/swagger/configuration/CustomInstantDeserializer.java
 /Users/sar/Documents/Stage/F_GRAND-PROJET/spring-server/target/generated-sources/openapi/src/main/java/io/swagger/articles/api/UsersApi.java
 /Users/sar/Documents/Stage/F_GRAND-PROJET/spring-server/target/generated-sources/openapi/src/main/java/io/swagger/articles/api/model/UpdateArticle.java
-/Users/sar/Documents/Stage/F_GRAND-PROJET/spring-server/src/main/java/io/swagger/repositories/TagRepository.java
 /Users/sar/Documents/Stage/F_GRAND-PROJET/spring-server/target/generated-sources/openapi/src/main/java/io/swagger/articles/api/ArticlesApi.java
 /Users/sar/Documents/Stage/F_GRAND-PROJET/spring-server/target/generated-sources/openapi/src/main/java/io/swagger/articles/api/model/UpdateUser.java
 /Users/sar/Documents/Stage/F_GRAND-PROJET/spring-server/src/main/java/io/swagger/entities/UserEntity.java
-/Users/sar/Documents/Stage/F_GRAND-PROJET/spring-server/src/main/java/io/swagger/api/endpoints/TagsApiController.java
 /Users/sar/Documents/Stage/F_GRAND-PROJET/spring-server/src/main/java/io/swagger/entities/CommentEntity.java
 /Users/sar/Documents/Stage/F_GRAND-PROJET/spring-server/src/main/java/io/swagger/api/exceptions/ApiException.java
 /Users/sar/Documents/Stage/F_GRAND-PROJET/spring-server/src/main/java/io/swagger/RFC3339DateFormat.java
