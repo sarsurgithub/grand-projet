@@ -14,12 +14,9 @@ import javax.validation.constraints.*;
 /**
  * UpdateArticle
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2020-05-20T11:50:33.217718+02:00[Europe/Zurich]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2020-05-20T16:39:26.008210+02:00[Europe/Zurich]")
 
 public class UpdateArticle   {
-  @JsonProperty("id")
-  private Long id;
-
   @JsonProperty("title")
   private String title;
 
@@ -40,27 +37,6 @@ public class UpdateArticle   {
   @JsonProperty("comments_ids")
   @Valid
   private List<Integer> commentsIds = null;
-
-  public UpdateArticle id(Long id) {
-    this.id = id;
-    return this;
-  }
-
-  /**
-   * Get id
-   * @return id
-  */
-  @ApiModelProperty(required = true, value = "")
-  @NotNull
-
-
-  public Long getId() {
-    return id;
-  }
-
-  public void setId(Long id) {
-    this.id = id;
-  }
 
   public UpdateArticle title(String title) {
     this.title = title;
@@ -219,8 +195,7 @@ public class UpdateArticle   {
       return false;
     }
     UpdateArticle updateArticle = (UpdateArticle) o;
-    return Objects.equals(this.id, updateArticle.id) &&
-        Objects.equals(this.title, updateArticle.title) &&
+    return Objects.equals(this.title, updateArticle.title) &&
         Objects.equals(this.content, updateArticle.content) &&
         Objects.equals(this.photoUrls, updateArticle.photoUrls) &&
         Objects.equals(this.views, updateArticle.views) &&
@@ -230,7 +205,7 @@ public class UpdateArticle   {
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, title, content, photoUrls, views, categoriesIds, commentsIds);
+    return Objects.hash(title, content, photoUrls, views, categoriesIds, commentsIds);
   }
 
   @Override
@@ -238,7 +213,6 @@ public class UpdateArticle   {
     StringBuilder sb = new StringBuilder();
     sb.append("class UpdateArticle {\n");
     
-    sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    title: ").append(toIndentedString(title)).append("\n");
     sb.append("    content: ").append(toIndentedString(content)).append("\n");
     sb.append("    photoUrls: ").append(toIndentedString(photoUrls)).append("\n");

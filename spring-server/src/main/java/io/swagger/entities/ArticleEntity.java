@@ -1,11 +1,7 @@
 package io.swagger.entities;
 
-
-import io.swagger.articles.api.model.GetCategory;
-
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -21,9 +17,9 @@ public class ArticleEntity implements Serializable{
     @OneToOne
     private UserEntity author;
     @OneToMany
-    private List<CommentEntity> comments = null;
+    private List<CommentEntity> comments;
     @OneToMany
-    private List<CategoryEntity> categories = null;
+    private List<CategoryEntity> categories;
     private String createdAt;
     private String lastUpdateAt;
     private Integer views;

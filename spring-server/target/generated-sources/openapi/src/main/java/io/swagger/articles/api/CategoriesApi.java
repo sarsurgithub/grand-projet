@@ -27,7 +27,7 @@ import javax.validation.constraints.*;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2020-05-20T11:50:33.217718+02:00[Europe/Zurich]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2020-05-20T16:39:26.008210+02:00[Europe/Zurich]")
 
 @Validated
 @Api(value = "categories", description = "the categories API")
@@ -107,6 +107,7 @@ public interface CategoriesApi {
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "successful operation") })
     @RequestMapping(value = "/categories/{categoryId}",
+        consumes = { "application/json" },
         method = RequestMethod.PATCH)
     default ResponseEntity<Void> updateCategoryById(@ApiParam(value = "category to update",required=true) @PathVariable("categoryId") Long categoryId,@ApiParam(value = "updated category" ,required=true )  @Valid @RequestBody CreateCategory createCategory) {
         return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);

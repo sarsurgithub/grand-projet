@@ -12,12 +12,9 @@ import javax.validation.constraints.*;
 /**
  * UpdateUser
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2020-05-20T11:50:33.217718+02:00[Europe/Zurich]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2020-05-20T16:39:26.008210+02:00[Europe/Zurich]")
 
 public class UpdateUser   {
-  @JsonProperty("id")
-  private Long id;
-
   @JsonProperty("username")
   private String username;
 
@@ -32,26 +29,6 @@ public class UpdateUser   {
 
   @JsonProperty("password")
   private String password;
-
-  public UpdateUser id(Long id) {
-    this.id = id;
-    return this;
-  }
-
-  /**
-   * Get id
-   * @return id
-  */
-  @ApiModelProperty(value = "")
-
-
-  public Long getId() {
-    return id;
-  }
-
-  public void setId(Long id) {
-    this.id = id;
-  }
 
   public UpdateUser username(String username) {
     this.username = username;
@@ -163,8 +140,7 @@ public class UpdateUser   {
       return false;
     }
     UpdateUser updateUser = (UpdateUser) o;
-    return Objects.equals(this.id, updateUser.id) &&
-        Objects.equals(this.username, updateUser.username) &&
+    return Objects.equals(this.username, updateUser.username) &&
         Objects.equals(this.firstName, updateUser.firstName) &&
         Objects.equals(this.lastName, updateUser.lastName) &&
         Objects.equals(this.email, updateUser.email) &&
@@ -173,7 +149,7 @@ public class UpdateUser   {
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, username, firstName, lastName, email, password);
+    return Objects.hash(username, firstName, lastName, email, password);
   }
 
   @Override
@@ -181,7 +157,6 @@ public class UpdateUser   {
     StringBuilder sb = new StringBuilder();
     sb.append("class UpdateUser {\n");
     
-    sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    username: ").append(toIndentedString(username)).append("\n");
     sb.append("    firstName: ").append(toIndentedString(firstName)).append("\n");
     sb.append("    lastName: ").append(toIndentedString(lastName)).append("\n");

@@ -3,8 +3,6 @@ package io.swagger.entities;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 public class CategoryEntity implements Serializable {

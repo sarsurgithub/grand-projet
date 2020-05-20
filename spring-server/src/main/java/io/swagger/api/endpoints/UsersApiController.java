@@ -1,6 +1,5 @@
 package io.swagger.api.endpoints;
 
-import io.swagger.articles.api.ApiUtil;
 import io.swagger.articles.api.UsersApi;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -8,28 +7,21 @@ import io.swagger.annotations.*;
 import io.swagger.articles.api.model.CreateUser;
 import io.swagger.articles.api.model.GetUser;
 import io.swagger.articles.api.model.UpdateUser;
-import io.swagger.entities.ArticleEntity;
 import io.swagger.entities.UserEntity;
 import io.swagger.repositories.UserRepository;
-import org.h2.engine.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import javax.validation.constraints.*;
 import javax.validation.Valid;
 import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2020-04-08T14:21:38.963Z[GMT]")
 @Controller

@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import io.swagger.articles.api.model.GetUser;
 import org.openapitools.jackson.nullable.JsonNullable;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
@@ -12,7 +13,7 @@ import javax.validation.constraints.*;
 /**
  * GetComment
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2020-05-20T11:50:33.217718+02:00[Europe/Zurich]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2020-05-20T16:39:26.008210+02:00[Europe/Zurich]")
 
 public class GetComment   {
   @JsonProperty("id")
@@ -25,7 +26,7 @@ public class GetComment   {
   private String content;
 
   @JsonProperty("author")
-  private Long author;
+  private GetUser author;
 
   public GetComment id(Long id) {
     this.id = id;
@@ -90,7 +91,7 @@ public class GetComment   {
     this.content = content;
   }
 
-  public GetComment author(Long author) {
+  public GetComment author(GetUser author) {
     this.author = author;
     return this;
   }
@@ -99,14 +100,16 @@ public class GetComment   {
    * Get author
    * @return author
   */
-  @ApiModelProperty(value = "")
+  @ApiModelProperty(required = true, value = "")
+  @NotNull
 
+  @Valid
 
-  public Long getAuthor() {
+  public GetUser getAuthor() {
     return author;
   }
 
-  public void setAuthor(Long author) {
+  public void setAuthor(GetUser author) {
     this.author = author;
   }
 

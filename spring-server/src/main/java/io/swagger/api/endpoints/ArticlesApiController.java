@@ -1,6 +1,5 @@
 package io.swagger.api.endpoints;
 
-import io.swagger.articles.api.ApiUtil;
 import io.swagger.articles.api.ArticlesApi;
 import io.swagger.articles.api.model.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -16,8 +15,6 @@ import io.swagger.repositories.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -30,7 +27,6 @@ import javax.servlet.http.HttpServletRequest;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2020-04-08T14:21:38.963Z[GMT]")
 @Controller
@@ -80,33 +76,21 @@ public class ArticlesApiController implements ArticlesApi {
 
     //FIND
 
-    public ResponseEntity<List<GetArticle>> findArticlesByCategories(@NotNull @ApiParam(value = "Categories to filter by", required = true) @Valid @RequestParam(value = "categories", required = true) List<GetCategory> categories) {
+    public ResponseEntity<List<GetArticle>> findArticlesByCategories(@NotNull @ApiParam(value = "Categories to filter by", required = true) @Valid @RequestParam(value = "categories", required = true) List<Long> categories) {
         //trouver tous les articles qui ont une catégorie en commun avec l'array de catégories passée en param
-        List<CategoryEntity> listOfTheCategoriesOfTheArticleWeAreWorkkingOnAsEntities;
-        List<GetArticle> listOfTheArticlesToReturnAsGetArticles = null;
-        // pour chaque catégorie passée en arg
-        for (GetCategory category : categories){
+        List<GetArticle> correspondingArticles = null;
+        List<GetArticle> potentialArticles;
 
-            //chercher chaque article et pour chaque catégorie et la comparer à la catégorie actuelle
-            for (ArticleEntity articleEntity : articleRepository.findAll()) {
-
-                GetArticle article = toGetArticle(articleEntity);
-                listOfTheCategoriesOfTheArticleWeAreWorkkingOnAsEntities = articleEntity.getCategories();
-                // Lorsqu'une catégorie recherchée est trouvée dans un article
-                if ( listOfTheCategoriesOfTheArticleWeAreWorkkingOnAsEntities.contains(fromGetCategoryToCategoryEntity(category))){
-
-                    // si l'article n'a pas encore été mis dans les articles à retourner
-                    if(!listOfTheArticlesToReturnAsGetArticles.contains(toGetArticle(articleEntity))){
-
-                        //on l'ajoute
-                        listOfTheArticlesToReturnAsGetArticles.add(toGetArticle(articleEntity));
-                    }
+        for (Long category : categories){
+            potentialArticles = findArticlesByCategory(category);
+            for ( GetArticle article : potentialArticles){
+                if ( !correspondingArticles.contains(article) ){
+                    correspondingArticles.add(article);
                 }
-
             }
         }
 
-        return ResponseEntity.ok(listOfTheArticlesToReturnAsGetArticles);
+        return  ResponseEntity.ok(correspondingArticles);
 
     }
 
@@ -120,7 +104,7 @@ public class ArticlesApiController implements ArticlesApi {
     public ResponseEntity<List<GetArticle>> findArticlesByDate() {
         List<GetArticle> articles = new ArrayList<>();
 
-        for (ArticleEntity articleEntity : articleRepository.findAllOrOrderByLastUpdateAt()) {
+        for (ArticleEntity articleEntity : articleRepository.findAllByOrderByLastUpdateAt()) {
             articles.add(toGetArticle(articleEntity));
         }
 
@@ -155,8 +139,14 @@ public class ArticlesApiController implements ArticlesApi {
     // COMMENTS
 
     public ResponseEntity<Void> addCommentToAnArticle(@ApiParam(value = "ID of the article",required=true) @PathVariable("articleId") Long articleId,@ApiParam(value = "comment to add to the article"  )  @Valid @RequestBody CreateComment createComment) {
-        CommentEntity comment = fromCreatetoCommentEntity(createComment);
+
         ArticleEntity article = articleRepository.findById(articleId).orElseThrow(() -> new EntityNotFoundException("This article does not exist"));
+
+        UserEntity author = userRepository.findById(createComment.getAuthor()).orElseThrow(() -> new EntityNotFoundException("This user does not exist"));
+
+        CommentEntity comment = fromCreatetoCommentEntity(createComment);
+        comment.setAuthor(author);
+        commentRepository.save(comment);
 
         List<CommentEntity> comments = article.getComments();
         comments.add(comment);
@@ -166,6 +156,7 @@ public class ArticlesApiController implements ArticlesApi {
                 .fromCurrentRequest().build().toUri();
 
         articleRepository.save(article);
+
 
         return ResponseEntity.created(location).build();
 
@@ -286,13 +277,12 @@ public class ArticlesApiController implements ArticlesApi {
         GetComment comment = new GetComment();
         comment.setContent(entity.getContent());
         comment.setTitle(entity.getTitle());
-        comment.setAuthor(entity.getAuthorId());
+        comment.setAuthor(toGetUser(entity.getAuthor()));
         return comment ;
     }
 
     private CommentEntity fromCreatetoCommentEntity( CreateComment comment){
         CommentEntity entity = new CommentEntity();
-        entity.setAuthorId(comment.getAuthor());
         entity.setContent(comment.getContent());
         entity.setTitle(comment.getTitle());
         return entity;
@@ -310,6 +300,24 @@ public class ArticlesApiController implements ArticlesApi {
         entity.setName(category.getName());
 
         return entity;
+    }
+
+    private List<GetArticle> findArticlesByCategory(Long categoryId) {
+        CategoryEntity categoryEntity = categoryRepository.findById(categoryId).orElseThrow(() -> new EntityNotFoundException("This category does not exist"));
+        List<GetArticle> articlesToReturn = null;
+
+        for (ArticleEntity articleEntity : articleRepository.findAll()) {
+
+            GetArticle article = toGetArticle(articleEntity);
+            List<CategoryEntity> categoriesOfTheActualArticle = articleEntity.getCategories();
+
+            if ( categoriesOfTheActualArticle.contains(categoryEntity) ) {
+
+                articlesToReturn.add(article);
+            }
+        }
+
+        return articlesToReturn;
     }
 
 }

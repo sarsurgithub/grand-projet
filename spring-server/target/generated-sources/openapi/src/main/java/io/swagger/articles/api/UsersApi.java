@@ -28,7 +28,7 @@ import javax.validation.constraints.*;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2020-05-20T11:50:33.217718+02:00[Europe/Zurich]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2020-05-20T16:39:26.008210+02:00[Europe/Zurich]")
 
 @Validated
 @Api(value = "users", description = "the users API")
@@ -98,8 +98,9 @@ public interface UsersApi {
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "successful operation") })
     @RequestMapping(value = "/users",
+        consumes = { "application/json" },
         method = RequestMethod.POST)
-    default ResponseEntity<Void> registerUser(@ApiParam(value = "Created user object" ,required=true )  @Valid @RequestBody CreateUser createUser) {
+    default ResponseEntity<Void> registerUser(@ApiParam(value = "Article that needs to be added" ,required=true )  @Valid @RequestBody CreateUser createUser) {
         return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
 
     }
@@ -110,6 +111,7 @@ public interface UsersApi {
         @ApiResponse(code = 400, message = "Invalid user supplied"),
         @ApiResponse(code = 404, message = "User not found") })
     @RequestMapping(value = "/users/{userId}",
+        consumes = { "application/json" },
         method = RequestMethod.PATCH)
     default ResponseEntity<Void> updateUser(@ApiParam(value = "name that need to be updated",required=true) @PathVariable("userId") Long userId,@ApiParam(value = "Updated user object" ,required=true )  @Valid @RequestBody UpdateUser updateUser) {
         return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);

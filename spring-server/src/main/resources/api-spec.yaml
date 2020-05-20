@@ -4,7 +4,7 @@ info:
   description: "API de mon grand projet qui n'a pas encore de nom. App sur laquelle on peut poster des articles et intéragir avec ceux-ci."
   version: 1.0.0
 servers:
-  - url: https://localhost:8080/api
+  - url: http://localhost:8080/api
 tags:
   - name: articles
     description: Operations about articles
@@ -66,7 +66,8 @@ paths:
           schema:
             type: array
             items:
-              $ref: '#/components/schemas/GetCategory'
+              type: integer
+              format: int64
       responses:
         200:
           description: successful operation
@@ -306,9 +307,9 @@ paths:
       description: register a user
       operationId: RegisterUser
       requestBody:
-        description: Created user object
+        description: Article that needs to be added
         content:
-          '*/*':
+          application/json:
             schema:
               $ref: '#/components/schemas/CreateUser'
         required: true
@@ -375,7 +376,7 @@ paths:
       requestBody:
         description: Updated user object
         content:
-          '*/*':
+          application/json:
             schema:
               $ref: '#/components/schemas/UpdateUser'
         required: true
@@ -477,7 +478,7 @@ paths:
       requestBody:
         description: updated category
         content:
-          '*/*':
+          application/json:
             schema:
               $ref: '#/components/schemas/CreateCategory'
         required: true
@@ -546,9 +547,6 @@ components:
     UpdateUser:
       type: object
       properties:
-        id:
-          type: integer
-          format: int64
         username:
           type: string
         firstName:
@@ -626,15 +624,11 @@ components:
             $ref: '#/components/schemas/GetCategory'
     UpdateArticle:
       required:
-        - id
         - title
         - content
         - views
       type: object
       properties:
-        id:
-          type: integer
-          format: int64
         title:
           type: string
         content:
@@ -657,9 +651,8 @@ components:
     CreateComment:
       required:
         - content
-        - article
         - title
-        - author_id
+        - author
       type: object
       properties:
         title:
@@ -671,18 +664,12 @@ components:
         author:
           type: integer
           format: int64
-        categories_ids:
-          type: array
-          items:
-            type: integer
-
     GetComment:
       required:
         - id
         - content
-        - article
         - title
-        - author_id
+        - author
       type: object
       properties:
         id:
@@ -695,8 +682,7 @@ components:
           type: string
           example: tu pourrais faire mieux
         author:
-          type: integer
-          format: int64
+          $ref: '#/components/schemas/GetUser'
     GetCategory:
       required:
         - id
