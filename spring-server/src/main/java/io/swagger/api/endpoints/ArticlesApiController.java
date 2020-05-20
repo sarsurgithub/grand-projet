@@ -76,7 +76,7 @@ public class ArticlesApiController implements ArticlesApi {
     //FIND
 
     public ResponseEntity<List<GetArticle>> findArticlesByCategories(@NotNull @ApiParam(value = "Categories to filter by", required = true) @Valid @RequestParam(value = "category", required = true) List<GetCategory> category) {
-        
+
         return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
 
     }
