@@ -7,7 +7,9 @@ import io.swagger.annotations.*;
 import io.swagger.articles.api.model.CreateUser;
 import io.swagger.articles.api.model.GetUser;
 import io.swagger.articles.api.model.UpdateUser;
+import io.swagger.entities.ArticleEntity;
 import io.swagger.entities.UserEntity;
+import io.swagger.repositories.ArticleRepository;
 import io.swagger.repositories.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,17 +19,21 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.persistence.EntityNotFoundException;
 import javax.validation.Valid;
 import javax.servlet.http.HttpServletRequest;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2020-04-08T14:21:38.963Z[GMT]")
 @Controller
 public class UsersApiController implements UsersApi {
     @Autowired
     UserRepository userRepository;
+    @Autowired
+    ArticleRepository articleRepository;
 
     private static final Logger log = LoggerFactory.getLogger(UsersApiController.class);
 
@@ -42,7 +48,18 @@ public class UsersApiController implements UsersApi {
     }
 
     public ResponseEntity<Void> deleteUser(@ApiParam(value = "The name that needs to be deleted",required=true) @PathVariable("userId") Long userId) {
+
+        UserEntity author = userRepository.findById(userId).orElseThrow(() -> new EntityNotFoundException("This user does not exist"));
+
+        List<ArticleEntity> articles = articleRepository.findAllByAuthor(author);
+
+        for( ArticleEntity article : articles) {
+            article.setAuthor(null);
+        }
+
+        articleRepository.saveAll(articles);
         userRepository.deleteById(userId);
+
         return ResponseEntity.ok().build();
 
     }
