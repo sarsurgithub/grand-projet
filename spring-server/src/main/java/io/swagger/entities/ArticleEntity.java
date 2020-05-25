@@ -2,6 +2,7 @@ package io.swagger.entities;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -17,9 +18,9 @@ public class ArticleEntity implements Serializable{
     @OneToOne
     private UserEntity author;
     @OneToMany
-    private List<CommentEntity> comments;
-    @OneToMany
-    private List<CategoryEntity> categories;
+    private List<CommentEntity> comments = new ArrayList<>();
+    @ManyToMany
+    private List<CategoryEntity> categories = new ArrayList<>() ;
     private String createdAt;
     private String lastUpdateAt;
     private Integer views;
@@ -92,12 +93,20 @@ public class ArticleEntity implements Serializable{
         this.comments = comments;
     }
 
+    public void addComment ( CommentEntity comment){
+        this.comments.add(comment);
+    }
+
     public List<CategoryEntity> getCategories() {
         return categories;
     }
 
     public void setCategories(List<CategoryEntity> categories) {
         this.categories = categories;
+    }
+
+    public void addCategory ( CategoryEntity category) {
+        this.categories.add(category);
     }
 
 }

@@ -26,7 +26,9 @@ import javax.validation.Valid;
 import javax.servlet.http.HttpServletRequest;
 import java.net.URI;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2020-04-08T14:21:38.963Z[GMT]")
 @Controller
@@ -60,10 +62,15 @@ public class ArticlesApiController implements ArticlesApi {
         ArticleEntity articleEntity = new ArticleEntity();
 
         UserEntity author = userRepository.findById(createArticle.getAuthorId()).orElseThrow(() -> new EntityNotFoundException("This user does not exist"));
-        // y'a sûrement un moyen beaucoup plus propre de faire ça but it will do for now
-        //j'ai trouvé ça c'est mieux :
+
         articleEntity = fromCreateArticleToArticleEntity(createArticle);
         articleEntity.setAuthor(author);
+
+        for (Long categoryid : createArticle.getCategoriesIds()) {
+            CategoryEntity category = categoryRepository.findById(categoryid).orElseThrow(() -> new EntityNotFoundException("This category does not exist"));
+            System.out.println(category);
+            articleEntity.addCategory(category);
+        }
 
         articleRepository.save(articleEntity);
 
@@ -78,7 +85,7 @@ public class ArticlesApiController implements ArticlesApi {
 
     public ResponseEntity<List<GetArticle>> findArticlesByCategories(@NotNull @ApiParam(value = "Categories to filter by", required = true) @Valid @RequestParam(value = "categories", required = true) List<Long> categories) {
         //trouver tous les articles qui ont une catégorie en commun avec l'array de catégories passée en param
-        List<GetArticle> correspondingArticles = null;
+        List<GetArticle> correspondingArticles = new ArrayList<>();
         List<GetArticle> potentialArticles;
 
         for (Long category : categories){
@@ -97,6 +104,8 @@ public class ArticlesApiController implements ArticlesApi {
     public ResponseEntity<GetArticle> findArticleById(@ApiParam(value = "ID of the article to return",required=true) @PathVariable("articleId") Long articleId) {
         ArticleEntity articleEntity = articleRepository.findById(articleId).orElseThrow(() -> new EntityNotFoundException("This article does not exist"));;
         GetArticle article = toGetArticle(articleEntity);
+
+
         return ResponseEntity.ok(article);
     }
 
@@ -117,11 +126,22 @@ public class ArticlesApiController implements ArticlesApi {
     public ResponseEntity<Void> updateArticleById(@ApiParam(value = "ID of article that needs to be updated",required=true) @PathVariable("articleId") Long articleId,@ApiParam(value = "updated article" ,required=true )  @Valid @RequestBody UpdateArticle updateArticle) {
         ArticleEntity articleEntity = articleRepository.findById(articleId).orElseThrow(() -> new EntityNotFoundException("This article does not exist"));
 
+        Iterable<CategoryEntity> categoriesIte = categoryRepository.findAllById(updateArticle.getCategoriesIds());
+        List<CategoryEntity> categories = null ;
+
+        for(CategoryEntity category : categoriesIte) {
+            categories.add(category);
+        }
+
         articleEntity = updateArticle(updateArticle, articleEntity);
+        articleEntity.setCategories(categories);
+
+
         //ici on n'update pas l'auteur puisque celui-ci ne peut pas changer, est-ce que c'est possible de le faire comme ça ?
 
         URI location = ServletUriComponentsBuilder
-                .fromCurrentRequest().build().toUri();
+                .fromCurrentRequest().path("/{id}")
+                .buildAndExpand(articleEntity.getId()).toUri();
 
         articleRepository.save(articleEntity);
 
@@ -148,14 +168,16 @@ public class ArticlesApiController implements ArticlesApi {
         comment.setAuthor(author);
         commentRepository.save(comment);
 
-        List<CommentEntity> comments = article.getComments();
-        comments.add(comment);
-        article.setComments(comments);
+        article.addComment(comment);
 
-        URI location = ServletUriComponentsBuilder
-                .fromCurrentRequest().build().toUri();
 
         articleRepository.save(article);
+
+
+        URI location = ServletUriComponentsBuilder
+                .fromCurrentRequest().path("/{id}")
+                .buildAndExpand(comment.getId()).toUri();
+
 
 
         return ResponseEntity.created(location).build();
@@ -164,6 +186,19 @@ public class ArticlesApiController implements ArticlesApi {
 
 
     public ResponseEntity<Void> deleteComment(@ApiParam(value = "ID of the comment to delete",required=true) @PathVariable("commentId") Long commentId,@ApiParam(value = "Article ID",required=true) @PathVariable("articleId") Long articleId) {
+        ArticleEntity article = articleRepository.findById(articleId).orElseThrow(() -> new EntityNotFoundException("This article does not exist"));
+        List<CommentEntity> comments = article.getComments();
+
+        for (Iterator<CommentEntity> it = comments.iterator(); it.hasNext();) {
+            CommentEntity comment = it.next();
+            if (comment.getId() == commentId){
+                it.remove();
+            }
+        }
+
+        article.setComments(comments);
+        articleRepository.save(article);
+
         commentRepository.deleteById(commentId);
         return ResponseEntity.ok().build();
 
@@ -241,6 +276,23 @@ public class ArticlesApiController implements ArticlesApi {
         article.setCreatedAt(entity.getCreatedAt());
         article.setContent(entity.getContent());
         article.setAuthor(toGetUser(entity.getAuthor()));
+
+        List<CategoryEntity> categories = entity.getCategories();
+        List<GetCategory> categoriesAsGets = new ArrayList<>();
+        for ( CategoryEntity category : categories){
+            GetCategory categoryAsAGet = toGetCategory(category);
+            categoriesAsGets.add(categoryAsAGet);
+        }
+        article.setCategories(categoriesAsGets);
+
+        List<CommentEntity> comments = entity.getComments();
+        List<GetComment> commentsAsGet = new ArrayList<>();
+        for ( CommentEntity comment : comments){
+            GetComment commentAsGet = toGetComment(comment);
+            commentsAsGet.add(commentAsGet);
+        }
+        article.setComments(commentsAsGet);
+
         return article;
     }
 
@@ -275,6 +327,7 @@ public class ArticlesApiController implements ArticlesApi {
 
     private GetComment toGetComment(CommentEntity entity) {
         GetComment comment = new GetComment();
+        comment.setId(entity.getId());
         comment.setContent(entity.getContent());
         comment.setTitle(entity.getTitle());
         comment.setAuthor(toGetUser(entity.getAuthor()));
@@ -287,6 +340,7 @@ public class ArticlesApiController implements ArticlesApi {
         entity.setTitle(comment.getTitle());
         return entity;
     }
+
 
     private GetCategory toGetCategory (CategoryEntity entity) {
         GetCategory category = new GetCategory();
@@ -304,7 +358,7 @@ public class ArticlesApiController implements ArticlesApi {
 
     private List<GetArticle> findArticlesByCategory(Long categoryId) {
         CategoryEntity categoryEntity = categoryRepository.findById(categoryId).orElseThrow(() -> new EntityNotFoundException("This category does not exist"));
-        List<GetArticle> articlesToReturn = null;
+        List<GetArticle> articlesToReturn = new ArrayList<>();
 
         for (ArticleEntity articleEntity : articleRepository.findAll()) {
 

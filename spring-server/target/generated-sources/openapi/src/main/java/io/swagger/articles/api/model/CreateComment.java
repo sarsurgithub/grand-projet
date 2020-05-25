@@ -12,7 +12,7 @@ import javax.validation.constraints.*;
 /**
  * CreateComment
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2020-05-20T16:39:26.008210+02:00[Europe/Zurich]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2020-05-25T16:14:59.571988+02:00[Europe/Zurich]")
 
 public class CreateComment   {
   @JsonProperty("title")
@@ -75,8 +75,7 @@ public class CreateComment   {
    * Get author
    * @return author
   */
-  @ApiModelProperty(required = true, value = "")
-  @NotNull
+  @ApiModelProperty(value = "")
 
 
   public Long getAuthor() {

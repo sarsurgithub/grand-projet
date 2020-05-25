@@ -644,15 +644,16 @@ components:
           type: array
           items:
             type: integer
+            format: int64
         comments_ids:
           type: array
           items:
             type: integer
+            format: int64
     CreateComment:
       required:
         - content
         - title
-        - author
       type: object
       properties:
         title:

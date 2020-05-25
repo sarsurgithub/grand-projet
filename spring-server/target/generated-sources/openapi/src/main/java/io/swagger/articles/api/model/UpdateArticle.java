@@ -14,7 +14,7 @@ import javax.validation.constraints.*;
 /**
  * UpdateArticle
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2020-05-20T16:39:26.008210+02:00[Europe/Zurich]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2020-05-25T16:14:59.571988+02:00[Europe/Zurich]")
 
 public class UpdateArticle   {
   @JsonProperty("title")
@@ -32,11 +32,11 @@ public class UpdateArticle   {
 
   @JsonProperty("categories_ids")
   @Valid
-  private List<Integer> categoriesIds = null;
+  private List<Long> categoriesIds = null;
 
   @JsonProperty("comments_ids")
   @Valid
-  private List<Integer> commentsIds = null;
+  private List<Long> commentsIds = null;
 
   public UpdateArticle title(String title) {
     this.title = title;
@@ -129,14 +129,14 @@ public class UpdateArticle   {
     this.views = views;
   }
 
-  public UpdateArticle categoriesIds(List<Integer> categoriesIds) {
+  public UpdateArticle categoriesIds(List<Long> categoriesIds) {
     this.categoriesIds = categoriesIds;
     return this;
   }
 
-  public UpdateArticle addCategoriesIdsItem(Integer categoriesIdsItem) {
+  public UpdateArticle addCategoriesIdsItem(Long categoriesIdsItem) {
     if (this.categoriesIds == null) {
-      this.categoriesIds = new ArrayList<Integer>();
+      this.categoriesIds = new ArrayList<Long>();
     }
     this.categoriesIds.add(categoriesIdsItem);
     return this;
@@ -149,22 +149,22 @@ public class UpdateArticle   {
   @ApiModelProperty(value = "")
 
 
-  public List<Integer> getCategoriesIds() {
+  public List<Long> getCategoriesIds() {
     return categoriesIds;
   }
 
-  public void setCategoriesIds(List<Integer> categoriesIds) {
+  public void setCategoriesIds(List<Long> categoriesIds) {
     this.categoriesIds = categoriesIds;
   }
 
-  public UpdateArticle commentsIds(List<Integer> commentsIds) {
+  public UpdateArticle commentsIds(List<Long> commentsIds) {
     this.commentsIds = commentsIds;
     return this;
   }
 
-  public UpdateArticle addCommentsIdsItem(Integer commentsIdsItem) {
+  public UpdateArticle addCommentsIdsItem(Long commentsIdsItem) {
     if (this.commentsIds == null) {
-      this.commentsIds = new ArrayList<Integer>();
+      this.commentsIds = new ArrayList<Long>();
     }
     this.commentsIds.add(commentsIdsItem);
     return this;
@@ -177,11 +177,11 @@ public class UpdateArticle   {
   @ApiModelProperty(value = "")
 
 
-  public List<Integer> getCommentsIds() {
+  public List<Long> getCommentsIds() {
     return commentsIds;
   }
 
-  public void setCommentsIds(List<Integer> commentsIds) {
+  public void setCommentsIds(List<Long> commentsIds) {
     this.commentsIds = commentsIds;
   }
 
