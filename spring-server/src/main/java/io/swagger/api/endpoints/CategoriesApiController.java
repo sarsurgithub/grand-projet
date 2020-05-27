@@ -5,9 +5,11 @@ import io.swagger.articles.api.CategoriesApi;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.annotations.*;
 import io.swagger.articles.api.model.*;
+import io.swagger.entities.ArticleEntity;
 import io.swagger.entities.CategoryEntity;
 import io.swagger.repositories.ArticleRepository;
 import io.swagger.repositories.CategoryRepository;
+import io.swagger.services.utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +25,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
+
 
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2020-04-08T14:21:38.963Z[GMT]")
 @Controller
@@ -45,7 +48,7 @@ public class CategoriesApiController implements CategoriesApi {
     }
 
     public ResponseEntity<Void> addCategory(@ApiParam(value = "Category that needs to be added" ,required=true )  @Valid @RequestBody CreateCategory createCategory) {
-        CategoryEntity categoryEntity = fromCreateCategoryToCategoryEntity(createCategory);
+        CategoryEntity categoryEntity = utils.fromCreateCategoryToCategoryEntity(createCategory);
         categoryRepository.save(categoryEntity);
 
         URI location = ServletUriComponentsBuilder
@@ -57,8 +60,23 @@ public class CategoriesApiController implements CategoriesApi {
     }
 
     public ResponseEntity<Void> deleteACategory(@ApiParam(value = "category to delete",required=true) @PathVariable("categoryId") Long categoryId) {
-         categoryRepository.deleteById(categoryId);
-         return ResponseEntity.ok().build();
+
+        CategoryEntity category = categoryRepository.findById(categoryId).orElseThrow(() -> new EntityNotFoundException("This category does not exist"));
+
+        Iterable<ArticleEntity> articles = articleRepository.findAll();
+
+        for( ArticleEntity article : articles){
+
+            if (article.getCategories().contains(category)){
+                List<CategoryEntity> categories = article.getCategories();
+                categories.remove(category);
+                article.setCategories(categories);
+                articleRepository.save(article);
+            }
+        }
+
+        categoryRepository.deleteById(categoryId);
+        return ResponseEntity.ok().build();
 
     }
 
@@ -66,7 +84,7 @@ public class CategoriesApiController implements CategoriesApi {
         List<GetCategory> categories = new ArrayList<>();
 
         for (CategoryEntity categoryEntity : categoryRepository.findAll()) {
-            categories.add(toGetCategory(categoryEntity));
+            categories.add(utils.toGetCategory(categoryEntity));
         }
 
         return ResponseEntity.ok(categories);
@@ -77,7 +95,7 @@ public class CategoriesApiController implements CategoriesApi {
     public ResponseEntity<GetCategory> findCategoryById(@ApiParam(value = "category to find",required=true) @PathVariable("categoryId") Long categoryId) {
 
         CategoryEntity categoryEntity = categoryRepository.findById(categoryId).orElseThrow(() -> new EntityNotFoundException("This category does not exist"));
-        GetCategory category = toGetCategory(categoryEntity);
+        GetCategory category = utils.toGetCategory(categoryEntity);
 
         return ResponseEntity.ok(category);
 
@@ -86,7 +104,7 @@ public class CategoriesApiController implements CategoriesApi {
     public ResponseEntity<Void> updateCategoryById(@ApiParam(value = "category to update",required=true) @PathVariable("categoryId") Long categoryId,@ApiParam(value = "updated category" ,required=true )  @Valid @RequestBody CreateCategory createCategory) {
         CategoryEntity categoryEntity = categoryRepository.findById(categoryId).orElseThrow(() -> new EntityNotFoundException("This category does not exist"));
 
-        categoryEntity = updateCategory(createCategory, categoryEntity);
+        categoryEntity = utils.updateCategory(createCategory, categoryEntity);
 
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest().build().toUri();
@@ -97,23 +115,5 @@ public class CategoriesApiController implements CategoriesApi {
 
     }
 
-    private GetCategory toGetCategory (CategoryEntity entity) {
-        GetCategory category = new GetCategory();
-        category.setId(entity.getId());
-        category.setName(entity.getName());
-        return category ;
-    }
-
-    private CategoryEntity fromCreateCategoryToCategoryEntity( CreateCategory category){
-        CategoryEntity entity = new CategoryEntity();
-        entity.setName(category.getName());
-
-        return entity;
-    }
-
-    private CategoryEntity updateCategory(CreateCategory category, CategoryEntity entity) {
-        entity.setName(category.getName());
-        return entity;
-    }
 
 }

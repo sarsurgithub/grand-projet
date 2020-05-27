@@ -586,7 +586,6 @@ components:
       required:
         - id
         - title
-        - author
         - content
         - createdAt
         - views

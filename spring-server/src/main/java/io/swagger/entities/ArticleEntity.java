@@ -17,7 +17,7 @@ public class ArticleEntity implements Serializable{
     private List<String> photoUrls = null;
     @OneToOne
     private UserEntity author;
-    @OneToMany
+    @OneToMany(cascade = CascadeType.REMOVE)
     private List<CommentEntity> comments = new ArrayList<>();
     @ManyToMany
     private List<CategoryEntity> categories = new ArrayList<>() ;
