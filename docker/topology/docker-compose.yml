@@ -6,11 +6,13 @@ services:
     environment: 
       - MYSQL_ROOT_PASSWORD=root
     restart: always
-    ports:
-      - 3000:3306
+    volumes:
+      - db_data:/var/lib/mysql
   
   phpmyadmin:
     image: phpmyadmin/phpmyadmin:latest
+    depends_on: 
+      - db
     environment: 
       - PMA_PORT=3306
       - PMA_HOST=db
@@ -19,4 +21,18 @@ services:
     restart: always
     ports:
       - 8888:80
+
+  server:
+    build: server-related-shit
+    depends_on: 
+      - db
+    environment: 
+      - SPRING_DATASOURCE_URL=jdbc:mysql://db:3306/db_example?serverTimezone=UTC
+    restart: always
+    ports: 
+      - 8080:8080
+
+volumes:
+  db_data:
+
 

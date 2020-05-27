@@ -22,6 +22,7 @@
 /Users/sar/Documents/Stage/F_GRAND-PROJET/spring-server/target/generated-sources/openapi/src/main/java/io/swagger/articles/api/UsersApi.java
 /Users/sar/Documents/Stage/F_GRAND-PROJET/spring-server/target/generated-sources/openapi/src/main/java/io/swagger/articles/api/model/UpdateArticle.java
 /Users/sar/Documents/Stage/F_GRAND-PROJET/spring-server/target/generated-sources/openapi/src/main/java/io/swagger/articles/api/ArticlesApi.java
+/Users/sar/Documents/Stage/F_GRAND-PROJET/spring-server/src/main/java/io/swagger/services/utils.java
 /Users/sar/Documents/Stage/F_GRAND-PROJET/spring-server/target/generated-sources/openapi/src/main/java/io/swagger/articles/api/model/UpdateUser.java
 /Users/sar/Documents/Stage/F_GRAND-PROJET/spring-server/src/main/java/io/swagger/entities/UserEntity.java
 /Users/sar/Documents/Stage/F_GRAND-PROJET/spring-server/src/main/java/io/swagger/entities/CommentEntity.java
