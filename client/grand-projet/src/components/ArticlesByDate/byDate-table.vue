@@ -15,18 +15,24 @@
 
 import tableLine from '@/components/ArticlesByDate/byDate-table-line.vue'
 
+import axios from 'axios'
+
 export default {
   data: function () {
     return {
-      articles: [
-        { id: 1, title: 'ACAB', date: '01.01.01', author: 'Aphaia' },
-        { id: 2, title: 'Atomic Design', date: '02.02.02', author: 'BandeletteQueen' },
-        { id: 3, title: 'La place des poules', date: '03.03.03', author: 'Sarah' }
-      ]
+      articles: []
     }
   },
   components: {
     tableLine
+  },
+  mounted () {
+    axios
+      .get('http://localhost:8081/api/articles')
+      .then(response => (
+        this.articles = response.data
+      )
+      )
   }
 }
 </script>

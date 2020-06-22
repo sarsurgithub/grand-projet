@@ -5,9 +5,8 @@
       <strong> Number of Articles </strong>
     </div>
     <div v-for="category in categories" :key="category.id">
-      <table-line v-bind="{category}"></table-line>
+      <table-line :category=category ></table-line>
     </div>
-    <div> {{categories}} </div>
   </div>
 </template>
 
@@ -30,7 +29,7 @@ export default {
     axios
       .get('http://localhost:8081/api/categories')
       .then(response => (
-        console.log(response)
+        this.categories = response.data
       )
       )
   }

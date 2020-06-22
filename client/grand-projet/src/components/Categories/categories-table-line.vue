@@ -1,13 +1,27 @@
 <template>
   <div class = 'line'>
     <div class='column'> {{category.name}} </div>
-    <div class='column'> i am nothing for now </div>
+    <div class='column'> {{articlesByCategory.length}} </div>
   </div>
 </template>
 
 <script>
+import axios from 'axios'
 export default {
-  props: ['category']
+  data: function () {
+    return {
+      articlesByCategory: []
+    }
+  },
+  props: ['category'],
+  mounted () {
+    axios
+      .get(`http://localhost:8081/api/articles/byCategories?categories=${this.category.id}`)
+      .then(response => (
+        this.articlesByCategory = response.data
+      )
+      )
+  }
 }
 </script>
 

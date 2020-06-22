@@ -6,6 +6,7 @@ import Categories from '../views/Categories.vue'
 import ArticlesByDate from '../views/ArticlesByDate.vue'
 import TheirProfile from '../views/TheirProfile.vue'
 import MyProfile from '../views/MyProfile.vue'
+import CreateArticle from '../views/CreateArticle'
 
 Vue.use(VueRouter)
 
@@ -24,6 +25,11 @@ const routes = [
     path: '/categories',
     name: 'Categories',
     component: Categories
+  },
+  {
+    path: '/createArticle',
+    name: 'CreateArticle',
+    component: CreateArticle
   },
   {
     path: '/articlesByDate',

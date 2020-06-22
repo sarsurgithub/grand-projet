@@ -1,7 +1,7 @@
 <template>
   <div class = 'line'>
-    <div class='column'> {{article.date}} </div>
-    <div class='column'> {{article.author}} </div>
+    <div class='column'> pas encore </div>
+    <div class='column'> {{article.author.username}} </div>
     <div class='column'> {{article.title}} </div>
   </div>
 </template>

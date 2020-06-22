@@ -11,6 +11,7 @@
       <router-link to="/articlesByDate">Articles by Date</router-link> |
       <router-link to="/theirProfile">Their Profile</router-link> |
       <router-link to="/myProfile">My Profile</router-link> |
+      <router-link to="/createArticle">Create Article</router-link>
     </div>
     <router-view/>
   </div>
