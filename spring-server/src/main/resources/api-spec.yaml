@@ -4,7 +4,7 @@ info:
   description: "API de mon grand projet qui n'a pas encore de nom. App sur laquelle on peut poster des articles et intéragir avec ceux-ci."
   version: 1.0.0
 servers:
-  - url: http://localhost:8080/api
+  - url: http://localhost:8081/api
 tags:
   - name: articles
     description: Operations about articles

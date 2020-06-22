@@ -17,6 +17,7 @@ io/swagger/articles/api/model/CreateUser.class
 io/swagger/configuration/CustomInstantDeserializer$FromIntegerArguments.class
 io/swagger/articles/api/ArticlesApi.class
 io/swagger/configuration/CustomInstantDeserializer$3.class
+io/swagger/configuration/CorsConfig.class
 io/swagger/Swagger2SpringBoot.class
 io/swagger/configuration/CustomInstantDeserializer$6.class
 io/swagger/articles/api/model/CreateComment.class
