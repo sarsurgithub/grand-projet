@@ -19,14 +19,13 @@ export default {
     color: black;
     font-size: 16px;
     font-weight: bold;
-    border-bottom: 3px solid #05FFFF;
     padding: 10px 5px 10px 5px;
 
   }
   .article{
     padding-top: 5px;
     padding-bottom: 5px;
-    border-bottom: 3px solid #05FFFF;
+    border-top: 3px solid #05FFFF;
     padding-left: 150px;
     padding-right: 150px;
     color: black;

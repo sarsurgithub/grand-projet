@@ -13,7 +13,7 @@ import javax.validation.constraints.*;
 /**
  * GetComment
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2020-06-22T10:44:21.718767+02:00[Europe/Zurich]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2020-06-25T14:26:50.337168+02:00[Europe/Zurich]")
 
 public class GetComment   {
   @JsonProperty("id")

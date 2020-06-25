@@ -130,18 +130,29 @@
 
       </div>
     </editor-menu-bar>
-    <editor-content class="editor__content" :editor="editor" />
-    {{html}}
+    <div class="wrapper-editor">
+      <input v-model="title"/>
+      <editor-content class="editor__content" :editor="editor" />
+    </div>
+    <template>
+      <div>
+        <vue-tags-input
+          v-model="tag"
+          :tags="tags"
+          @tags-changed="newTags => tags = newTags"
+        />
+      </div>
+    </template>
     <button
-      class='cancel_button'>
-      Forget this </button>
-    <button
-      class='validate_button'>
+      class='validate_button'
+      @click="formSubmit()">
       I'm done </button>
   </div>
 </template>
 
 <script>
+import VueTagsInput from '@johmun/vue-tags-input'
+import axios from 'axios'
 import { Editor, EditorContent, EditorMenuBar } from 'tiptap'
 import {
   Blockquote,
@@ -165,10 +176,18 @@ import {
 export default {
   components: {
     EditorContent,
-    EditorMenuBar
+    EditorMenuBar,
+    VueTagsInput
   },
   data () {
     return {
+      tag: '',
+      tags: [],
+      tagsChecking: [],
+      title: 'Mon super Article',
+      categoriesToPost: [],
+      categories: [],
+      categoriesIds: [],
       editor: new Editor({
         extensions: [
           new Blockquote(),
@@ -191,22 +210,10 @@ export default {
         ],
         content: `
           <h2>
-            Hi there,
+            Write your article here,
           </h2>
-          <p>
-            this is a very <em>basic</em> example of tiptap.
-          </p>
-          <pre><code>body { display: none; }</code></pre>
-          <ul>
-            <li>
-              A regular list
-            </li>
-            <li>
-              With regular items
-            </li>
-          </ul>
           <blockquote>
-            It's amazing 👏
+            It's amazing 
             <br />
             – mom
           </blockquote>
@@ -220,15 +227,109 @@ export default {
   },
   beforeDestroy () {
     this.editor.destroy()
+  },
+  methods: {
+
+    afficherHtml: function () {
+      console.log(this.editor.getHTML())
+    },
+
+    formSubmit () {
+
+    this.categoriesToPost = this.tags.map(tag => ({
+      name: tag.text
+    }))
+    // envoyer un array des catégories à potentiellement ajouter, les doublons sont gérés par le backend
+    axios.post('http://localhost:8081/api/categories', {
+
+    })
+      .then(function (response) {
+        console.log(response)
+      })
+      .catch(function (error) {
+        console.log(error)
+      })
+    // envoyer un array de noms de catégories pour obtenir leur ids dans le query
+    axios
+      .get('http://localhost:8081/api/categories/getIds', {
+        // comment on fait ??? 
+        this.categoriesToPost
+      })
+      .then(response => {
+        this.categories = response.data
+        this.categoriesIds = this.categories.map(category => ({
+          // comment on fait ???
+          category.id
+        }))
+      })
+    // envoyer un article avec son titre, contenu, autheur, et les ids de ses catégories
+    axios.post('http://localhost:8081/api/articles', {
+      title: this.title,
+      content: this.editor.getHTML(),
+      author_id: 1,
+      categories_ids: this.categoriesIds
+    })
+      .then(function (response) {
+        console.log(response)
+      })
+      .catch(function (error) {
+        console.log(error)
+      })
+    }
   }
 }
 </script>
 
 <style scoped>
   .validate_button {
-    background-color: pink;
+    color: #FFFE00;
+    padding: 5px;
+    border: 2px solid #FFFE00;
+    background-color: black;
+    border-radius: 5px;
+    font-weight: bold;
+    font-size: 16px;
   }
-  .cancel_button {
-    background-color: purple;
+  .validate_button:hover {
+    color: black;
+    background-color: #FFFE00;
+  }
+  .wrapper-editor {
+    background-color: white;
+    color: black;
+    border: 5px solid #FFFE00;
+    border-radius: 20px;
+    margin-bottom: 30px;
+  }
+  .menubar {
+    border: 5px solid #FFFE00;
+    border-radius: 20px;
+    padding: 30px 0px 30px 0px;
+    margin-bottom: 20px;
+  }
+  .editor {
+    margin: 15px 15% 15px 15%;
+  }
+
+</style>
+
+<style lang="scss" >
+  .ti-input {
+    border: 5px solid yellow !important;
+    border-radius: 20px !important;
+    display: flex;
+    padding: 20px 45px !important;
+    flex-wrap: wrap;
+  }
+  .vue-tags-input {
+    border-radius: 20px !important;
+  }
+  .ti-tag {
+    color:black !important;
+    background-color: yellow !important;
+  }
+  .vue-tags-input {
+    max-width: none !important;
+    margin-bottom: 20px;
   }
 </style>

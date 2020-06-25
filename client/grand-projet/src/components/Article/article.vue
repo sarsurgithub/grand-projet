@@ -1,5 +1,6 @@
 <template>
   <div class='wrapper'>
+    <div class='author'> author: {{article.author.username}}
     <div class='title'>{{article.title}}</div>
     <div class='text'>{{article.content}}</div>
   </div>

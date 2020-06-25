@@ -15,14 +15,15 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.persistence.EntityNotFoundException;
 import javax.validation.Valid;
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.constraints.NotNull;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
@@ -48,15 +49,21 @@ public class CategoriesApiController implements CategoriesApi {
         this.request = request;
     }
 
-    public ResponseEntity<Void> addCategory(@ApiParam(value = "Category that needs to be added" ,required=true )  @Valid @RequestBody CreateCategory createCategory) {
-        CategoryEntity categoryEntity = utils.fromCreateCategoryToCategoryEntity(createCategory);
-        categoryRepository.save(categoryEntity);
+    public ResponseEntity<Void> addCategories(@ApiParam(value = "Categories that needs to be added" ,required=true )  @Valid @RequestBody List<CreateCategory> createCategories) {
 
-        URI location = ServletUriComponentsBuilder
-                .fromCurrentRequest().path("/{id}")
-                .buildAndExpand(categoryEntity.getId()).toUri();
+        for ( CreateCategory createCategory : createCategories ){
+            CategoryEntity categoryEntity = utils.fromCreateCategoryToCategoryEntity(createCategory);
+            if ( categoryRepository.findByName(createCategory.getName() ) == null) {
+                categoryRepository.save(categoryEntity);
 
-        return ResponseEntity.created(location).build();
+                URI location = ServletUriComponentsBuilder
+                        .fromCurrentRequest().path("/{id}")
+                        .buildAndExpand(categoryEntity.getId()).toUri();
+                return ResponseEntity.created(location).build();
+            }
+        }
+
+        return ResponseEntity.ok().build();
 
     }
 
@@ -113,6 +120,17 @@ public class CategoriesApiController implements CategoriesApi {
         categoryRepository.save(categoryEntity);
 
         return ResponseEntity.created(location).build();
+
+    }
+    public ResponseEntity<List<GetCategory>> getCategoriesIds(@NotNull @ApiParam(value = "categories to get the ids", required = true) @Valid @RequestParam(value = "categoriesName", required = true) List<String> categoriesName) {
+        List<GetCategory> categories = new ArrayList<>();
+        for (String categoryName : categoriesName) {
+            CategoryEntity category = categoryRepository.findByName(categoryName);
+            GetCategory getCategory = utils.toGetCategory(category);
+            categories.add(getCategory);
+        }
+
+        return  ResponseEntity.ok(categories);
 
     }
 
