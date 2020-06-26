@@ -3,7 +3,6 @@
   <div>
     <div id="nav">
       <router-link to="/" class="navItem">Home</router-link> |
-      <router-link to="/article" class="navItem">Article</router-link> |
       <router-link to="/categories" class="navItem">Categories</router-link> |
       <router-link to="/articlesByDate" class="navItem">Articles by Date</router-link> |
       <router-link to="/theirProfile" class="navItem">Their Profile</router-link> |

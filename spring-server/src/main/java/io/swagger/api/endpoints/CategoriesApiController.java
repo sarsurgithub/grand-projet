@@ -55,11 +55,6 @@ public class CategoriesApiController implements CategoriesApi {
             CategoryEntity categoryEntity = utils.fromCreateCategoryToCategoryEntity(createCategory);
             if ( categoryRepository.findByName(createCategory.getName() ) == null) {
                 categoryRepository.save(categoryEntity);
-
-                URI location = ServletUriComponentsBuilder
-                        .fromCurrentRequest().path("/{id}")
-                        .buildAndExpand(categoryEntity.getId()).toUri();
-                return ResponseEntity.created(location).build();
             }
         }
 
@@ -73,9 +68,9 @@ public class CategoriesApiController implements CategoriesApi {
 
         Iterable<ArticleEntity> articles = articleRepository.findAll();
 
-        for( ArticleEntity article : articles){
+        for( ArticleEntity article : articles ){
 
-            if (article.getCategories().contains(category)){
+            if ( article.getCategories().contains(category) ){
                 List<CategoryEntity> categories = article.getCategories();
                 categories.remove(category);
                 article.setCategories(categories);
@@ -91,7 +86,7 @@ public class CategoriesApiController implements CategoriesApi {
     public ResponseEntity<List<GetCategory>> findCategories() {
         List<GetCategory> categories = new ArrayList<>();
 
-        for (CategoryEntity categoryEntity : categoryRepository.findAll()) {
+        for ( CategoryEntity categoryEntity : categoryRepository.findAll() ) {
             categories.add(utils.toGetCategory(categoryEntity));
         }
 
@@ -122,15 +117,14 @@ public class CategoriesApiController implements CategoriesApi {
         return ResponseEntity.created(location).build();
 
     }
-    public ResponseEntity<List<GetCategory>> getCategoriesIds(@NotNull @ApiParam(value = "categories to get the ids", required = true) @Valid @RequestParam(value = "categoriesName", required = true) List<String> categoriesName) {
-        List<GetCategory> categories = new ArrayList<>();
-        for (String categoryName : categoriesName) {
-            CategoryEntity category = categoryRepository.findByName(categoryName);
-            GetCategory getCategory = utils.toGetCategory(category);
-            categories.add(getCategory);
+    public ResponseEntity<List<Long>> getCategoriesIds(@NotNull @ApiParam(value = "categories to get the ids", required = true) @Valid @RequestParam(value = "name", required = true) List<String> name) {
+        List<Long> categoriesIds = new ArrayList<>();
+        for (String categoryName : name) {
+            long categoryId = categoryRepository.findByName(categoryName).getId();
+            categoriesIds.add(categoryId);
         }
 
-        return  ResponseEntity.ok(categories);
+        return  ResponseEntity.ok(categoriesIds);
 
     }
 

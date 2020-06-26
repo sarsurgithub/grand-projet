@@ -28,7 +28,7 @@ import javax.validation.constraints.*;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2020-06-25T14:26:50.337168+02:00[Europe/Zurich]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2020-06-26T15:04:15.423012+02:00[Europe/Zurich]")
 
 @Validated
 @Api(value = "categories", description = "the categories API")
@@ -104,17 +104,17 @@ public interface CategoriesApi {
     }
 
 
-    @ApiOperation(value = "return the ids for a given category names array", nickname = "getCategoriesIds", notes = "", response = GetCategory.class, responseContainer = "List", tags={ "categories", })
+    @ApiOperation(value = "return the ids for a given category names array", nickname = "getCategoriesIds", notes = "", response = Long.class, responseContainer = "List", tags={ "categories", })
     @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "successful operation", response = GetCategory.class, responseContainer = "List") })
+        @ApiResponse(code = 200, message = "successful operation", response = Long.class, responseContainer = "List") })
     @RequestMapping(value = "/categories/getIds",
         produces = { "application/json" }, 
         method = RequestMethod.GET)
-    default ResponseEntity<List<GetCategory>> getCategoriesIds(@NotNull @ApiParam(value = "categories to get the ids", required = true) @Valid @RequestParam(value = "categoriesName", required = true) List<String> categoriesName) {
+    default ResponseEntity<List<Long>> getCategoriesIds(@NotNull @ApiParam(value = "categories to get the ids", required = true) @Valid @RequestParam(value = "name", required = true) List<String> name) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"name\" : \"name\", \"id\" : 5 }";
+                    String exampleString = "0";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }

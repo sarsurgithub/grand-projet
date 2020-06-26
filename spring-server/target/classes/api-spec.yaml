@@ -450,7 +450,7 @@ paths:
       summary: return the ids for a given category names array
       operationId: getCategoriesIds
       parameters:
-        - name: categoriesName
+        - name: name
           in: query
           description: categories to get the ids
           required: true
@@ -466,8 +466,8 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/GetCategory'
-
+                  type: integer
+                  format: int64
   /categories/{categoryId}:
     get:
       tags:

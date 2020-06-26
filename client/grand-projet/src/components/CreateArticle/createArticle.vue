@@ -188,6 +188,8 @@ export default {
       categoriesToPost: [],
       categories: [],
       categoriesIds: [],
+      categoriesNames: [],
+      url: '',
       editor: new Editor({
         extensions: [
           new Blockquote(),
@@ -234,46 +236,55 @@ export default {
       console.log(this.editor.getHTML())
     },
 
-    formSubmit () {
+    async formSubmit () {
+      console.log('nous entrons dans la fonction formSubmit')
 
-    this.categoriesToPost = this.tags.map(tag => ({
-      name: tag.text
-    }))
-    // envoyer un array des catégories à potentiellement ajouter, les doublons sont gérés par le backend
-    axios.post('http://localhost:8081/api/categories', {
+      // servira à avoir un array avec seulement les noms des catégories, pour retrouver les ids des catégories
+      console.log('étape1 : créer array de noms')
+      this.categoriesNames = this.tags.map(tag => tag.text)
+      console.log(this.categoriesNames)
 
-    })
-      .then(function (response) {
-        console.log(response)
-      })
-      .catch(function (error) {
-        console.log(error)
-      })
-    // envoyer un array de noms de catégories pour obtenir leur ids dans le query
-    axios
-      .get('http://localhost:8081/api/categories/getIds', {
-        // comment on fait ??? 
-        this.categoriesToPost
-      })
-      .then(response => {
-        this.categories = response.data
-        this.categoriesIds = this.categories.map(category => ({
-          // comment on fait ???
-          category.id
-        }))
-      })
-    // envoyer un article avec son titre, contenu, autheur, et les ids de ses catégories
-    axios.post('http://localhost:8081/api/articles', {
-      title: this.title,
-      content: this.editor.getHTML(),
-      author_id: 1,
-      categories_ids: this.categoriesIds
-    })
-      .then(function (response) {
-        console.log(response)
-      })
-      .catch(function (error) {
-        console.log(error)
+      // servira à avoir un array sous la forme [{ name : design }, { name: sociology}] pour pouvoir ajouter les catégories
+      console.log('étape2 : créer array objets')
+      this.categoriesToPost = this.tags.map(tag => ({
+        name: tag.text
+      }))
+      console.log(this.categoriesToPost)
+
+      // pour chacun des tag entré, ajouter à l'url pour préparer la prochaine requête
+      console.log('étape3 : créer url')
+      for (let i = 0; i < this.categoriesNames.length; i++) {
+        if (i === this.categoriesNames.length - 1) {
+          this.url += 'name=' + this.categoriesNames[i]
+        } else {
+          this.url += 'name=' + this.categoriesNames[i] + '&'
+        }
+      }
+      console.log('url: ' + this.url)
+
+      // envoyer un array des catégories à potentiellement ajouter, les doublons sont gérés par le backend
+      console.log('étape4 créer les catégories')
+      await axios.post('http://localhost:8081/api/categories', this.categoriesToPost)
+
+      // envoyer un array de noms de catégories pour obtenir leur ids dans le query
+      console.log('étape5 : récup les ids des catégories')
+      const response = await axios
+        .get(`http://localhost:8081/api/categories/getIds?${this.url}`)
+      this.categories = response.data
+      // .then(response => {
+      //   console.log('entrée dans la requête des ids')
+      //   this.categories = response.data
+      //   console.log(this.categories)
+      // })
+      console.log(response)
+
+      // envoyer un article avec son titre, contenu, autheur, et les ids de ses catégories
+      console.log('étape6: créer article')
+      await axios.post('http://localhost:8081/api/articles', {
+        title: this.title,
+        content: this.editor.getHTML(),
+        author_id: 1,
+        categories_ids: this.categories
       })
     }
   }
