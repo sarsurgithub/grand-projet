@@ -1,8 +1,10 @@
 <template>
+  <router-link class='link' :to="{ name: 'Category', params: { id : category.id, name: category.name }}">
   <div class = 'line'>
     <div class='column'> {{category.name}} </div>
     <div class='column'> {{articlesByCategory.length}} </div>
   </div>
+  </router-link>
 </template>
 
 <script>

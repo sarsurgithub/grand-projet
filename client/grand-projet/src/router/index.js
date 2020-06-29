@@ -7,6 +7,7 @@ import ArticlesByDate from '../views/ArticlesByDate.vue'
 import TheirProfile from '../views/TheirProfile.vue'
 import MyProfile from '../views/MyProfile.vue'
 import CreateArticle from '../views/CreateArticle'
+import Category from '../views/Category.vue'
 
 Vue.use(VueRouter)
 
@@ -37,7 +38,7 @@ const routes = [
     component: ArticlesByDate
   },
   {
-    path: '/theirProfile',
+    path: '/theirProfile/:id',
     name: 'TheirProfile',
     component: TheirProfile
   },
@@ -45,6 +46,11 @@ const routes = [
     path: '/myProfile',
     name: 'MyProfile',
     component: MyProfile
+  },
+  {
+    path: '/category/:id',
+    name: 'Category',
+    component: Category
   }
 ]
 

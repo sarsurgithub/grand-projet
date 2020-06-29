@@ -7,21 +7,27 @@
         <router-link to="/myProfile" class="navItem">Profile</router-link> |
         <router-link to="/createArticle" class="navItem">Create Article</router-link>
     </div>
-    <div>
-      <tableau></tableau>
+    <div class="wrapper">
+      <articles></articles>
     </div>
   </div>
 </template>
-
 <script>
-
-import tableau from '@/components/ArticlesByDate/byDate-table.vue'
+import articles from '@/components/Category/articles-byCategory'
 
 export default {
+  data: function () {
+    return {
+      article: {},
+      id: this.$route.params.id,
+      comments: []
+    }
+  },
   components: {
-    tableau
+    articles
   }
 }
+
 </script>
 
 <style lang="scss" scoped>

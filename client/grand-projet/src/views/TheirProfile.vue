@@ -4,8 +4,7 @@
       <router-link to="/" class="navItem">Home</router-link> |
       <router-link to="/categories" class="navItem">Categories</router-link> |
       <router-link to="/articlesByDate" class="navItem">Articles by Date</router-link> |
-      <router-link to="/theirProfile" class="navItem">Their Profile</router-link> |
-      <router-link to="/myProfile" class="navItem">My Profile</router-link> |
+      <router-link to="/myProfile" class="navItem">Profile</router-link> |
       <router-link to="/createArticle" class="navItem">Create Article</router-link>
     </div>
     <div class="wrapper">
@@ -17,25 +16,30 @@
 
 <script>
 
+import axios from 'axios'
 import articleList from '@/components/TheirProfile/article-list.vue'
 import infosCard from '@/components/TheirProfile/infos-card.vue'
 
 export default {
   data: function () {
     return {
-      user: {
-        id: 1, username: 'Jean-Ivre'
-      },
+      user: {},
       articles: [
-        { id: 1, title: 'ACAB' },
-        { id: 2, title: 'Atomic Design' },
-        { id: 3, title: 'La place des poules' }
       ]
     }
   },
   components: {
     articleList,
     infosCard
+  },
+  mounted () {
+    axios
+      .get(`http://localhost:8081/api/users/${this.$route.params.id}`)
+      .then(response => {
+        console.log(response)
+        this.user = response.data
+      }
+      )
   }
 }
 
