@@ -28,7 +28,7 @@ const routes = [
     component: Categories
   },
   {
-    path: '/createArticle',
+    path: '/user/:id/createArticle',
     name: 'CreateArticle',
     component: CreateArticle
   },

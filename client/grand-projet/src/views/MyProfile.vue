@@ -5,12 +5,16 @@
       <router-link to="/categories" class="navItem">Categories</router-link> |
       <router-link to="/articlesByDate" class="navItem">Articles by Date</router-link> |
       <router-link to="/myProfile" class="navItem">Profile</router-link> |
-      <router-link to="/createArticle" class="navItem">Create Article</router-link>
     </div>
     <div class="wrapper">
       <infos-card :user=user></infos-card>
       <article-list :articles=articles></article-list>
     </div>
+    <router-link class='link' :to="{ name: 'CreateArticle', params: { id : user.id}}">
+    <button>
+      Create an article
+    </button>
+    </router-link>
   </div>
 </template>
 

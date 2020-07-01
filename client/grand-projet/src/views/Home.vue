@@ -5,7 +5,6 @@
       <router-link to="/categories" class="navItem">Categories</router-link> |
       <router-link to="/articlesByDate" class="navItem">Articles by Date</router-link> |
       <router-link to="/myProfile" class="navItem">Profile</router-link> |
-      <router-link to="/createArticle" class="navItem">Create Article</router-link>
     </div>
     <div class="home">
       <h2> ça va être la merde de faire cette page </h2>

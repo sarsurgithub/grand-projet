@@ -94,7 +94,7 @@ export default {
       // servira à avoir un array avec seulement les noms des catégories, pour retrouver les ids des catégories
       console.log('étape1 : créer array de noms')
       this.categoriesNames = this.tags.map(tag => tag.text)
-      console.log(this.categoriesNames)
+      console.log('categ: ' + this.categoriesNames)
 
       // servira à avoir un array sous la forme [{ name : design }, { name: sociology}] pour pouvoir ajouter les catégories
       console.log('étape2 : créer array objets')
@@ -120,10 +120,13 @@ export default {
 
       // envoyer un array de noms de catégories pour obtenir leur ids dans le query
       console.log('étape5 : récup les ids des catégories')
-      const response = await axios
-        .get(`http://localhost:8081/api/categories/getIds?${this.url}`)
-      this.categories = response.data
-      console.log(response)
+      if (this.categoriesNames.length !== 0) {
+        console.log('dans la boucle')
+        const response = await axios
+          .get(`http://localhost:8081/api/categories/getIds?${this.url}`)
+        this.categories = response.data
+        console.log(response)
+      }
 
       // envoyer un article avec son titre, contenu, autheur, et les ids de ses catégories
       console.log('étape6: créer article')
