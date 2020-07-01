@@ -3,7 +3,7 @@
   <div class = 'line'>
       <div class='column'> pas encore </div>
       <div class='column'> {{article.author.username}} </div>
-      <div class='column'> {{article.title}} </div>
+      <div class='column' v-html="article.title"></div>
   </div>
   </router-link>
 </template>
@@ -32,4 +32,14 @@ export default {
     min-width: 0;
     max-width: 100%;
   }
+  p {
+    margin: 0px;
+    color: red;
+  }
+</style>
+
+<style>
+p {
+  margin:0px;
+}
 </style>

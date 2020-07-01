@@ -1,138 +1,16 @@
 <template>
   <div class="editor">
-    <editor-menu-bar :editor="editor" v-slot="{ commands, isActive }">
-      <div class="menubar">
-
-        <button
-          class="menubar__button"
-          :class="{ 'is-active': isActive.bold() }"
-          @click="commands.bold"
-        >
-          <icon name="bold" />
-        </button>
-
-        <button
-          class="menubar__button"
-          :class="{ 'is-active': isActive.italic() }"
-          @click="commands.italic"
-        >
-          <icon name="italic" />
-        </button>
-
-        <button
-          class="menubar__button"
-          :class="{ 'is-active': isActive.strike() }"
-          @click="commands.strike"
-        >
-          <icon name="strike" />
-        </button>
-
-        <button
-          class="menubar__button"
-          :class="{ 'is-active': isActive.underline() }"
-          @click="commands.underline"
-        >
-          <icon name="underline" />
-        </button>
-
-        <button
-          class="menubar__button"
-          :class="{ 'is-active': isActive.code() }"
-          @click="commands.code"
-        >
-          <icon name="code" />
-        </button>
-
-        <button
-          class="menubar__button"
-          :class="{ 'is-active': isActive.paragraph() }"
-          @click="commands.paragraph"
-        >
-          <icon name="paragraph" />
-        </button>
-
-        <button
-          class="menubar__button"
-          :class="{ 'is-active': isActive.heading({ level: 1 }) }"
-          @click="commands.heading({ level: 1 })"
-        >
-          H1
-        </button>
-
-        <button
-          class="menubar__button"
-          :class="{ 'is-active': isActive.heading({ level: 2 }) }"
-          @click="commands.heading({ level: 2 })"
-        >
-          H2
-        </button>
-
-        <button
-          class="menubar__button"
-          :class="{ 'is-active': isActive.heading({ level: 3 }) }"
-          @click="commands.heading({ level: 3 })"
-        >
-          H3
-        </button>
-
-        <button
-          class="menubar__button"
-          :class="{ 'is-active': isActive.bullet_list() }"
-          @click="commands.bullet_list"
-        >
-          <icon name="ul" />
-        </button>
-
-        <button
-          class="menubar__button"
-          :class="{ 'is-active': isActive.ordered_list() }"
-          @click="commands.ordered_list"
-        >
-          <icon name="ol" />
-        </button>
-
-        <button
-          class="menubar__button"
-          :class="{ 'is-active': isActive.blockquote() }"
-          @click="commands.blockquote"
-        >
-          <icon name="quote" />
-        </button>
-
-        <button
-          class="menubar__button"
-          :class="{ 'is-active': isActive.code_block() }"
-          @click="commands.code_block"
-        >
-          <icon name="code" />
-        </button>
-
-        <button
-          class="menubar__button"
-          @click="commands.horizontal_rule"
-        >
-          <icon name="hr" />
-        </button>
-
-        <button
-          class="menubar__button"
-          @click="commands.undo"
-        >
-          <icon name="undo" />
-        </button>
-
-        <button
-          class="menubar__button"
-          @click="commands.redo"
-        >
-          <icon name="redo" />
-        </button>
-
-      </div>
-    </editor-menu-bar>
     <div class="wrapper-editor">
-      <input v-model="title"/>
-      <editor-content class="editor__content" :editor="editor" />
+      <div class='title'>
+        <quill-editor
+            :options="titleOptions"
+            v-model="title"/>
+      </div>
+    </div>
+    <div class='quilleditor'>
+        <quill-editor
+            :options="editorOptions"
+            v-model="description"/>
     </div>
     <template>
       <div>
@@ -153,78 +31,52 @@
 <script>
 import VueTagsInput from '@johmun/vue-tags-input'
 import axios from 'axios'
-import { Editor, EditorContent, EditorMenuBar } from 'tiptap'
-import {
-  Blockquote,
-  CodeBlock,
-  HardBreak,
-  Heading,
-  HorizontalRule,
-  OrderedList,
-  BulletList,
-  ListItem,
-  TodoItem,
-  TodoList,
-  Bold,
-  Code,
-  Italic,
-  Link,
-  Strike,
-  Underline,
-  History
-} from 'tiptap-extensions'
+import 'quill/dist/quill.core.css'
+import 'quill/dist/quill.snow.css'
+import 'quill/dist/quill.bubble.css'
+import { quillEditor } from 'vue-quill-editor'
+
 export default {
   components: {
-    EditorContent,
-    EditorMenuBar,
-    VueTagsInput
+    VueTagsInput,
+    quillEditor
   },
   data () {
     return {
       tag: '',
       tags: [],
       tagsChecking: [],
-      title: 'Mon super Article',
+      title: null,
       categoriesToPost: [],
       categories: [],
       categoriesIds: [],
       categoriesNames: [],
       url: '',
-      editor: new Editor({
-        extensions: [
-          new Blockquote(),
-          new BulletList(),
-          new CodeBlock(),
-          new HardBreak(),
-          new Heading({ levels: [1, 2, 3] }),
-          new HorizontalRule(),
-          new ListItem(),
-          new OrderedList(),
-          new TodoItem(),
-          new TodoList(),
-          new Link(),
-          new Bold(),
-          new Code(),
-          new Italic(),
-          new Strike(),
-          new Underline(),
-          new History()
-        ],
-        content: `
-          <h2>
-            Write your article here,
-          </h2>
-          <blockquote>
-            It's amazing 
-            <br />
-            – mom
-          </blockquote>
-        `,
-        onUpdate: ({ getHTML }) => {
-          this.html = getHTML()
+      description: null,
+      // Options de l'éditeur (quels boutons sont actifs - tu peux trouver la liste ici : https://quilljs.com/docs/modules/toolbar/)
+      editorOptions: {
+        modules: {
+          toolbar: [
+            ['bold', 'italic', 'underline', 'strike'],
+            [{ list: 'ordered' }, { list: 'bullet' }, { list: 'check' }],
+            [{ indent: '-1' }, { indent: '+1' }], // outdent/indent
+            [{ color: [] }, { background: [] }], // dropdown with defaults from theme
+            [{ align: [] }],
+            ['image'],
+            [{ script: 'sub' }, { script: 'super' }], // exposant
+            ['clean'] // "reset formatting" button
+          ]
         },
-        html: 'Update content to see changes'
-      })
+        theme: 'snow',
+        placeholder: 'Insérez du texte ici...'
+      },
+      titleOptions: {
+        modules: {
+          toolbar: []
+        },
+        theme: 'bubble',
+        placeholder: 'Insérez votre titre ici...'
+      }
     }
   },
   beforeDestroy () {
@@ -233,7 +85,7 @@ export default {
   methods: {
 
     afficherHtml: function () {
-      console.log(this.editor.getHTML())
+      console.log(this.description)
     },
 
     async formSubmit () {
@@ -271,18 +123,13 @@ export default {
       const response = await axios
         .get(`http://localhost:8081/api/categories/getIds?${this.url}`)
       this.categories = response.data
-      // .then(response => {
-      //   console.log('entrée dans la requête des ids')
-      //   this.categories = response.data
-      //   console.log(this.categories)
-      // })
       console.log(response)
 
       // envoyer un article avec son titre, contenu, autheur, et les ids de ses catégories
       console.log('étape6: créer article')
       await axios.post('http://localhost:8081/api/articles', {
         title: this.title,
-        content: this.editor.getHTML(),
+        content: this.description,
         author_id: 1,
         categories_ids: this.categories
       })
@@ -342,5 +189,30 @@ export default {
   .vue-tags-input {
     max-width: none !important;
     margin-bottom: 20px;
+  }
+  .ql-toolbar {
+    border: none;
+    margin-bottom: 20px !important;
+  }
+  .ql-toolbar.ql-snow {
+    border: none;
+    border-bottom:  5px solid #FFFE00 !important;
+  }
+  .ql-container.ql-snow {
+    border: none;
+  }
+  .title {
+    padding: 10px;
+    font-weight: 800;
+  }
+  .quilleditor {
+    background-color: white;
+    margin-bottom: 30px;
+    color: black;
+    border-radius: 20px;
+    border: 5px solid #FFFE00 !important;
+  }
+  .quill-editor {
+    border-radius: 20px !important;
   }
 </style>

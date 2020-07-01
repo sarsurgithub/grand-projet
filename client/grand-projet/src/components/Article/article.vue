@@ -6,8 +6,8 @@
       {{article.author.username}}
     </router-link>
     </div>
-    <h1 class='title'>{{article.title}}</h1>
-    <div class='text'>{{article.content}}</div>
+    <h1 v-html="article.title" class='title'></h1>
+    <div v-html="article.content" class='text'></div>
   </div>
 </template>
 
