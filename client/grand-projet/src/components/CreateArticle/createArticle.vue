@@ -84,10 +84,6 @@ export default {
   },
   methods: {
 
-    afficherHtml: function () {
-      console.log(this.description)
-    },
-
     async formSubmit () {
       console.log('nous entrons dans la fonction formSubmit')
 
@@ -108,8 +104,10 @@ export default {
       for (let i = 0; i < this.categoriesNames.length; i++) {
         if (i === this.categoriesNames.length - 1) {
           this.url += 'name=' + this.categoriesNames[i]
+          console.log('url dans boucle: ' + this.url)
         } else {
           this.url += 'name=' + this.categoriesNames[i] + '&'
+          console.log('url pas index 1 :' + this.url)
         }
       }
       console.log('url: ' + this.url)
@@ -136,6 +134,18 @@ export default {
         author_id: 1,
         categories_ids: this.categories
       })
+
+      // remettre toutes les valeurs à leur origine, maybe rediriger vers la page de l'article ? ou page de l'auteur ?
+      this.url = ''
+      this.description = null
+      this.categories = []
+      this.tag = ''
+      this.tags = []
+      this.tagsChecking = []
+      this.title = null
+      this.categoriesToPost = []
+      this.categoriesIds = []
+      this.categoriesNames = []
     }
   }
 }
@@ -188,6 +198,7 @@ export default {
   .ti-tag {
     color:black !important;
     background-color: yellow !important;
+    border-radius: 5px !important;
   }
   .vue-tags-input {
     max-width: none !important;

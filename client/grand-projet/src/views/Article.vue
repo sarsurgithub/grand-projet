@@ -66,7 +66,5 @@ export default {
   border-radius: 10px;
 
 }
-.wrapper {
-  padding: 15px 20% 15px 20%;
-}
+
 </style>

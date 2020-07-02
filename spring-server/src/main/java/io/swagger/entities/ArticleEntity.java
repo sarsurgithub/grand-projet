@@ -12,6 +12,7 @@ public class ArticleEntity implements Serializable{
     private long id;
 
     private String title;
+    @Lob
     private String content;
     @ElementCollection
     private List<String> photoUrls = null;

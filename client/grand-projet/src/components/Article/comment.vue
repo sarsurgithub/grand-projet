@@ -1,7 +1,8 @@
 <template>
-  <div class='wrapper'>
+  <div class='boite'>
     <div class='title'>{{comment.title}}</div>
     <div class='text'>{{comment.content}}</div>
+    <hr>
   </div>
 </template>
 
@@ -12,8 +13,4 @@ export default {
 </script>
 
 <style scoped>
-.title{
-  color: white;
-  font-weight:800;
-}
 </style>
