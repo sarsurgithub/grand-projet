@@ -7,19 +7,17 @@
         <router-link to="/myProfile" class="navItem">Profile</router-link> |
         <router-link to="/Auth" class="navItem">Login</router-link>
     </div>
-    <div>
-      <tableau></tableau>
-    </div>
+    <formulaire></formulaire>
   </div>
 </template>
 
 <script>
-
-import tableau from '@/components/ArticlesByDate/byDate-table.vue'
+import formulaire from '@/components/Auth/formulaire.vue'
 
 export default {
   components: {
-    tableau
+    formulaire
+
   }
 }
 </script>
@@ -27,22 +25,27 @@ export default {
 <style lang="scss" scoped>
 #nav {
   padding: 30px;
-  color: #F51FFF;
+  color: #05FFFF;
   a {
     font-weight: bold;
-    color: #F51FFF;
+    color: #05FFFF;
 
     &.router-link-exact-active {
       color: black;
-      background-color :#F51FFF ;
+      background-color :#05FFFF ;
     }
   }
 }
 
 .navItem {
   padding: 5px;
-  border: 3px solid #F51FFF;
+  border: 3px solid #05FFFF;
   border-radius: 10px;
 
 }
+
+.wrapper {
+  margin-bottom: 10%;
+}
+
 </style>

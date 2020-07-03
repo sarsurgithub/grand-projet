@@ -8,6 +8,8 @@ import TheirProfile from '../views/TheirProfile.vue'
 import MyProfile from '../views/MyProfile.vue'
 import CreateArticle from '../views/CreateArticle'
 import Category from '../views/Category.vue'
+import Auth from '../views/Auth.vue'
+import CreateAccount from '../views/CreateAccount.vue'
 
 Vue.use(VueRouter)
 
@@ -51,6 +53,16 @@ const routes = [
     path: '/category/:id',
     name: 'Category',
     component: Category
+  },
+  {
+    path: '/auth',
+    name: 'Auth',
+    component: Auth
+  },
+  {
+    path: '/createAccount',
+    name: 'CreateAccount',
+    component: CreateAccount
   }
 ]
 
