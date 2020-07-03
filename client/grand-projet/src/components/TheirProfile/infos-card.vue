@@ -1,5 +1,5 @@
 <template>
-  <div class='wrapper'>
+  <div class='boite'>
     <img class='profilePic' src="@/assets/yellowValidation.png"/>
     <p> {{user.username}} </p>
   </div>
@@ -12,13 +12,13 @@ export default {
 </script>
 
 <style scoped>
-  .wrapper {
+  .boite {
     background: #FFFFFF;
     border: 5px solid #05FFFF;
     border-radius: 20px;
-    margin-left: 7%;
-    margin-right: 7%;
     justify-content: space-evenly;
+    padding: 25px 45px;
+    margin-right: 7%;
   }
 
   img {

@@ -39,6 +39,12 @@ export default {
         this.user = response.data
       }
       )
+    axios
+      .get(`http://localhost:8081/api/articles/byUser?user=${this.$route.params.id}`)
+      .then(response => {
+        console.log(response)
+        this.articles = response.data
+      })
   }
 }
 
@@ -67,11 +73,8 @@ export default {
 }
 .wrapper {
   display: flex;
-}
-#articleCard {
-  border: 5px solid #05FFFF;
-  background-color: white;
-  border-radius: 20px;
+  align-items: flex-start;
+  margin: 60px 10%;
 }
 
 </style>

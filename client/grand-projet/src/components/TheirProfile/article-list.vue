@@ -1,9 +1,11 @@
 <template>
-  <div class='wrapper'>
+  <div class='boite'>
     <div class="articlesTitle"> Articles
       </div>
     <div class='article' v-for="article in articles" :key="article.id">
+      <router-link class='link' :to="{ name: 'Article', params: { id : article.id }}">
       {{article.title}}
+      </router-link>
     </div>
   </div>
 </template>
@@ -30,8 +32,13 @@ export default {
     padding-right: 150px;
     color: black;
   }
-  .wrapper {
+  .boite {
+    border: 5px solid #05FFFF;
+    background-color: white;
+    border-radius: 20px;
     display: flex;
     flex-direction: column ;
+    width: 717px;
+    min-height: 571px;
   }
 </style>
