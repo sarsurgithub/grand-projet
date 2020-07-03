@@ -1,5 +1,6 @@
 package io.swagger.api.endpoints;
 
+import io.swagger.articles.api.ApiUtil;
 import io.swagger.articles.api.ArticlesApi;
 import io.swagger.articles.api.model.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -17,6 +18,8 @@ import io.swagger.services.utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -102,6 +105,26 @@ public class ArticlesApiController implements ArticlesApi {
         return  ResponseEntity.ok(correspondingArticles);
 
     }
+
+    public ResponseEntity<List<GetArticle>> findArticlesByUser(@NotNull @ApiParam(value = "user to filter by", required = true) @Valid @RequestParam(value = "user", required = true) Long user) {
+        UserEntity userEntity = userRepository.findById(user).orElseThrow(() -> new EntityNotFoundException("This user does not exist"));
+        List<GetArticle> articlesToReturn = new ArrayList<>();
+
+        for (ArticleEntity articleEntity : articleRepository.findAll()) {
+
+            GetArticle article = utils.toGetArticle(articleEntity);
+            UserEntity authorOfTheArticle = articleEntity.getAuthor();
+
+            if ( authorOfTheArticle == userEntity ) {
+
+                articlesToReturn.add(article);
+            }
+        }
+
+        return ResponseEntity.ok(articlesToReturn);
+
+    }
+
 
     public ResponseEntity<GetArticle> findArticleById(@ApiParam(value = "ID of the article to return",required=true) @PathVariable("articleId") Long articleId) {
         ArticleEntity articleEntity = articleRepository.findById(articleId).orElseThrow(() -> new EntityNotFoundException("This article does not exist"));;
@@ -221,7 +244,6 @@ public class ArticlesApiController implements ArticlesApi {
         List<GetComment> comments = article.getComments();
         return ResponseEntity.ok(comments);
     }
-
 
     public ResponseEntity<Void> updateCommentbyId(@ApiParam(value = "ID of the comment that needs to be updated",required=true) @PathVariable("commentId") Long commentId,@ApiParam(value = "ID of the article",required=true) @PathVariable("articleId") Long articleId,@ApiParam(value = "updated comment"  )  @Valid @RequestBody CreateComment createComment) {
         CommentEntity commentEntitytoUpdate = commentRepository.findById(commentId).get();

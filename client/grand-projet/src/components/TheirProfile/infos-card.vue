@@ -13,14 +13,9 @@ export default {
 
 <style scoped>
   .wrapper {
-    top: 464px;
-    left: 57px;
-    width: 338px;
-    height: 129px;
-    background: #FFFFFF 0% 0% no-repeat padding-box;
+    background: #FFFFFF;
     border: 5px solid #05FFFF;
     border-radius: 20px;
-    opacity: 1;
     margin-left: 7%;
     margin-right: 7%;
     justify-content: space-evenly;

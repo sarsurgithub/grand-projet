@@ -30,7 +30,7 @@ import javax.validation.constraints.*;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2020-06-26T15:04:15.423012+02:00[Europe/Zurich]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2020-07-03T09:25:10.824344+02:00[Europe/Zurich]")
 
 @Validated
 @Api(value = "articles", description = "the articles API")
@@ -144,6 +144,28 @@ public interface ArticlesApi {
         produces = { "application/json" }, 
         method = RequestMethod.GET)
     default ResponseEntity<List<GetArticle>> findArticlesByDate() {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"createdAt\" : \"12-02-2013H12-05\", \"photoUrls\" : [ \"photoUrls\", \"photoUrls\" ], \"comments\" : [ { \"author\" : { \"firstName\" : \"firstName\", \"lastName\" : \"lastName\", \"id\" : 6, \"email\" : \"email\", \"username\" : \"username\" }, \"id\" : 1, \"title\" : \"article nul\", \"content\" : \"tu pourrais faire mieux\" }, { \"author\" : { \"firstName\" : \"firstName\", \"lastName\" : \"lastName\", \"id\" : 6, \"email\" : \"email\", \"username\" : \"username\" }, \"id\" : 1, \"title\" : \"article nul\", \"content\" : \"tu pourrais faire mieux\" } ], \"author\" : { \"firstName\" : \"firstName\", \"lastName\" : \"lastName\", \"id\" : 6, \"email\" : \"email\", \"username\" : \"username\" }, \"id\" : 0, \"lastUpdateAt\" : \"12-02-2013H12-05\", \"categories\" : [ { \"name\" : \"name\", \"id\" : 5 }, { \"name\" : \"name\", \"id\" : 5 } ], \"title\" : \"title\", \"content\" : \"content\", \"views\" : 456 }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+            }
+        });
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
+
+
+    @ApiOperation(value = "Finds articles by user", nickname = "findArticlesByUser", notes = "", response = GetArticle.class, responseContainer = "List", tags={ "articles", })
+    @ApiResponses(value = { 
+        @ApiResponse(code = 200, message = "successful operation", response = GetArticle.class, responseContainer = "List"),
+        @ApiResponse(code = 400, message = "Invalid category") })
+    @RequestMapping(value = "/articles/byUser",
+        produces = { "application/json" }, 
+        method = RequestMethod.GET)
+    default ResponseEntity<List<GetArticle>> findArticlesByUser(@NotNull @ApiParam(value = "user to filter by", required = true) @Valid @RequestParam(value = "user", required = true) Long user) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {

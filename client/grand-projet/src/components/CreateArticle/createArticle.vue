@@ -45,7 +45,6 @@ export default {
     return {
       tag: '',
       tags: [],
-      tagsChecking: [],
       title: null,
       categoriesToPost: [],
       categories: [],
@@ -78,9 +77,6 @@ export default {
         placeholder: 'Insérez votre titre ici...'
       }
     }
-  },
-  beforeDestroy () {
-    this.editor.destroy()
   },
   methods: {
 
@@ -134,18 +130,16 @@ export default {
         author_id: 1,
         categories_ids: this.categories
       })
-
       // remettre toutes les valeurs à leur origine, maybe rediriger vers la page de l'article ? ou page de l'auteur ?
       this.url = ''
       this.description = null
       this.categories = []
-      this.tag = ''
       this.tags = []
-      this.tagsChecking = []
       this.title = null
       this.categoriesToPost = []
       this.categoriesIds = []
       this.categoriesNames = []
+      console.log('url au début: ' + this.url)
     }
   }
 }

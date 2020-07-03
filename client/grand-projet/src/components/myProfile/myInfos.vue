@@ -1,11 +1,10 @@
 <template>
-  <div class='wrapper' id='profileInfos'>
+  <div class='boite' id='profileInfos'>
       <img class='profilePic' src="@/assets/yellowValidation.png"/>
       <p> Username: {{user.username}} </p>
       <p> Firstname: {{user.firstName}} </p>
       <p> Lastname: {{user.lastName}} </p>
-      <p> e-mail: {{user.eMail}} </p>
-      <p> Password: {{user.password}} </p>
+      <p> e-mail: {{user.email}} </p>
   </div>
 </template>
 
@@ -16,20 +15,19 @@ export default {
 </script>
 
 <style scoped>
-  .wrapper {
-    top: 470px;
-    left: 139px;
-    width: 434px;
-    background: #FFFFFF 0% 0% no-repeat padding-box;
+  .boite {
+    background: #FFFFFF;
     border: 5px solid #05FFFF;
     border-radius: 20px;
-    opacity: 1;
-    position:absolute;
+    text-align: left;
+    margin-right: 5%;
   }
 
   #profileInfos {
     flex-direction: column;
     justify-items: start;
+    justify-content: start;
+    align-items: start;
   }
 
   img {
@@ -37,10 +35,12 @@ export default {
     height: 100px;
     padding-top: 15px;
     padding-right:15px;
+    align-self: center;
+    text-align: center;
   }
   p {
     color: black;
-    padding-top: 10px;
+    padding: 20px;
     font-weight: bold;
   }
 </style>

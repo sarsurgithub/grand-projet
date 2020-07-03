@@ -67,4 +67,8 @@ export default {
 
 }
 
+.wrapper {
+  margin-bottom: 10%;
+}
+
 </style>
