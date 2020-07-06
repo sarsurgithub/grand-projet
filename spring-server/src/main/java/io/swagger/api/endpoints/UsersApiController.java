@@ -16,6 +16,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -34,6 +35,8 @@ public class UsersApiController implements UsersApi {
     UserRepository userRepository;
     @Autowired
     ArticleRepository articleRepository;
+
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     private static final Logger log = LoggerFactory.getLogger(UsersApiController.class);
 
@@ -85,6 +88,8 @@ public class UsersApiController implements UsersApi {
     public ResponseEntity<Void> registerUser(@ApiParam(value = "Created user object" ,required=true )  @Valid @RequestBody CreateUser createUser) {
 
         UserEntity userEntity = utils.fromCreateUsertoUserEntity(createUser);
+
+        userEntity.setPassword(bCryptPasswordEncoder.encode(userEntity.getPassword()));
 
         userRepository.save(userEntity);
 

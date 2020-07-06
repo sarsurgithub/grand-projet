@@ -4,6 +4,7 @@ io/swagger/configuration/CustomInstantDeserializer$9.class
 io/swagger/repositories/CategoryRepository.class
 io/swagger/configuration/CustomInstantDeserializer$2.class
 io/swagger/configuration/CustomInstantDeserializer$12.class
+io/swagger/api/security/SecurityConstants.class
 io/swagger/api/util/ApiResponseMessage.class
 io/swagger/articles/api/model/GetComment.class
 io/swagger/articles/api/CategoriesApi.class
@@ -16,6 +17,7 @@ io/swagger/repositories/ArticleRepository.class
 io/swagger/articles/api/model/CreateUser.class
 io/swagger/configuration/CustomInstantDeserializer$FromIntegerArguments.class
 io/swagger/articles/api/ArticlesApi.class
+io/swagger/api/security/JWTAuthorizationFilter.class
 io/swagger/configuration/CustomInstantDeserializer$3.class
 io/swagger/configuration/CorsConfig.class
 io/swagger/Swagger2SpringBoot.class
@@ -47,6 +49,7 @@ io/swagger/configuration/JacksonConfiguration.class
 io/swagger/articles/api/model/GetCategory.class
 io/swagger/configuration/CustomInstantDeserializer.class
 io/swagger/articles/api/model/UpdateArticle.class
+io/swagger/api/security/JWTAuthenticationFilter.class
 io/swagger/api/exceptions/NotFoundException.class
 io/swagger/articles/api/model/CreateArticle.class
 io/swagger/configuration/CustomInstantDeserializer$1.class
