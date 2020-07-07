@@ -1,6 +1,5 @@
 package io.swagger.api.endpoints;
 
-import io.swagger.articles.api.ApiUtil;
 import io.swagger.articles.api.ArticlesApi;
 import io.swagger.articles.api.model.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -19,8 +18,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -136,6 +135,7 @@ public class ArticlesApiController implements ArticlesApi {
 
 
     public ResponseEntity<List<GetArticle>> findArticlesByDate() {
+
         List<GetArticle> articles = new ArrayList<>();
 
         for (ArticleEntity articleEntity : articleRepository.findAllByOrderByLastUpdateAt()) {
@@ -150,33 +150,49 @@ public class ArticlesApiController implements ArticlesApi {
 
     public ResponseEntity<Void> updateArticleById(@ApiParam(value = "ID of article that needs to be updated",required=true) @PathVariable("articleId") Long articleId,@ApiParam(value = "updated article" ,required=true )  @Valid @RequestBody UpdateArticle updateArticle) {
         ArticleEntity articleEntity = articleRepository.findById(articleId).orElseThrow(() -> new EntityNotFoundException("This article does not exist"));
+        String id = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
 
-        Iterable<CategoryEntity> categoriesIte = categoryRepository.findAllById(updateArticle.getCategoriesIds());
-        List<CategoryEntity> categories = null ;
+        Long idLong = Long.parseLong(id);
+        if ( articleEntity.getAuthor() != null && articleEntity.getAuthor().getId() == idLong ) {
+            Iterable<CategoryEntity> categoriesIte = categoryRepository.findAllById(updateArticle.getCategoriesIds());
+            List<CategoryEntity> categories = null ;
 
-        for(CategoryEntity category : categoriesIte) {
-            categories.add(category);
+            for(CategoryEntity category : categoriesIte) {
+                categories.add(category);
+            }
+
+            articleEntity = utils.updateArticle(updateArticle, articleEntity);
+            articleEntity.setCategories(categories);
+
+
+            //ici on n'update pas l'auteur puisque celui-ci ne peut pas changer, est-ce que c'est possible de le faire comme ça ?
+
+            URI location = ServletUriComponentsBuilder
+                    .fromCurrentRequest().path("/{id}")
+                    .buildAndExpand(articleEntity.getId()).toUri();
+
+            articleRepository.save(articleEntity);
+
+            return ResponseEntity.created(location).build();
+        } else {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
-
-        articleEntity = utils.updateArticle(updateArticle, articleEntity);
-        articleEntity.setCategories(categories);
-
-
-        //ici on n'update pas l'auteur puisque celui-ci ne peut pas changer, est-ce que c'est possible de le faire comme ça ?
-
-        URI location = ServletUriComponentsBuilder
-                .fromCurrentRequest().path("/{id}")
-                .buildAndExpand(articleEntity.getId()).toUri();
-
-        articleRepository.save(articleEntity);
-
-        return ResponseEntity.created(location).build();
     }
 
 
     public ResponseEntity<Void> deleteArticleById(@ApiParam(value = "Article id to delete",required=true) @PathVariable("articleId") Long articleId) {
-        articleRepository.deleteById(articleId);
-        return ResponseEntity.ok().build();
+        ArticleEntity articleEntity = articleRepository.findById(articleId).get();
+
+        String id = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
+
+        Long idLong = Long.parseLong(id);
+        if ( articleEntity.getAuthor() != null && articleEntity.getAuthor().getId() == idLong ) {
+            articleRepository.deleteById(articleId);
+            return ResponseEntity.ok().build();
+        } else {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
+
     }
 
 
@@ -213,20 +229,30 @@ public class ArticlesApiController implements ArticlesApi {
     public ResponseEntity<Void> deleteComment(@ApiParam(value = "ID of the comment to delete",required=true) @PathVariable("commentId") Long commentId,@ApiParam(value = "Article ID",required=true) @PathVariable("articleId") Long articleId) {
         ArticleEntity article = articleRepository.findById(articleId).orElseThrow(() -> new EntityNotFoundException("This article does not exist"));
         List<CommentEntity> comments = article.getComments();
+        CommentEntity commentOutside = null;
+
+        String id = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
+        Long idLong = Long.parseLong(id);
 
         for (Iterator<CommentEntity> it = comments.iterator(); it.hasNext();) {
             CommentEntity comment = it.next();
-            if (comment.getId() == commentId){
+
+            if (comment.getId() == commentId) {
+                commentOutside = comment;
                 it.remove();
             }
         }
 
-        article.setComments(comments);
-        articleRepository.save(article);
+        if (commentOutside.getAuthor() != null && commentOutside.getAuthor().getId() == idLong) {
 
-        commentRepository.deleteById(commentId);
-        return ResponseEntity.ok().build();
+            article.setComments(comments);
+            articleRepository.save(article);
 
+            commentRepository.deleteById(commentId);
+            return ResponseEntity.ok().build();
+        } else {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
     }
 
 
@@ -248,16 +274,24 @@ public class ArticlesApiController implements ArticlesApi {
     public ResponseEntity<Void> updateCommentbyId(@ApiParam(value = "ID of the comment that needs to be updated",required=true) @PathVariable("commentId") Long commentId,@ApiParam(value = "ID of the article",required=true) @PathVariable("articleId") Long articleId,@ApiParam(value = "updated comment"  )  @Valid @RequestBody CreateComment createComment) {
         CommentEntity commentEntitytoUpdate = commentRepository.findById(commentId).get();
 
-        commentEntitytoUpdate.setTitle(createComment.getTitle());
-        commentEntitytoUpdate.setContent(createComment.getContent());
+        String id = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
+        Long idLong = Long.parseLong(id);
 
-        URI location = ServletUriComponentsBuilder
-                .fromCurrentRequest().build().toUri();
+        if (commentEntitytoUpdate.getAuthor() != null && commentEntitytoUpdate.getAuthor().getId() == idLong) {
 
-        commentRepository.save(commentEntitytoUpdate);
+            commentEntitytoUpdate.setTitle(createComment.getTitle());
+            commentEntitytoUpdate.setContent(createComment.getContent());
 
-        return ResponseEntity.created(location).build();
+            URI location = ServletUriComponentsBuilder
+                    .fromCurrentRequest().build().toUri();
 
+            commentRepository.save(commentEntitytoUpdate);
+
+            return ResponseEntity.created(location).build();
+
+        } else {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
     }
 
     // fonctions
