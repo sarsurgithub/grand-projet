@@ -15,7 +15,10 @@ import io.swagger.services.utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -35,6 +38,8 @@ public class UsersApiController implements UsersApi {
     @Autowired
     ArticleRepository articleRepository;
 
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
+
     private static final Logger log = LoggerFactory.getLogger(UsersApiController.class);
 
     private final ObjectMapper objectMapper;
@@ -42,26 +47,35 @@ public class UsersApiController implements UsersApi {
     private final HttpServletRequest request;
 
     @org.springframework.beans.factory.annotation.Autowired
-    public UsersApiController(ObjectMapper objectMapper, HttpServletRequest request) {
+    public UsersApiController(ObjectMapper objectMapper, HttpServletRequest request, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.objectMapper = objectMapper;
         this.request = request;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
     public ResponseEntity<Void> deleteUser(@ApiParam(value = "The name that needs to be deleted",required=true) @PathVariable("userId") Long userId) {
 
         UserEntity author = userRepository.findById(userId).orElseThrow(() -> new EntityNotFoundException("This user does not exist"));
 
-        List<ArticleEntity> articles = articleRepository.findAllByAuthor(author);
+        String id = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
+        Long idLong = Long.parseLong(id);
 
-        for( ArticleEntity article : articles) {
-            article.setAuthor(null);
+        if (userId == idLong) {
+
+            List<ArticleEntity> articles = articleRepository.findAllByAuthor(author);
+
+            for( ArticleEntity article : articles) {
+                article.setAuthor(null);
+            }
+
+            articleRepository.saveAll(articles);
+            userRepository.deleteById(userId);
+
+            return ResponseEntity.ok().build();
+
+        } else {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
-
-        articleRepository.saveAll(articles);
-        userRepository.deleteById(userId);
-
-        return ResponseEntity.ok().build();
-
     }
 
     public ResponseEntity<GetUser> getUserById(@ApiParam(value = "The name that needs to be fetched.",required=true) @PathVariable("userId") Long userId) {
@@ -86,6 +100,8 @@ public class UsersApiController implements UsersApi {
 
         UserEntity userEntity = utils.fromCreateUsertoUserEntity(createUser);
 
+        userEntity.setPassword(bCryptPasswordEncoder.encode(userEntity.getPassword()));
+
         userRepository.save(userEntity);
 
         URI location = ServletUriComponentsBuilder
@@ -97,18 +113,25 @@ public class UsersApiController implements UsersApi {
     }
 
     public ResponseEntity<Void> updateUser(@ApiParam(value = "name that need to be updated",required=true) @PathVariable("userId") Long userId,@ApiParam(value = "Updated user object" ,required=true )  @Valid @RequestBody UpdateUser updateUser) {
-        UserEntity userEntity = userRepository.findById(userId).get();
+        UserEntity userEntity = userRepository.findById(userId).orElseThrow(() -> new EntityNotFoundException("This user does not exist"));
 
-        userEntity = utils.updateUser(updateUser, userEntity);
+        String id = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
+        Long idLong = Long.parseLong(id);
 
+        if (userId == idLong) {
 
-        URI location = ServletUriComponentsBuilder
-                .fromCurrentRequest().build().toUri();
+            userEntity = utils.updateUser(updateUser, userEntity);
 
-        userRepository.save(userEntity);
+            URI location = ServletUriComponentsBuilder
+                    .fromCurrentRequest().build().toUri();
 
-        return ResponseEntity.created(location).build();
+            userRepository.save(userEntity);
+
+            return ResponseEntity.created(location).build();
+
+        } else {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
     }
-
 
 }
