@@ -5,11 +5,27 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    connectedUser: null,
+    authToken: null
   },
   mutations: {
+    SET_CONNECTED_USER (state, user) {
+      state.connectedUser = user
+    },
+    SET_AUTH_TOKEN (state, token) {
+      state.authToken = token
+    }
   },
   actions: {
+    setConnectedUser ({ commit }, connectedUserId) {
+      commit('SET_CONNECTED_USER', connectedUserId)
+    },
+    setAuthToken ({ commit }, connectedUserId) {
+      commit('SET_AUTH_TOKEN', connectedUserId)
+    }
   },
-  modules: {
+  getters: {
+    GET_CONNECTED_USER: (state) => state.connectedUser,
+    GET_AUTH_TOKEN: (state) => state.authToken
   }
 })

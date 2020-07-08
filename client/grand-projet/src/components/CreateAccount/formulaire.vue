@@ -1,25 +1,64 @@
 <template>
     <div class='card'>
-      <form>
-        <label for="uname">Username: </label>
-        <input type="text" id="uname" name="username" placeholder="Your username..">
 
-        <label for="fname">First Name: </label>
-        <input type="text" id="fname" name="firstName" placeholder="Your first name..">
+        <p>Username: </p>
+        <input v-model="username" type="text" id="uname" name="username" placeholder="Your username..">
 
-        <label for="lname">Last Name: </label>
-        <input type="text" id="lname" name="lastName" placeholder="Your last name..">
+        <p >First Name: </p>
+        <input v-model="firstName" type="text" id="fname" name="firstName" placeholder="Your first name..">
 
-        <label for="email">E-mail: </label>
-        <input type="text" id="email" name="email" placeholder="Your email..">
+        <p>Last Name: </p>
+        <input v-model="lastName" type="text" id="lname" name="lastName" placeholder="Your last name..">
 
-        <label for="pword">Password: </label>
-        <input type="text" id="pword" name="password" placeholder="Your password..">
+        <p>E-mail: </p>
+        <input v-model="email" type="text" id="email" name="email" placeholder="Your email..">
 
-        <input type="submit" value="Create Account">
-      </form>
+        <p>Password: </p>
+        <input v-model="password" type="text" id="pword" name="password" placeholder="Your password..">
+
+        <button @click="formSubmit()" type="submit" >
+          Create Account
+        </button>
+
     </div>
 </template>
+
+<script>
+import axios from 'axios'
+export default {
+  data: function () {
+    return {
+      username: null,
+      firstName: null,
+      lastName: null,
+      email: null,
+      password: null
+    }
+  },
+  methods: {
+
+    async formSubmit () {
+      console.log('nous entrons dans la fonction formSubmit')
+
+      axios.post('http://localhost:8081/api/users', {
+        username: this.username,
+        firstName: this.firstName,
+        lastName: this.lastName,
+        email: this.email,
+        password: this.password
+      })
+      console.log(this.username)
+
+      // remettre toutes les valeurs à leur origine, maybe rediriger vers la page de l'article ? ou page de l'auteur ?
+      this.username = null
+      this.firstName = null
+      this.lastName = null
+      this.email = null
+      this.password = null
+    }
+  }
+}
+</script>
 
 <style scoped>
 .createAccount {
@@ -57,7 +96,7 @@ input[type=text] {
   box-sizing: border-box;
 }
 
-input[type=submit] {
+button[type=submit] {
   margin: 8px 0;
   cursor: pointer;
   color: black;
@@ -69,7 +108,7 @@ input[type=submit] {
   font-size: 16px;
 }
 
-input[type=submit]:hover {
+button[type=submit]:hover {
   background-color: #05FFFF;
   color: white;
   margin: 8px 0;

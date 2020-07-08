@@ -1,19 +1,68 @@
 <template>
     <div class='card'>
-      <form>
+      <div class='form'>
         <label for="uname">Username: </label>
-        <input type="text" id="uname" name="username" placeholder="Your username..">
+        <input v-model="username" type="text" id="uname" name="username" placeholder="Your username..">
 
         <label for="pword">Password: </label>
-        <input type="text" id="pword" name="password" placeholder="Your password..">
+        <input v-model="password" type="password" id="pword" name="password" placeholder="Your password..">
 
-        <input type="submit" value="Connexion">
+        <button type="submit" @click="formSubmit()">
+          login
+        </button>
         <a href='http://localhost:8080/createAccount' class='createAccount'>
         create an account
-      </a>
-      </form>
+        </a>
+      </div>
     </div>
 </template>
+
+<script>
+import axios from 'axios'
+import VueJwtDecode from 'vue-jwt-decode'
+
+export default {
+  data: function () {
+    return {
+      username: null,
+      password: null,
+      decoded: null,
+      token: null,
+      connectedUserId: null
+    }
+  },
+  methods: {
+    async formSubmit () {
+      console.log('nous entrons dans la fonction formSubmit')
+
+      axios.post('http://localhost:8081/api/login', {
+        username: this.username,
+        password: this.password
+      })
+        .then((response) => {
+          this.token = response.headers.authorization
+          this.token = this.token.substring(7)
+
+          // set the connected User Id globally
+          this.decoded = VueJwtDecode.decode(this.token)
+          this.connectedUserId = this.decoded.sub
+          this.$store.dispatch('setConnectedUser', this.connectedUserId)
+          console.log(this.$store.getters.GET_CONNECTED_USER)
+
+          // set the token globally
+          this.$store.dispatch('setAuthToken', this.token)
+          console.log(this.$store.getters.GET_AUTH_TOKEN)
+        })
+
+      console.log(this.username)
+
+      // remettre toutes les valeurs à leur origine, maybe rediriger vers la page de l'article ? ou page de l'auteur ?
+      this.username = null
+      this.password = null
+    }
+  }
+}
+</script>
 
 <style scoped>
 .createAccount {
@@ -38,10 +87,10 @@ a {
 p {
     padding: 20px;
 }
-form {
+.form {
   padding: 20px;
 }
-input[type=text] {
+input, #pword {
   width: 100%;
   padding: 12px 20px;
   margin: 8px 0;
@@ -51,7 +100,7 @@ input[type=text] {
   box-sizing: border-box;
 }
 
-input[type=submit] {
+button[type=submit] {
   margin: 8px 0;
   cursor: pointer;
   color: black;
@@ -63,7 +112,7 @@ input[type=submit] {
   font-size: 16px;
 }
 
-input[type=submit]:hover {
+button[type=submit]:hover {
   background-color: #05FFFF;
   color: white;
   margin: 8px 0;

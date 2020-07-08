@@ -72,7 +72,12 @@ export default {
         axios.post(`http://localhost:8081/api/articles/${this.id}/comments`, {
           title: this.title,
           content: this.description,
-          author: 1
+          author: this.$store.getters.GET_CONNECTED_USER
+        },
+        {
+          headers: {
+            Authorization: 'Bearer ' + this.$store.getters.GET_AUTH_TOKEN
+          }
         })
         this.commentIsActive = false
         this.buttonContent = 'new Comment'

@@ -82,6 +82,7 @@ export default {
 
     async formSubmit () {
       console.log('nous entrons dans la fonction formSubmit')
+      console.log(this.$store)
 
       // servira à avoir un array avec seulement les noms des catégories, pour retrouver les ids des catégories
       console.log('étape1 : créer array de noms')
@@ -108,13 +109,16 @@ export default {
       }
       console.log('url: ' + this.url)
 
-      // envoyer un array des catégories à potentiellement ajouter, les doublons sont gérés par le backend
-      console.log('étape4 créer les catégories')
-      await axios.post('http://localhost:8081/api/categories', this.categoriesToPost)
-
       // envoyer un array de noms de catégories pour obtenir leur ids dans le query
       console.log('étape5 : récup les ids des catégories')
       if (this.categoriesNames.length !== 0) {
+        // envoyer un array des catégories à potentiellement ajouter, les doublons sont gérés par le backend
+        console.log('étape4 créer les catégories')
+        await axios.post('http://localhost:8081/api/categories', this.categoriesToPost, {
+          headers: {
+            Authorization: 'Bearer ' + this.$store.getters.GET_AUTH_TOKEN
+          }
+        })
         console.log('dans la boucle')
         const response = await axios
           .get(`http://localhost:8081/api/categories/getIds?${this.url}`)
@@ -127,9 +131,15 @@ export default {
       await axios.post('http://localhost:8081/api/articles', {
         title: this.title,
         content: this.description,
-        author_id: 1,
+        author_id: this.$store.getters.GET_CONNECTED_USER,
         categories_ids: this.categories
+      },
+      {
+        headers: {
+          Authorization: 'Bearer ' + this.$store.getters.GET_AUTH_TOKEN
+        }
       })
+
       // remettre toutes les valeurs à leur origine, maybe rediriger vers la page de l'article ? ou page de l'auteur ?
       this.url = ''
       this.description = null

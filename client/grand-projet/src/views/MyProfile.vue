@@ -39,15 +39,13 @@ export default {
   },
   mounted () {
     axios
-      .get(`http://localhost:8081/api/users/${this.connectedUserId}`)
+      .get(`http://localhost:8081/api/users/${this.$store.getters.GET_CONNECTED_USER}`)
       .then(response => {
-        console.log(response)
         this.user = response.data
       })
     axios
-      .get(`http://localhost:8081/api/articles/byUser?user=${this.connectedUserId}`)
+      .get(`http://localhost:8081/api/articles/byUser?user=${this.$store.getters.GET_CONNECTED_USER}`)
       .then(response => {
-        console.log(response)
         this.articles = response.data
       })
   }

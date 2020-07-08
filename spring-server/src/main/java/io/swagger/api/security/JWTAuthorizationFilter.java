@@ -1,5 +1,6 @@
 package io.swagger.api.security;
 
+import org.springframework.core.annotation.Order;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
 import com.auth0.jwt.JWT;
