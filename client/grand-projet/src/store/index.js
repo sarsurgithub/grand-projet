@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import createPersistedState from 'vuex-persistedstate'
 
 Vue.use(Vuex)
 
@@ -27,5 +28,6 @@ export default new Vuex.Store({
   getters: {
     GET_CONNECTED_USER: (state) => state.connectedUser,
     GET_AUTH_TOKEN: (state) => state.authToken
-  }
+  },
+  plugins: [createPersistedState()]
 })

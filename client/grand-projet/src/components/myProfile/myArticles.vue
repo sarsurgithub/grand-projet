@@ -3,8 +3,7 @@
     <div class="articlesTitle"> My Articles
       </div>
     <div class='article' v-for="article in articles" :key="article.id">
-      <router-link class='link' :to="{ name: 'Article', params: { id : article.id }}">
-      {{article.title}}
+      <router-link class='link' :to="{ name: 'Article', params: { id : article.id }}" v-html="article.title">
       </router-link>
     </div>
   </div>

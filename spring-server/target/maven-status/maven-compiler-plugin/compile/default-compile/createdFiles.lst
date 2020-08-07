@@ -7,6 +7,7 @@ io/swagger/configuration/CustomInstantDeserializer$12.class
 io/swagger/api/security/SecurityConstants.class
 io/swagger/api/util/ApiResponseMessage.class
 io/swagger/articles/api/model/GetComment.class
+io/swagger/api/security/ExposeHeadersFilter.class
 io/swagger/articles/api/CategoriesApi.class
 io/swagger/configuration/CustomInstantDeserializer$5.class
 io/swagger/Swagger2SpringBoot$ExitException.class
@@ -33,6 +34,7 @@ io/swagger/configuration/CustomInstantDeserializer$4.class
 io/swagger/entities/CategoryEntity.class
 io/swagger/configuration/CustomInstantDeserializer$7.class
 io/swagger/api/endpoints/UsersApiController.class
+io/swagger/api/security/WebSecurity.class
 io/swagger/configuration/CustomInstantDeserializer$FromDecimalArguments.class
 io/swagger/repositories/CommentRepository.class
 io/swagger/repositories/UserRepository.class
@@ -52,4 +54,5 @@ io/swagger/articles/api/model/UpdateArticle.class
 io/swagger/api/security/JWTAuthenticationFilter.class
 io/swagger/api/exceptions/NotFoundException.class
 io/swagger/articles/api/model/CreateArticle.class
+io/swagger/services/UserDetailsServiceImpl.class
 io/swagger/configuration/CustomInstantDeserializer$1.class

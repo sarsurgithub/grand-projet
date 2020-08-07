@@ -1,18 +1,20 @@
 <template>
-  <div class='big'>
-    <div class='articleEntier'>
-      <h1 v-html="article.title" class='title'></h1>
-      <div v-html="article.content" class='text'></div>
-      <div class='tags'>
-        <div class='tag' v-for="tag in article.categories" :key="tag.id">
-          <tag :tag=tag></tag>
+  <div class='page'>
+    <div class='big'>
+      <div class='articleEntier'>
+        <h1 v-html="article.title" class='title'></h1>
+        <div v-html="article.content" class='text'></div>
+        <div class='tags'>
+          <div class='tag' v-for="tag in article.categories" :key="tag.id">
+            <tag :tag=tag></tag>
+          </div>
         </div>
       </div>
-    </div>
-    <div class='author'> Written by
-      <router-link class='link' :to="{ name: 'TheirProfile', params: { id : article.author.id }}">
-        {{article.author.username}}
-      </router-link>
+      <div class='author'> Written by
+        <router-link class='link' :to="{ name: 'TheirProfile', params: { id : article.author.id }}">
+          {{article.author.username}}
+        </router-link>
+      </div>
     </div>
   </div>
 </template>
@@ -28,6 +30,9 @@ export default {
 </script>
 
 <style scoped>
+body {
+  margin:0px;
+}
 .title {
   size: 16px;
   font-weight: bold;

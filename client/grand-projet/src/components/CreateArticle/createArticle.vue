@@ -21,10 +21,9 @@
         />
       </div>
     </template>
-    <button
-      class='validate_button'
-      @click="formSubmit()">
-      I'm done </button>
+    <button class='validate_button' @click="formSubmit()">
+          I'm done
+      </button>
   </div>
 </template>
 
@@ -51,6 +50,7 @@ export default {
       categoriesIds: [],
       categoriesNames: [],
       url: '',
+      articleId: null,
       description: null,
       // Options de l'éditeur (quels boutons sont actifs - tu peux trouver la liste ici : https://quilljs.com/docs/modules/toolbar/)
       editorOptions: {
@@ -81,53 +81,37 @@ export default {
   methods: {
 
     async formSubmit () {
-      console.log('nous entrons dans la fonction formSubmit')
-      console.log(this.$store)
-
       // servira à avoir un array avec seulement les noms des catégories, pour retrouver les ids des catégories
-      console.log('étape1 : créer array de noms')
       this.categoriesNames = this.tags.map(tag => tag.text)
-      console.log('categ: ' + this.categoriesNames)
 
       // servira à avoir un array sous la forme [{ name : design }, { name: sociology}] pour pouvoir ajouter les catégories
-      console.log('étape2 : créer array objets')
       this.categoriesToPost = this.tags.map(tag => ({
         name: tag.text
       }))
-      console.log(this.categoriesToPost)
 
       // pour chacun des tag entré, ajouter à l'url pour préparer la prochaine requête
-      console.log('étape3 : créer url')
       for (let i = 0; i < this.categoriesNames.length; i++) {
         if (i === this.categoriesNames.length - 1) {
           this.url += 'name=' + this.categoriesNames[i]
-          console.log('url dans boucle: ' + this.url)
         } else {
           this.url += 'name=' + this.categoriesNames[i] + '&'
-          console.log('url pas index 1 :' + this.url)
         }
       }
-      console.log('url: ' + this.url)
 
       // envoyer un array de noms de catégories pour obtenir leur ids dans le query
-      console.log('étape5 : récup les ids des catégories')
       if (this.categoriesNames.length !== 0) {
         // envoyer un array des catégories à potentiellement ajouter, les doublons sont gérés par le backend
-        console.log('étape4 créer les catégories')
         await axios.post('http://localhost:8081/api/categories', this.categoriesToPost, {
           headers: {
             Authorization: 'Bearer ' + this.$store.getters.GET_AUTH_TOKEN
           }
         })
-        console.log('dans la boucle')
         const response = await axios
           .get(`http://localhost:8081/api/categories/getIds?${this.url}`)
         this.categories = response.data
-        console.log(response)
       }
 
       // envoyer un article avec son titre, contenu, autheur, et les ids de ses catégories
-      console.log('étape6: créer article')
       await axios.post('http://localhost:8081/api/articles', {
         title: this.title,
         content: this.description,
@@ -139,6 +123,11 @@ export default {
           Authorization: 'Bearer ' + this.$store.getters.GET_AUTH_TOKEN
         }
       })
+        .then((response) => {
+          this.articleId = response.headers.location.substring(35)
+          console.log(this.articleId)
+          this.$router.push({ name: 'Article', params: { id: this.articleId } })
+        })
 
       // remettre toutes les valeurs à leur origine, maybe rediriger vers la page de l'article ? ou page de l'auteur ?
       this.url = ''
@@ -149,7 +138,6 @@ export default {
       this.categoriesToPost = []
       this.categoriesIds = []
       this.categoriesNames = []
-      console.log('url au début: ' + this.url)
     }
   }
 }
@@ -158,9 +146,9 @@ export default {
 <style scoped>
   .validate_button {
     color: #FFFE00;
+    background-color: black;
     padding: 5px;
     border: 2px solid #FFFE00;
-    background-color: black;
     border-radius: 5px;
     font-weight: bold;
     font-size: 16px;

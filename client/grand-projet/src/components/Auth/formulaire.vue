@@ -8,7 +8,7 @@
         <input v-model="password" type="password" id="pword" name="password" placeholder="Your password..">
 
         <button type="submit" @click="formSubmit()">
-          login
+          Login
         </button>
         <a href='http://localhost:8080/createAccount' class='createAccount'>
         create an account
@@ -56,7 +56,9 @@ export default {
 
       console.log(this.username)
 
-      // remettre toutes les valeurs à leur origine, maybe rediriger vers la page de l'article ? ou page de l'auteur ?
+      this.$router.push('/myProfile')
+
+      // remettre toutes les valeurs à leur origine
       this.username = null
       this.password = null
     }

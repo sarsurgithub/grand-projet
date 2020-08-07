@@ -1,7 +1,6 @@
 <template>
   <div class= 'validation-button' >
     <button>
-      <img class='yellow-button' src='../assets/yellowValidation.png'/>
     </button>
   </div>
 </template>
@@ -13,11 +12,12 @@ export default {
 </script>
 
 <style scoped>
-  button, .yellow-button {
+  button {
     height: 50px;
     width: 50px;
     border-radius: 50%;
     padding: 0px;
     border: none;
+    background-image: url('../assets/yellowValidation.png')
   }
 </style>

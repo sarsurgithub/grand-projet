@@ -19,6 +19,7 @@ public class ExposeHeadersFilter extends OncePerRequestFilter {
                                     FilterChain filterChain)
             throws ServletException, IOException {
         httpServletResponse.addHeader("Access-Control-Expose-Headers", "Authorization");
+        httpServletResponse.addHeader("Access-Control-Expose-Headers", "Location");
         filterChain.doFilter(httpServletRequest, httpServletResponse);
     }
 }

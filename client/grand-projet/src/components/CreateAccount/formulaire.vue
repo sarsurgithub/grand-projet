@@ -49,7 +49,9 @@ export default {
       })
       console.log(this.username)
 
-      // remettre toutes les valeurs à leur origine, maybe rediriger vers la page de l'article ? ou page de l'auteur ?
+      this.$router.push('/Auth')
+
+      // remettre toutes les valeurs à leur origine
       this.username = null
       this.firstName = null
       this.lastName = null
