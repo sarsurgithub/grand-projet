@@ -4,11 +4,48 @@
       <h1 class='title'>Convergence:</h1>
       <h2 class='subtitle'> the state of converging. </h2>
     </div>
+    <div :class="{
+      'pink-navbar': isPink ,
+      'purple-navbar': isPurple,
+      'blue-navbar': isBlue,
+      'yellow-navbar': isYellow,
+      'green-navbar': isGreen
+      }"
+    id="nav">
+      <router-link to="/" class="navItem">Home</router-link> |
+      <router-link to="/categories" class="navItem">Categories</router-link> |
+      <router-link to="/articlesByDate" class="navItem">Articles by Date</router-link> |
+      <router-link to="/myProfile" v-if='$store.getters.GET_CONNECTED_USER' class="navItem">Profile</router-link>
+      <router-link to="/Auth" class="navItem" v-if='$store.getters.GET_CONNECTED_USER === null'>Login</router-link> |
+      <button class="navItem" v-if='$store.getters.GET_CONNECTED_USER' @click="$store.dispatch('setConnectedUser', null)" >Logout</button>
+    </div>
     <router-view/>
   </div>
 </template>
 
+<script>
+export default {
+  computed: {
+    isPink: function () {
+      return this.$route.name === 'Categories' || this.$route.name === 'ArticlesByDate'
+    },
+    isPurple: function () {
+      return this.$route.name === 'Home'
+    },
+    isBlue: function () {
+      return this.$route.name === 'MyProfile' || this.$route.name === 'TheirProfile' || this.$route.name === 'Auth'
+    },
+    isYellow: function () {
+      return this.$route.name === 'CreateArticle'
+    },
+    isGreen: function () {
+      return this.$route.name === 'Article'
+    }
+  }
+}
+</script>
 <style lang="scss">
+
 #app {
   font-family: hack,sans-serif;
   font-weight: 400;
@@ -43,5 +80,91 @@ body {
   color: black;
   margin: 0px;
 }
+.purple-navbar {
+  padding: 30px;
+  color: #9D20FF;
+  a,button {
+    text-decoration: none;
+    font-weight: bold;
+    color: #9D20FF;
+    padding: 5px;
+    border: 3px solid #9D20FF;
+    border-radius: 10px;
 
+    &.router-link-exact-active {
+      color: black;
+      background-color :#9D20FF ;
+    }
+  }
+}
+.pink-navbar {
+  padding:30px;
+  color: #F51FFF;
+  a, button {
+    text-decoration: none;
+    font-weight: bold;
+    color: #F51FFF;
+    padding: 5px;
+    border: 3px solid #F51FFF;
+    border-radius: 10px;
+
+    &.router-link-exact-active {
+      color: black;
+      background-color :#F51FFF ;
+    }
+  }
+}
+.blue-navbar {
+  padding:30px;
+  color: #05FFFF;
+  a, button {
+    text-decoration: none;
+    font-weight: bold;
+    color: #05FFFF;
+    padding: 5px;
+    border: 3px solid #05FFFF;
+    border-radius: 10px;
+    font-size: 16px;
+    background-color: black;
+
+    &.router-link-exact-active {
+      color: black;
+      background-color :#05FFFF ;
+    }
+  }
+}
+.yellow-navbar {
+  padding:30px;
+  color: #FFFE00;
+  a {
+    text-decoration: none;
+    font-weight: bold;
+    color: #FFFE00;
+    padding: 5px;
+    border: 3px solid #FFFE00;
+    border-radius: 10px;
+
+    &.router-link-exact-active {
+      color: black;
+      background-color :#FFFE00 ;
+    }
+  }
+}
+.green-navbar {
+  padding:30px;
+  color: #05FFA1;
+  a {
+    text-decoration: none;
+    font-weight: bold;
+    color: #05FFA1;
+    padding: 5px;
+    border: 3px solid #05FFA1;
+    border-radius: 10px;
+
+    &.router-link-exact-active {
+      color: black;
+      background-color :#05FFA1 ;
+    }
+  }
+}
 </style>
