@@ -6,6 +6,7 @@
       <router-link class='link' :to="{ name: 'TheirProfile', params: { id : comment.author.id }}">
         {{comment.author.username}}
       </router-link>
+      -{{comment.createdAt.dayOfMonth}}.{{comment.createdAt.monthOfYear}}.{{comment.createdAt.year}}
     </div>
     <hr>
   </div>
@@ -24,6 +25,6 @@ export default {
   padding: 10px;
 }
 a {
-  color: #05FFA1;
+  color: black;
 }
 </style>

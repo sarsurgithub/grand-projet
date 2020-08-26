@@ -14,7 +14,7 @@ import javax.validation.constraints.*;
 /**
  * CreateArticle
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2020-07-08T14:52:33.491593+02:00[Europe/Zurich]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2020-08-26T11:16:28.324752+02:00[Europe/Zurich]")
 
 public class CreateArticle   {
   @JsonProperty("title")
@@ -22,10 +22,6 @@ public class CreateArticle   {
 
   @JsonProperty("content")
   private String content;
-
-  @JsonProperty("photoUrls")
-  @Valid
-  private List<String> photoUrls = null;
 
   @JsonProperty("author_id")
   private Long authorId;
@@ -74,34 +70,6 @@ public class CreateArticle   {
 
   public void setContent(String content) {
     this.content = content;
-  }
-
-  public CreateArticle photoUrls(List<String> photoUrls) {
-    this.photoUrls = photoUrls;
-    return this;
-  }
-
-  public CreateArticle addPhotoUrlsItem(String photoUrlsItem) {
-    if (this.photoUrls == null) {
-      this.photoUrls = new ArrayList<String>();
-    }
-    this.photoUrls.add(photoUrlsItem);
-    return this;
-  }
-
-  /**
-   * Get photoUrls
-   * @return photoUrls
-  */
-  @ApiModelProperty(value = "")
-
-
-  public List<String> getPhotoUrls() {
-    return photoUrls;
-  }
-
-  public void setPhotoUrls(List<String> photoUrls) {
-    this.photoUrls = photoUrls;
   }
 
   public CreateArticle authorId(Long authorId) {
@@ -165,14 +133,13 @@ public class CreateArticle   {
     CreateArticle createArticle = (CreateArticle) o;
     return Objects.equals(this.title, createArticle.title) &&
         Objects.equals(this.content, createArticle.content) &&
-        Objects.equals(this.photoUrls, createArticle.photoUrls) &&
         Objects.equals(this.authorId, createArticle.authorId) &&
         Objects.equals(this.categoriesIds, createArticle.categoriesIds);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(title, content, photoUrls, authorId, categoriesIds);
+    return Objects.hash(title, content, authorId, categoriesIds);
   }
 
   @Override
@@ -182,7 +149,6 @@ public class CreateArticle   {
     
     sb.append("    title: ").append(toIndentedString(title)).append("\n");
     sb.append("    content: ").append(toIndentedString(content)).append("\n");
-    sb.append("    photoUrls: ").append(toIndentedString(photoUrls)).append("\n");
     sb.append("    authorId: ").append(toIndentedString(authorId)).append("\n");
     sb.append("    categoriesIds: ").append(toIndentedString(categoriesIds)).append("\n");
     sb.append("}");

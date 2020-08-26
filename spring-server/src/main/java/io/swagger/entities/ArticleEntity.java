@@ -1,5 +1,7 @@
 package io.swagger.entities;
 
+import org.joda.time.DateTime;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -14,17 +16,43 @@ public class ArticleEntity implements Serializable{
     private String title;
     @Lob
     private String content;
-    @ElementCollection
-    private List<String> photoUrls = null;
     @OneToOne
     private UserEntity author;
     @OneToMany(cascade = CascadeType.REMOVE)
     private List<CommentEntity> comments = new ArrayList<>();
     @ManyToMany
     private List<CategoryEntity> categories = new ArrayList<>() ;
-    private String createdAt;
-    private String lastUpdateAt;
+
     private Integer views;
+
+    private DateTime createdAt;
+    private DateTime lastUpdateAt;
+
+    @PrePersist
+    protected void onCreate() {
+        createdAt = new DateTime();
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        lastUpdateAt = new DateTime();
+    }
+
+    public DateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(DateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public DateTime getLastUpdateAt() {
+        return lastUpdateAt;
+    }
+
+    public void setLastUpdateAt(DateTime lastUpdatedAt) {
+        this.lastUpdateAt = lastUpdatedAt;
+    }
 
     public long getId() {
         return id ;
@@ -46,36 +74,12 @@ public class ArticleEntity implements Serializable{
         this.content = content;
     }
 
-    public List<String> getPhotoUrls() {
-        return photoUrls;
-    }
-
-    public void setPhotoUrls(List<String> photoUrls) {
-        this.photoUrls = photoUrls;
-    }
-
     public UserEntity getAuthor() {
         return author;
     }
 
     public void setAuthor(UserEntity author) {
         this.author = author;
-    }
-
-    public String getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(String createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public String getLastUpdateAt() {
-        return lastUpdateAt;
-    }
-
-    public void setLastUpdateAt(String lastUpdateAt) {
-        this.lastUpdateAt = lastUpdateAt;
     }
 
     public Integer getViews() {

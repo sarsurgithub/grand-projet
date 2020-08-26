@@ -1,25 +1,25 @@
 <template>
     <div class='card'>
-
-        <p>Username: </p>
+      <div class='form'>
+        <label>Username: </label>
         <input v-model="username" type="text" id="uname" name="username" placeholder="Your username..">
 
-        <p >First Name: </p>
+        <label>First Name: </label>
         <input v-model="firstName" type="text" id="fname" name="firstName" placeholder="Your first name..">
 
-        <p>Last Name: </p>
+        <label>Last Name: </label>
         <input v-model="lastName" type="text" id="lname" name="lastName" placeholder="Your last name..">
 
-        <p>E-mail: </p>
+        <label>E-mail: </label>
         <input v-model="email" type="text" id="email" name="email" placeholder="Your email..">
 
-        <p>Password: </p>
-        <input v-model="password" type="text" id="pword" name="password" placeholder="Your password..">
+        <label>Password: </label>
+        <input v-model="password" type="password" id="pword" name="password" placeholder="Your password..">
 
         <button @click="formSubmit()" type="submit" >
           Create Account
         </button>
-
+      </div>
     </div>
 </template>
 
@@ -63,13 +63,6 @@ export default {
 </script>
 
 <style scoped>
-.createAccount {
-  font-size: 12px;
-  font-style: italic;
-  color: lightslategray;
-  padding: 15px;
-  text-align: center ;
-}
 a {
   padding: 20px;
   text-decoration: none;
@@ -83,12 +76,12 @@ a {
   color: black;
 }
 p {
-    padding: 20px;
+    padding: 20px 5px;
 }
-form {
+.form {
   padding: 20px;
 }
-input[type=text] {
+input, #pword {
   width: 100%;
   padding: 12px 20px;
   margin: 8px 0;

@@ -45,7 +45,7 @@ export default {
   data () {
     return {
       tag: '',
-      tags: this.article.categories,
+      tags: this.article.categories.map(tag => tag.name),
       title: this.article.title,
       categoriesToPost: [],
       categories: [],

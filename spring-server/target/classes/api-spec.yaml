@@ -617,7 +617,6 @@ components:
         - title
         - author_id
         - content
-        - createdAt
       type: object
       properties:
         title:
@@ -625,10 +624,6 @@ components:
           example: my super article
         content:
           type: string
-        photoUrls:
-          type: array
-          items:
-            type: string
         author_id:
           type: integer
           format: int64
@@ -655,15 +650,12 @@ components:
           $ref: '#/components/schemas/GetUser'
         content:
           type: string
-        photoUrls:
-          type: array
-          items:
-            type: string
         createdAt:
           type: string
-          example: '12-02-2013H12-05'
+          format: date-time
         lastUpdateAt:
           type: string
+          format: date-time
           example: '12-02-2013H12-05'
         views:
           type: integer
@@ -686,10 +678,6 @@ components:
           type: string
         content:
           type: string
-        photoUrls:
-          type: array
-          items:
-            type: string
         views:
           type: integer
           example: 456
@@ -736,6 +724,9 @@ components:
           example: tu pourrais faire mieux
         author:
           $ref: '#/components/schemas/GetUser'
+        createdAt:
+          type: string
+          format: date-time
     GetCategory:
       required:
         - id

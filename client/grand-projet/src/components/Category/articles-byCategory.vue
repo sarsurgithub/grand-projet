@@ -1,6 +1,6 @@
 <template>
   <div class='wrapper'>
-    <h1> Articles in "{{this.$route.params.name}}" </h1>
+    <h1> Articles in "{{this.category}}" </h1>
     <div class='table-header'>
       <strong> Date </strong>
       <strong> Author </strong>
@@ -21,7 +21,8 @@ import axios from 'axios'
 export default {
   data: function () {
     return {
-      articles: []
+      articles: [],
+      category: null
     }
   },
   components: {
@@ -32,6 +33,12 @@ export default {
       .get(`http://localhost:8081/api/articles/byCategories?categories=${this.$route.params.id}`)
       .then(response => (
         this.articles = response.data
+      )
+      )
+    axios
+      .get(`http://localhost:8081/api/categories/${this.$route.params.id}`)
+      .then(response => (
+        this.category = response.data.name
       )
       )
   }

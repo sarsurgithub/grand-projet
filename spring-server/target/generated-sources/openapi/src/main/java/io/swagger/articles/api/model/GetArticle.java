@@ -10,6 +10,7 @@ import io.swagger.articles.api.model.GetComment;
 import io.swagger.articles.api.model.GetUser;
 import java.util.ArrayList;
 import java.util.List;
+import org.joda.time.DateTime;
 import org.openapitools.jackson.nullable.JsonNullable;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
@@ -17,7 +18,7 @@ import javax.validation.constraints.*;
 /**
  * GetArticle
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2020-07-08T14:52:33.491593+02:00[Europe/Zurich]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2020-08-26T11:16:28.324752+02:00[Europe/Zurich]")
 
 public class GetArticle   {
   @JsonProperty("id")
@@ -32,15 +33,11 @@ public class GetArticle   {
   @JsonProperty("content")
   private String content;
 
-  @JsonProperty("photoUrls")
-  @Valid
-  private List<String> photoUrls = null;
-
   @JsonProperty("createdAt")
-  private String createdAt;
+  private DateTime createdAt;
 
   @JsonProperty("lastUpdateAt")
-  private String lastUpdateAt;
+  private DateTime lastUpdateAt;
 
   @JsonProperty("views")
   private Integer views;
@@ -137,35 +134,7 @@ public class GetArticle   {
     this.content = content;
   }
 
-  public GetArticle photoUrls(List<String> photoUrls) {
-    this.photoUrls = photoUrls;
-    return this;
-  }
-
-  public GetArticle addPhotoUrlsItem(String photoUrlsItem) {
-    if (this.photoUrls == null) {
-      this.photoUrls = new ArrayList<String>();
-    }
-    this.photoUrls.add(photoUrlsItem);
-    return this;
-  }
-
-  /**
-   * Get photoUrls
-   * @return photoUrls
-  */
-  @ApiModelProperty(value = "")
-
-
-  public List<String> getPhotoUrls() {
-    return photoUrls;
-  }
-
-  public void setPhotoUrls(List<String> photoUrls) {
-    this.photoUrls = photoUrls;
-  }
-
-  public GetArticle createdAt(String createdAt) {
+  public GetArticle createdAt(DateTime createdAt) {
     this.createdAt = createdAt;
     return this;
   }
@@ -174,19 +143,20 @@ public class GetArticle   {
    * Get createdAt
    * @return createdAt
   */
-  @ApiModelProperty(example = "12-02-2013H12-05", required = true, value = "")
+  @ApiModelProperty(required = true, value = "")
   @NotNull
 
+  @Valid
 
-  public String getCreatedAt() {
+  public DateTime getCreatedAt() {
     return createdAt;
   }
 
-  public void setCreatedAt(String createdAt) {
+  public void setCreatedAt(DateTime createdAt) {
     this.createdAt = createdAt;
   }
 
-  public GetArticle lastUpdateAt(String lastUpdateAt) {
+  public GetArticle lastUpdateAt(DateTime lastUpdateAt) {
     this.lastUpdateAt = lastUpdateAt;
     return this;
   }
@@ -195,14 +165,15 @@ public class GetArticle   {
    * Get lastUpdateAt
    * @return lastUpdateAt
   */
-  @ApiModelProperty(example = "12-02-2013H12-05", value = "")
+  @ApiModelProperty(value = "")
 
+  @Valid
 
-  public String getLastUpdateAt() {
+  public DateTime getLastUpdateAt() {
     return lastUpdateAt;
   }
 
-  public void setLastUpdateAt(String lastUpdateAt) {
+  public void setLastUpdateAt(DateTime lastUpdateAt) {
     this.lastUpdateAt = lastUpdateAt;
   }
 
@@ -299,7 +270,6 @@ public class GetArticle   {
         Objects.equals(this.title, getArticle.title) &&
         Objects.equals(this.author, getArticle.author) &&
         Objects.equals(this.content, getArticle.content) &&
-        Objects.equals(this.photoUrls, getArticle.photoUrls) &&
         Objects.equals(this.createdAt, getArticle.createdAt) &&
         Objects.equals(this.lastUpdateAt, getArticle.lastUpdateAt) &&
         Objects.equals(this.views, getArticle.views) &&
@@ -309,7 +279,7 @@ public class GetArticle   {
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, title, author, content, photoUrls, createdAt, lastUpdateAt, views, comments, categories);
+    return Objects.hash(id, title, author, content, createdAt, lastUpdateAt, views, comments, categories);
   }
 
   @Override
@@ -321,7 +291,6 @@ public class GetArticle   {
     sb.append("    title: ").append(toIndentedString(title)).append("\n");
     sb.append("    author: ").append(toIndentedString(author)).append("\n");
     sb.append("    content: ").append(toIndentedString(content)).append("\n");
-    sb.append("    photoUrls: ").append(toIndentedString(photoUrls)).append("\n");
     sb.append("    createdAt: ").append(toIndentedString(createdAt)).append("\n");
     sb.append("    lastUpdateAt: ").append(toIndentedString(lastUpdateAt)).append("\n");
     sb.append("    views: ").append(toIndentedString(views)).append("\n");

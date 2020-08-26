@@ -20,12 +20,12 @@ export default {
     color: black;
     font-size: 16px;
     font-weight: bold;
-    padding: 10px 5px 10px 5px;
+    padding: 10px 5px;
 
   }
   .article{
-    padding-top: 5px;
-    padding-bottom: 5px;
+    padding-top: 10px;
+    padding-bottom: 10px;
     border-top: 3px solid #05FFFF;
     padding-left: 150px;
     padding-right: 150px;
@@ -38,7 +38,6 @@ export default {
     display: flex;
     flex-direction: column ;
     width: 717px;
-    min-height: 571px;
     margin-right: 30px;
   }
 </style>

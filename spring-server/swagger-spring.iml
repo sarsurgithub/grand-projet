@@ -149,5 +149,6 @@
     <orderEntry type="library" name="Maven: org.springframework.security:spring-security-web:5.2.1.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: com.auth0:java-jwt:3.4.0" level="project" />
     <orderEntry type="library" name="Maven: commons-codec:commons-codec:1.13" level="project" />
+    <orderEntry type="library" name="Maven: joda-time:joda-time:2.10.6" level="project" />
   </component>
 </module>

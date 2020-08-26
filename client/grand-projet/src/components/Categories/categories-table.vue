@@ -46,7 +46,7 @@ export default {
     justify-content: space-between;
     padding: 7px;
     align-content:left;
-    color: #F51FFF;
+    color: white;
   }
   strong {
     padding: 5px;

@@ -1,10 +1,13 @@
 <template>
   <div class='boite' id='profileInfos'>
-      <img class='profilePic' src="@/assets/yellowValidation.png"/>
-      <p> Username: {{user.username}} </p>
-      <p> Firstname: {{user.firstName}} </p>
-      <p> Lastname: {{user.lastName}} </p>
-      <p> e-mail: {{user.email}} </p>
+      <p class='bold'> Username: </p>
+      <p> {{user.username}} </p>
+      <p class='bold'> Firstname: </p>
+      <p> {{user.firstName}} </p>
+      <p class='bold'> Lastname: </p>
+      <p>{{user.lastName}} </p>
+      <p class='bold'> e-mail: </p>
+      <p> {{user.email}} </p>
   </div>
 </template>
 
@@ -21,6 +24,8 @@ export default {
     border-radius: 20px;
     text-align: left;
     margin-right: 5%;
+    min-width: 300px;
+    padding: 10px;
   }
 
   #profileInfos {
@@ -33,14 +38,15 @@ export default {
   img {
     width: 100px;
     height: 100px;
-    padding-top: 15px;
-    padding-right:15px;
+    padding: 20px 50px;;
     align-self: center;
     text-align: center;
   }
   p {
     color: black;
-    padding: 20px;
+    padding: 10px;
+  }
+  .bold  {
     font-weight: bold;
   }
 </style>

@@ -16,8 +16,8 @@
       <router-link to="/categories" class="navItem">Categories</router-link> |
       <router-link to="/articlesByDate" class="navItem">Articles by Date</router-link> |
       <router-link to="/myProfile" v-if='$store.getters.GET_CONNECTED_USER' class="navItem">Profile</router-link>
-      <router-link to="/Auth" class="navItem" v-if='$store.getters.GET_CONNECTED_USER === null'>Login</router-link> |
-      <button class="navItem" v-if='$store.getters.GET_CONNECTED_USER' @click="$store.dispatch('setConnectedUser', null)" >Logout</button>
+      <router-link to="/Auth" class="navItem" v-if='$store.getters.GET_CONNECTED_USER === null'>Login</router-link>
+      <button class="logout" v-if='$store.getters.GET_CONNECTED_USER' @click="$store.dispatch('setConnectedUser', null)" >Logout</button>
     </div>
     <router-view/>
   </div>
@@ -27,13 +27,13 @@
 export default {
   computed: {
     isPink: function () {
-      return this.$route.name === 'Categories' || this.$route.name === 'ArticlesByDate'
+      return this.$route.name === 'Categories' || this.$route.name === 'ArticlesByDate' || this.$route.name === 'Category'
     },
     isPurple: function () {
       return this.$route.name === 'Home'
     },
     isBlue: function () {
-      return this.$route.name === 'MyProfile' || this.$route.name === 'TheirProfile' || this.$route.name === 'Auth'
+      return this.$route.name === 'MyProfile' || this.$route.name === 'TheirProfile' || this.$route.name === 'Auth' || this.$route.name === 'CreateAccount'
     },
     isYellow: function () {
       return this.$route.name === 'CreateArticle'
@@ -45,7 +45,9 @@ export default {
 }
 </script>
 <style lang="scss">
-
+.logout {
+  margin-left: 5%;
+}
 #app {
   font-family: hack,sans-serif;
   font-weight: 400;
@@ -83,7 +85,7 @@ body {
 .purple-navbar {
   padding: 30px;
   color: #9D20FF;
-  a,button {
+  a {
     text-decoration: none;
     font-weight: bold;
     color: #9D20FF;
@@ -96,11 +98,25 @@ body {
       background-color :#9D20FF ;
     }
   }
+    button {
+    font-family: hack,sans-serif;
+    color: #9D20FF;
+    padding: 5px;
+    border: 3px solid #9D20FF;
+    background-color: black;
+    border-radius: 10px;
+    font-weight: bold;
+    font-size: 16px;
+  }
+  button:hover {
+    color: black;
+    background-color: #9D20FF;
+  }
 }
 .pink-navbar {
   padding:30px;
   color: #F51FFF;
-  a, button {
+  a {
     text-decoration: none;
     font-weight: bold;
     color: #F51FFF;
@@ -112,6 +128,20 @@ body {
       color: black;
       background-color :#F51FFF ;
     }
+  }
+    button {
+    font-family: hack,sans-serif;
+    color: #F51FFF;
+    padding: 5px;
+    border: 3px solid #F51FFF;
+    background-color: black;
+    border-radius: 10px;
+    font-weight: bold;
+    font-size: 16px;
+  }
+  button:hover {
+    color: black;
+    background-color: #F51FFF;
   }
 }
 .blue-navbar {
@@ -132,6 +162,20 @@ body {
       background-color :#05FFFF ;
     }
   }
+  button {
+    font-family: hack,sans-serif;
+    color: #05FFFF;
+    padding: 5px;
+    border: 3px solid #05FFFF;
+    background-color: black;
+    border-radius: 10px;
+    font-weight: bold;
+    font-size: 16px;
+  }
+  button:hover {
+    color: black;
+    background-color: #05FFFF;
+  }
 }
 .yellow-navbar {
   padding:30px;
@@ -149,6 +193,20 @@ body {
       background-color :#FFFE00 ;
     }
   }
+  button {
+    font-family: hack,sans-serif;
+    color: #FFFE00;
+    padding: 5px;
+    border: 3px solid #FFFE00;
+    background-color: black;
+    border-radius: 10px;
+    font-weight: bold;
+    font-size: 16px;
+  }
+  button:hover {
+    color: black;
+    background-color: #FFFE00;
+  }
 }
 .green-navbar {
   padding:30px;
@@ -165,6 +223,20 @@ body {
       color: black;
       background-color :#05FFA1 ;
     }
+  }
+  button {
+    font-family: hack,sans-serif;
+    color: #05FFA1;
+    padding: 5px;
+    border: 3px solid #05FFA1;
+    background-color: black;
+    border-radius: 10px;
+    font-weight: bold;
+    font-size: 16px;
+  }
+  button:hover {
+    color: black;
+    background-color: #05FFA1;
   }
 }
 </style>

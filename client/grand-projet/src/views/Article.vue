@@ -63,6 +63,7 @@ export default {
   margin-bottom: 10%;
 }
 .updateArticle {
+  margin-left: 10px;;
   position: absolute;
   top: 360px;
   left: 1429px;

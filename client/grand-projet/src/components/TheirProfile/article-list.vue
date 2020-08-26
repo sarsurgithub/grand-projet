@@ -3,8 +3,7 @@
     <div class="articlesTitle"> Articles
       </div>
     <div class='article' v-for="article in articles" :key="article.id">
-      <router-link class='link' :to="{ name: 'Article', params: { id : article.id }}">
-      {{article.title}}
+      <router-link class='link' :to="{ name: 'Article', params: { id : article.id }}" v-html="article.title">
       </router-link>
     </div>
   </div>
@@ -21,12 +20,12 @@ export default {
     color: black;
     font-size: 16px;
     font-weight: bold;
-    padding: 10px 5px 10px 5px;
+    padding: 10px 5px;
 
   }
   .article{
-    padding-top: 5px;
-    padding-bottom: 5px;
+    padding-top: 10px;
+    padding-bottom: 10px;
     border-top: 3px solid #05FFFF;
     padding-left: 150px;
     padding-right: 150px;
@@ -39,6 +38,5 @@ export default {
     display: flex;
     flex-direction: column ;
     width: 717px;
-    min-height: 571px;
   }
 </style>

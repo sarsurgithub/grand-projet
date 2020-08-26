@@ -41,8 +41,10 @@ export default {
           if (b.id > a.id) return -1
           return 0
         })
-        articles = articles.slice(1).slice(-10)
-        console.log(articles)
+        if (articles.length >= 10) {
+          articles = articles.slice(1).slice(-10)
+        }
+        console.log('articles' + articles)
       })
     console.log(promise)
     mesPromesses.push(promise)
@@ -66,7 +68,7 @@ export default {
         category: 'article'
       }))
 
-      console.log(articlesFormated)
+      console.log('articles formatted' + articlesFormated)
 
       articles.forEach(element => {
         const id = element.id
@@ -104,7 +106,7 @@ export default {
         category: 'category'
       }))
       const data = categoriesFormated.concat(articlesFormated)
-      console.log(data)
+      console.log('data' + data)
 
       chart.data = data
 

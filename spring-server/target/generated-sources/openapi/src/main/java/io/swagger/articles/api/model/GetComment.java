@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.articles.api.model.GetUser;
+import org.joda.time.DateTime;
 import org.openapitools.jackson.nullable.JsonNullable;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
@@ -13,7 +14,7 @@ import javax.validation.constraints.*;
 /**
  * GetComment
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2020-07-08T14:52:33.491593+02:00[Europe/Zurich]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2020-08-26T11:16:28.324752+02:00[Europe/Zurich]")
 
 public class GetComment   {
   @JsonProperty("id")
@@ -27,6 +28,9 @@ public class GetComment   {
 
   @JsonProperty("author")
   private GetUser author;
+
+  @JsonProperty("createdAt")
+  private DateTime createdAt;
 
   public GetComment id(Long id) {
     this.id = id;
@@ -112,6 +116,27 @@ public class GetComment   {
     this.author = author;
   }
 
+  public GetComment createdAt(DateTime createdAt) {
+    this.createdAt = createdAt;
+    return this;
+  }
+
+  /**
+   * Get createdAt
+   * @return createdAt
+  */
+  @ApiModelProperty(value = "")
+
+  @Valid
+
+  public DateTime getCreatedAt() {
+    return createdAt;
+  }
+
+  public void setCreatedAt(DateTime createdAt) {
+    this.createdAt = createdAt;
+  }
+
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -125,12 +150,13 @@ public class GetComment   {
     return Objects.equals(this.id, getComment.id) &&
         Objects.equals(this.title, getComment.title) &&
         Objects.equals(this.content, getComment.content) &&
-        Objects.equals(this.author, getComment.author);
+        Objects.equals(this.author, getComment.author) &&
+        Objects.equals(this.createdAt, getComment.createdAt);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, title, content, author);
+    return Objects.hash(id, title, content, author, createdAt);
   }
 
   @Override
@@ -142,6 +168,7 @@ public class GetComment   {
     sb.append("    title: ").append(toIndentedString(title)).append("\n");
     sb.append("    content: ").append(toIndentedString(content)).append("\n");
     sb.append("    author: ").append(toIndentedString(author)).append("\n");
+    sb.append("    createdAt: ").append(toIndentedString(createdAt)).append("\n");
     sb.append("}");
     return sb.toString();
   }

@@ -5,15 +5,17 @@
         <h1 v-html="article.title" class='title'></h1>
         <div v-html="article.content" class='text'></div>
         <div class='tags'>
-          <div class='tag' v-for="tag in article.categories" :key="tag.id">
-            <tag :tag=tag></tag>
-          </div>
+          <router-link class='tag' v-for="tag in article.categories" :key="tag.id" :to="{ name: 'Category', params: { id : tag.id }}">
+            <tag :tag=tag ></tag>
+          </router-link>
         </div>
       </div>
+      <button class='like'> like </button>
       <div class='author'> Written by
         <router-link class='link' :to="{ name: 'TheirProfile', params: { id : article.author.id }}">
           {{article.author.username}}
         </router-link>
+        -{{article.createdAt.dayOfMonth}}.{{article.createdAt.monthOfYear}}.{{article.createdAt.year}}
       </div>
     </div>
   </div>
@@ -51,7 +53,7 @@ body {
     margin: 15px 15% 15px 15%;
 }
 a {
-  color: #05FFA1;
+  color: black;
 }
 .tags {
   display: flex;
@@ -63,7 +65,19 @@ a {
 .text{
   padding: 0px 5% 30px 5%;
 }
-
+button {
+  color: black;
+  padding: 5px;
+  border: 2px solid black;
+  border-radius: 50%;
+  background-color: #05FFA1;
+  font-weight: bold;
+  font-size: 16px;
+}
+button:hover {
+  color: #05FFA1;
+  background-color: black;
+}
 </style>
 
 <style>

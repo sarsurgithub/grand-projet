@@ -14,7 +14,7 @@ import javax.validation.constraints.*;
 /**
  * UpdateArticle
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2020-07-08T14:52:33.491593+02:00[Europe/Zurich]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2020-08-26T11:16:28.324752+02:00[Europe/Zurich]")
 
 public class UpdateArticle   {
   @JsonProperty("title")
@@ -22,10 +22,6 @@ public class UpdateArticle   {
 
   @JsonProperty("content")
   private String content;
-
-  @JsonProperty("photoUrls")
-  @Valid
-  private List<String> photoUrls = null;
 
   @JsonProperty("views")
   private Integer views;
@@ -78,34 +74,6 @@ public class UpdateArticle   {
 
   public void setContent(String content) {
     this.content = content;
-  }
-
-  public UpdateArticle photoUrls(List<String> photoUrls) {
-    this.photoUrls = photoUrls;
-    return this;
-  }
-
-  public UpdateArticle addPhotoUrlsItem(String photoUrlsItem) {
-    if (this.photoUrls == null) {
-      this.photoUrls = new ArrayList<String>();
-    }
-    this.photoUrls.add(photoUrlsItem);
-    return this;
-  }
-
-  /**
-   * Get photoUrls
-   * @return photoUrls
-  */
-  @ApiModelProperty(value = "")
-
-
-  public List<String> getPhotoUrls() {
-    return photoUrls;
-  }
-
-  public void setPhotoUrls(List<String> photoUrls) {
-    this.photoUrls = photoUrls;
   }
 
   public UpdateArticle views(Integer views) {
@@ -196,7 +164,6 @@ public class UpdateArticle   {
     UpdateArticle updateArticle = (UpdateArticle) o;
     return Objects.equals(this.title, updateArticle.title) &&
         Objects.equals(this.content, updateArticle.content) &&
-        Objects.equals(this.photoUrls, updateArticle.photoUrls) &&
         Objects.equals(this.views, updateArticle.views) &&
         Objects.equals(this.categoriesIds, updateArticle.categoriesIds) &&
         Objects.equals(this.commentsIds, updateArticle.commentsIds);
@@ -204,7 +171,7 @@ public class UpdateArticle   {
 
   @Override
   public int hashCode() {
-    return Objects.hash(title, content, photoUrls, views, categoriesIds, commentsIds);
+    return Objects.hash(title, content, views, categoriesIds, commentsIds);
   }
 
   @Override
@@ -214,7 +181,6 @@ public class UpdateArticle   {
     
     sb.append("    title: ").append(toIndentedString(title)).append("\n");
     sb.append("    content: ").append(toIndentedString(content)).append("\n");
-    sb.append("    photoUrls: ").append(toIndentedString(photoUrls)).append("\n");
     sb.append("    views: ").append(toIndentedString(views)).append("\n");
     sb.append("    categoriesIds: ").append(toIndentedString(categoriesIds)).append("\n");
     sb.append("    commentsIds: ").append(toIndentedString(commentsIds)).append("\n");

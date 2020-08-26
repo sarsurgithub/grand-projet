@@ -14,7 +14,6 @@ public class utils {
     public static ArticleEntity fromCreateArticleToArticleEntity(CreateArticle article) {
         ArticleEntity entity = new ArticleEntity();
         entity.setTitle(article.getTitle());
-        entity.setPhotoUrls(article.getPhotoUrls());
         entity.setContent(article.getContent());
         return entity;
     }
@@ -22,7 +21,6 @@ public class utils {
     public static ArticleEntity updateArticle(UpdateArticle article, ArticleEntity entity) {
         entity.setViews(article.getViews());
         entity.setTitle(article.getTitle());
-        entity.setPhotoUrls(article.getPhotoUrls());
         entity.setContent(article.getContent());
         return entity;
     }
@@ -32,7 +30,6 @@ public class utils {
         article.setId(entity.getId());
         article.setViews(entity.getViews());
         article.setTitle(entity.getTitle());
-        article.setPhotoUrls(entity.getPhotoUrls());
         article.setLastUpdateAt(entity.getLastUpdateAt());
         article.setCreatedAt(entity.getCreatedAt());
         article.setContent(entity.getContent());
@@ -96,6 +93,7 @@ public class utils {
     public static GetComment toGetComment(CommentEntity entity) {
         GetComment comment = new GetComment();
         comment.setId(entity.getId());
+        comment.setCreatedAt(entity.getCreatedAt());
         comment.setContent(entity.getContent());
         comment.setTitle(entity.getTitle());
         comment.setAuthor(toGetUser(entity.getAuthor()));

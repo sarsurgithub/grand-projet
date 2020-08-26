@@ -1,7 +1,7 @@
 <template>
 <router-link class='link' :to="{ name: 'Article', params: { id : article.id }}">
   <div class = 'line'>
-      <div class='column'> pas encore </div>
+      <div class='column'> {{article.createdAt.dayOfMonth}}.{{article.createdAt.monthOfYear}}.{{article.createdAt.year}} </div>
       <div class='column'> {{article.author.username}} </div>
       <div class='column' v-html="article.title"></div>
   </div>

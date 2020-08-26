@@ -30,7 +30,7 @@ import javax.validation.constraints.*;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2020-07-08T14:52:33.491593+02:00[Europe/Zurich]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2020-08-26T11:16:28.324752+02:00[Europe/Zurich]")
 
 @Validated
 @Api(value = "articles", description = "the articles API")
@@ -103,7 +103,7 @@ public interface ArticlesApi {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"createdAt\" : \"12-02-2013H12-05\", \"photoUrls\" : [ \"photoUrls\", \"photoUrls\" ], \"comments\" : [ { \"author\" : { \"firstName\" : \"firstName\", \"lastName\" : \"lastName\", \"id\" : 6, \"email\" : \"email\", \"username\" : \"username\" }, \"id\" : 1, \"title\" : \"article nul\", \"content\" : \"tu pourrais faire mieux\" }, { \"author\" : { \"firstName\" : \"firstName\", \"lastName\" : \"lastName\", \"id\" : 6, \"email\" : \"email\", \"username\" : \"username\" }, \"id\" : 1, \"title\" : \"article nul\", \"content\" : \"tu pourrais faire mieux\" } ], \"author\" : { \"firstName\" : \"firstName\", \"lastName\" : \"lastName\", \"id\" : 6, \"email\" : \"email\", \"username\" : \"username\" }, \"id\" : 0, \"lastUpdateAt\" : \"12-02-2013H12-05\", \"categories\" : [ { \"name\" : \"name\", \"id\" : 5 }, { \"name\" : \"name\", \"id\" : 5 } ], \"title\" : \"title\", \"content\" : \"content\", \"views\" : 456 }";
+                    String exampleString = "{ \"createdAt\" : \"2000-01-23T04:56:07.000+00:00\", \"comments\" : [ { \"createdAt\" : \"2000-01-23T04:56:07.000+00:00\", \"author\" : { \"firstName\" : \"firstName\", \"lastName\" : \"lastName\", \"id\" : 6, \"email\" : \"email\", \"username\" : \"username\" }, \"id\" : 1, \"title\" : \"article nul\", \"content\" : \"tu pourrais faire mieux\" }, { \"createdAt\" : \"2000-01-23T04:56:07.000+00:00\", \"author\" : { \"firstName\" : \"firstName\", \"lastName\" : \"lastName\", \"id\" : 6, \"email\" : \"email\", \"username\" : \"username\" }, \"id\" : 1, \"title\" : \"article nul\", \"content\" : \"tu pourrais faire mieux\" } ], \"author\" : { \"firstName\" : \"firstName\", \"lastName\" : \"lastName\", \"id\" : 6, \"email\" : \"email\", \"username\" : \"username\" }, \"id\" : 0, \"lastUpdateAt\" : \"2000-01-23T04:56:07.000+00:00\", \"categories\" : [ { \"name\" : \"name\", \"id\" : 5 }, { \"name\" : \"name\", \"id\" : 5 } ], \"title\" : \"title\", \"content\" : \"content\", \"views\" : 456 }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
@@ -125,7 +125,7 @@ public interface ArticlesApi {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"createdAt\" : \"12-02-2013H12-05\", \"photoUrls\" : [ \"photoUrls\", \"photoUrls\" ], \"comments\" : [ { \"author\" : { \"firstName\" : \"firstName\", \"lastName\" : \"lastName\", \"id\" : 6, \"email\" : \"email\", \"username\" : \"username\" }, \"id\" : 1, \"title\" : \"article nul\", \"content\" : \"tu pourrais faire mieux\" }, { \"author\" : { \"firstName\" : \"firstName\", \"lastName\" : \"lastName\", \"id\" : 6, \"email\" : \"email\", \"username\" : \"username\" }, \"id\" : 1, \"title\" : \"article nul\", \"content\" : \"tu pourrais faire mieux\" } ], \"author\" : { \"firstName\" : \"firstName\", \"lastName\" : \"lastName\", \"id\" : 6, \"email\" : \"email\", \"username\" : \"username\" }, \"id\" : 0, \"lastUpdateAt\" : \"12-02-2013H12-05\", \"categories\" : [ { \"name\" : \"name\", \"id\" : 5 }, { \"name\" : \"name\", \"id\" : 5 } ], \"title\" : \"title\", \"content\" : \"content\", \"views\" : 456 }";
+                    String exampleString = "{ \"createdAt\" : \"2000-01-23T04:56:07.000+00:00\", \"comments\" : [ { \"createdAt\" : \"2000-01-23T04:56:07.000+00:00\", \"author\" : { \"firstName\" : \"firstName\", \"lastName\" : \"lastName\", \"id\" : 6, \"email\" : \"email\", \"username\" : \"username\" }, \"id\" : 1, \"title\" : \"article nul\", \"content\" : \"tu pourrais faire mieux\" }, { \"createdAt\" : \"2000-01-23T04:56:07.000+00:00\", \"author\" : { \"firstName\" : \"firstName\", \"lastName\" : \"lastName\", \"id\" : 6, \"email\" : \"email\", \"username\" : \"username\" }, \"id\" : 1, \"title\" : \"article nul\", \"content\" : \"tu pourrais faire mieux\" } ], \"author\" : { \"firstName\" : \"firstName\", \"lastName\" : \"lastName\", \"id\" : 6, \"email\" : \"email\", \"username\" : \"username\" }, \"id\" : 0, \"lastUpdateAt\" : \"2000-01-23T04:56:07.000+00:00\", \"categories\" : [ { \"name\" : \"name\", \"id\" : 5 }, { \"name\" : \"name\", \"id\" : 5 } ], \"title\" : \"title\", \"content\" : \"content\", \"views\" : 456 }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
@@ -147,7 +147,7 @@ public interface ArticlesApi {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"createdAt\" : \"12-02-2013H12-05\", \"photoUrls\" : [ \"photoUrls\", \"photoUrls\" ], \"comments\" : [ { \"author\" : { \"firstName\" : \"firstName\", \"lastName\" : \"lastName\", \"id\" : 6, \"email\" : \"email\", \"username\" : \"username\" }, \"id\" : 1, \"title\" : \"article nul\", \"content\" : \"tu pourrais faire mieux\" }, { \"author\" : { \"firstName\" : \"firstName\", \"lastName\" : \"lastName\", \"id\" : 6, \"email\" : \"email\", \"username\" : \"username\" }, \"id\" : 1, \"title\" : \"article nul\", \"content\" : \"tu pourrais faire mieux\" } ], \"author\" : { \"firstName\" : \"firstName\", \"lastName\" : \"lastName\", \"id\" : 6, \"email\" : \"email\", \"username\" : \"username\" }, \"id\" : 0, \"lastUpdateAt\" : \"12-02-2013H12-05\", \"categories\" : [ { \"name\" : \"name\", \"id\" : 5 }, { \"name\" : \"name\", \"id\" : 5 } ], \"title\" : \"title\", \"content\" : \"content\", \"views\" : 456 }";
+                    String exampleString = "{ \"createdAt\" : \"2000-01-23T04:56:07.000+00:00\", \"comments\" : [ { \"createdAt\" : \"2000-01-23T04:56:07.000+00:00\", \"author\" : { \"firstName\" : \"firstName\", \"lastName\" : \"lastName\", \"id\" : 6, \"email\" : \"email\", \"username\" : \"username\" }, \"id\" : 1, \"title\" : \"article nul\", \"content\" : \"tu pourrais faire mieux\" }, { \"createdAt\" : \"2000-01-23T04:56:07.000+00:00\", \"author\" : { \"firstName\" : \"firstName\", \"lastName\" : \"lastName\", \"id\" : 6, \"email\" : \"email\", \"username\" : \"username\" }, \"id\" : 1, \"title\" : \"article nul\", \"content\" : \"tu pourrais faire mieux\" } ], \"author\" : { \"firstName\" : \"firstName\", \"lastName\" : \"lastName\", \"id\" : 6, \"email\" : \"email\", \"username\" : \"username\" }, \"id\" : 0, \"lastUpdateAt\" : \"2000-01-23T04:56:07.000+00:00\", \"categories\" : [ { \"name\" : \"name\", \"id\" : 5 }, { \"name\" : \"name\", \"id\" : 5 } ], \"title\" : \"title\", \"content\" : \"content\", \"views\" : 456 }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
@@ -169,7 +169,7 @@ public interface ArticlesApi {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"createdAt\" : \"12-02-2013H12-05\", \"photoUrls\" : [ \"photoUrls\", \"photoUrls\" ], \"comments\" : [ { \"author\" : { \"firstName\" : \"firstName\", \"lastName\" : \"lastName\", \"id\" : 6, \"email\" : \"email\", \"username\" : \"username\" }, \"id\" : 1, \"title\" : \"article nul\", \"content\" : \"tu pourrais faire mieux\" }, { \"author\" : { \"firstName\" : \"firstName\", \"lastName\" : \"lastName\", \"id\" : 6, \"email\" : \"email\", \"username\" : \"username\" }, \"id\" : 1, \"title\" : \"article nul\", \"content\" : \"tu pourrais faire mieux\" } ], \"author\" : { \"firstName\" : \"firstName\", \"lastName\" : \"lastName\", \"id\" : 6, \"email\" : \"email\", \"username\" : \"username\" }, \"id\" : 0, \"lastUpdateAt\" : \"12-02-2013H12-05\", \"categories\" : [ { \"name\" : \"name\", \"id\" : 5 }, { \"name\" : \"name\", \"id\" : 5 } ], \"title\" : \"title\", \"content\" : \"content\", \"views\" : 456 }";
+                    String exampleString = "{ \"createdAt\" : \"2000-01-23T04:56:07.000+00:00\", \"comments\" : [ { \"createdAt\" : \"2000-01-23T04:56:07.000+00:00\", \"author\" : { \"firstName\" : \"firstName\", \"lastName\" : \"lastName\", \"id\" : 6, \"email\" : \"email\", \"username\" : \"username\" }, \"id\" : 1, \"title\" : \"article nul\", \"content\" : \"tu pourrais faire mieux\" }, { \"createdAt\" : \"2000-01-23T04:56:07.000+00:00\", \"author\" : { \"firstName\" : \"firstName\", \"lastName\" : \"lastName\", \"id\" : 6, \"email\" : \"email\", \"username\" : \"username\" }, \"id\" : 1, \"title\" : \"article nul\", \"content\" : \"tu pourrais faire mieux\" } ], \"author\" : { \"firstName\" : \"firstName\", \"lastName\" : \"lastName\", \"id\" : 6, \"email\" : \"email\", \"username\" : \"username\" }, \"id\" : 0, \"lastUpdateAt\" : \"2000-01-23T04:56:07.000+00:00\", \"categories\" : [ { \"name\" : \"name\", \"id\" : 5 }, { \"name\" : \"name\", \"id\" : 5 } ], \"title\" : \"title\", \"content\" : \"content\", \"views\" : 456 }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
@@ -191,7 +191,7 @@ public interface ArticlesApi {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"author\" : { \"firstName\" : \"firstName\", \"lastName\" : \"lastName\", \"id\" : 6, \"email\" : \"email\", \"username\" : \"username\" }, \"id\" : 1, \"title\" : \"article nul\", \"content\" : \"tu pourrais faire mieux\" }";
+                    String exampleString = "{ \"createdAt\" : \"2000-01-23T04:56:07.000+00:00\", \"author\" : { \"firstName\" : \"firstName\", \"lastName\" : \"lastName\", \"id\" : 6, \"email\" : \"email\", \"username\" : \"username\" }, \"id\" : 1, \"title\" : \"article nul\", \"content\" : \"tu pourrais faire mieux\" }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
@@ -213,7 +213,7 @@ public interface ArticlesApi {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"author\" : { \"firstName\" : \"firstName\", \"lastName\" : \"lastName\", \"id\" : 6, \"email\" : \"email\", \"username\" : \"username\" }, \"id\" : 1, \"title\" : \"article nul\", \"content\" : \"tu pourrais faire mieux\" }";
+                    String exampleString = "{ \"createdAt\" : \"2000-01-23T04:56:07.000+00:00\", \"author\" : { \"firstName\" : \"firstName\", \"lastName\" : \"lastName\", \"id\" : 6, \"email\" : \"email\", \"username\" : \"username\" }, \"id\" : 1, \"title\" : \"article nul\", \"content\" : \"tu pourrais faire mieux\" }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
