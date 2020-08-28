@@ -22,7 +22,7 @@
       </div>
     </template>
     <button class='validate_button' @click="formSubmit()">
-          I'm done
+          <img src='@/assets/yellowValidation.png'>
       </button>
   </div>
 </template>
@@ -144,18 +144,20 @@ export default {
 </script>
 
 <style scoped>
-  .validate_button {
-    color: #FFFE00;
-    background-color: black;
-    padding: 5px;
-    border: 2px solid #FFFE00;
-    border-radius: 5px;
-    font-weight: bold;
-    font-size: 16px;
-  }
-  .validate_button:hover {
-    color: black;
-    background-color: #FFFE00;
+img {
+  height: 50px;
+  width: 50px;
+  cursor: pointer;;
+}
+button {
+    margin-top: 10px;
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    padding: 0px;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
   }
   .wrapper-editor {
     background-color: white;

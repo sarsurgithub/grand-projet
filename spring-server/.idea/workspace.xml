@@ -2,46 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3975b10b-04a0-4f1d-9688-fe9fa342e381" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__joda_time_joda_time_2_10_6.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../client/grand-projet/src/App.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../client/grand-projet/src/App.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../client/grand-projet/src/components/Article/article-editor.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../client/grand-projet/src/components/Article/article-editor.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../client/grand-projet/src/components/Article/article.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../client/grand-projet/src/components/Article/article.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../client/grand-projet/src/components/Category/articles-byCategory.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../client/grand-projet/src/components/Category/articles-byCategory.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../client/grand-projet/src/components/CreateAccount/formulaire.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../client/grand-projet/src/components/CreateAccount/formulaire.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../client/grand-projet/src/components/chart.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../client/grand-projet/src/components/chart.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/grand-projet/src/components/CreateArticle/createArticle.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../client/grand-projet/src/components/CreateArticle/createArticle.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../client/grand-projet/src/components/myProfile/myInfos.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../client/grand-projet/src/components/myProfile/myInfos.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/grand-projet/src/components/validation-button.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../client/grand-projet/src/components/validation-button.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../client/grand-projet/src/views/Article.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../client/grand-projet/src/views/Article.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/grand-projet/src/views/MyProfile.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../client/grand-projet/src/views/MyProfile.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/io/swagger/entities/ArticleEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/swagger/entities/ArticleEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/io/swagger/entities/CommentEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/swagger/entities/CommentEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/io/swagger/services/utils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/swagger/services/utils.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/api-spec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/api-spec.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/swagger-spring.iml" beforeDir="false" afterPath="$PROJECT_DIR$/swagger-spring.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/api-spec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/api-spec.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/io/swagger/articles/api/ArticlesApi.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/io/swagger/articles/api/ArticlesApi.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/io/swagger/articles/api/model/CreateArticle.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/io/swagger/articles/api/model/CreateArticle.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/io/swagger/articles/api/model/GetArticle.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/io/swagger/articles/api/model/GetArticle.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/io/swagger/articles/api/model/GetComment.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/io/swagger/articles/api/model/GetComment.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/io/swagger/articles/api/model/UpdateArticle.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/io/swagger/articles/api/model/UpdateArticle.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/io/swagger/entities/ArticleEntity.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/io/swagger/entities/ArticleEntity.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/io/swagger/services/utils.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/io/swagger/services/utils.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/generated-sources/openapi/.openapi-generator/api-spec.yaml.sha256" beforeDir="false" afterPath="$PROJECT_DIR$/target/generated-sources/openapi/.openapi-generator/api-spec.yaml.sha256" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/generated-sources/openapi/src/main/java/io/swagger/articles/api/ArticlesApi.java" beforeDir="false" afterPath="$PROJECT_DIR$/target/generated-sources/openapi/src/main/java/io/swagger/articles/api/ArticlesApi.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/generated-sources/openapi/src/main/java/io/swagger/articles/api/CategoriesApi.java" beforeDir="false" afterPath="$PROJECT_DIR$/target/generated-sources/openapi/src/main/java/io/swagger/articles/api/CategoriesApi.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/generated-sources/openapi/src/main/java/io/swagger/articles/api/UsersApi.java" beforeDir="false" afterPath="$PROJECT_DIR$/target/generated-sources/openapi/src/main/java/io/swagger/articles/api/UsersApi.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/generated-sources/openapi/src/main/java/io/swagger/articles/api/model/CreateArticle.java" beforeDir="false" afterPath="$PROJECT_DIR$/target/generated-sources/openapi/src/main/java/io/swagger/articles/api/model/CreateArticle.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/generated-sources/openapi/src/main/java/io/swagger/articles/api/model/CreateCategory.java" beforeDir="false" afterPath="$PROJECT_DIR$/target/generated-sources/openapi/src/main/java/io/swagger/articles/api/model/CreateCategory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/generated-sources/openapi/src/main/java/io/swagger/articles/api/model/CreateComment.java" beforeDir="false" afterPath="$PROJECT_DIR$/target/generated-sources/openapi/src/main/java/io/swagger/articles/api/model/CreateComment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/generated-sources/openapi/src/main/java/io/swagger/articles/api/model/CreateUser.java" beforeDir="false" afterPath="$PROJECT_DIR$/target/generated-sources/openapi/src/main/java/io/swagger/articles/api/model/CreateUser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/generated-sources/openapi/src/main/java/io/swagger/articles/api/model/GetArticle.java" beforeDir="false" afterPath="$PROJECT_DIR$/target/generated-sources/openapi/src/main/java/io/swagger/articles/api/model/GetArticle.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/generated-sources/openapi/src/main/java/io/swagger/articles/api/model/GetCategory.java" beforeDir="false" afterPath="$PROJECT_DIR$/target/generated-sources/openapi/src/main/java/io/swagger/articles/api/model/GetCategory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/generated-sources/openapi/src/main/java/io/swagger/articles/api/model/GetComment.java" beforeDir="false" afterPath="$PROJECT_DIR$/target/generated-sources/openapi/src/main/java/io/swagger/articles/api/model/GetComment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/generated-sources/openapi/src/main/java/io/swagger/articles/api/model/GetUser.java" beforeDir="false" afterPath="$PROJECT_DIR$/target/generated-sources/openapi/src/main/java/io/swagger/articles/api/model/GetUser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/generated-sources/openapi/src/main/java/io/swagger/articles/api/model/UpdateArticle.java" beforeDir="false" afterPath="$PROJECT_DIR$/target/generated-sources/openapi/src/main/java/io/swagger/articles/api/model/UpdateArticle.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/generated-sources/openapi/src/main/java/io/swagger/articles/api/model/UpdateUser.java" beforeDir="false" afterPath="$PROJECT_DIR$/target/generated-sources/openapi/src/main/java/io/swagger/articles/api/model/UpdateUser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/swagger-spring-1.0.0.jar" beforeDir="false" afterPath="$PROJECT_DIR$/target/swagger-spring-1.0.0.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/swagger-spring-1.0.0.jar.original" beforeDir="false" afterPath="$PROJECT_DIR$/target/swagger-spring-1.0.0.jar.original" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -145,7 +112,7 @@
       <workItem from="1594111258654" duration="8170000" />
       <workItem from="1594128951182" duration="2027000" />
       <workItem from="1594199295836" duration="1891000" />
-      <workItem from="1596789713170" duration="6177000" />
+      <workItem from="1596789713170" duration="6446000" />
     </task>
     <servers />
   </component>

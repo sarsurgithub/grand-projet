@@ -23,7 +23,7 @@ export default {
     border: 5px solid #05FFFF;
     border-radius: 20px;
     text-align: left;
-    margin-right: 5%;
+    margin-right: 20px;
     min-width: 300px;
     padding: 10px;
   }

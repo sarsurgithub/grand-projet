@@ -10,7 +10,9 @@
           </router-link>
         </div>
       </div>
-      <button class='like'> like </button>
+      <button class='like'>
+        <img src='@/assets/greenLike.png'>
+      </button>
       <div class='author'> Written by
         <router-link class='link' :to="{ name: 'TheirProfile', params: { id : article.author.id }}">
           {{article.author.username}}
@@ -65,19 +67,21 @@ a {
 .text{
   padding: 0px 5% 30px 5%;
 }
+img {
+  height: 50px;
+  width: 50px;
+  cursor: pointer;;
+}
 button {
-  color: black;
-  padding: 5px;
-  border: 2px solid black;
-  border-radius: 50%;
-  background-color: #05FFA1;
-  font-weight: bold;
-  font-size: 16px;
-}
-button:hover {
-  color: #05FFA1;
-  background-color: black;
-}
+    margin-top: 10px;
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    padding: 0px;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+  }
 </style>
 
 <style>

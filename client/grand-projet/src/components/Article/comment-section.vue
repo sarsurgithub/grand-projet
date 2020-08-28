@@ -19,9 +19,12 @@
             v-model="description"/>
       </div>
     </div>
-    <button @click="activeSwitch()">
-      {{this.buttonContent}}
-    </button>
+    <div class='oops'>
+      <button @click="activeSwitch()">
+        <img v-if="this.commentIsActive === false" src="@/assets/croix-verte.png"/>
+        <img v-if="this.commentIsActive === true" src="@/assets/yellowValidation.png"/>
+      </button>
+    </div>
   </div>
 </template>
 
@@ -43,7 +46,6 @@ export default {
   data () {
     return {
       id: this.$route.params.id,
-      buttonContent: 'new Comment',
       commentIsActive: false,
       description: null,
       title: null,
@@ -67,7 +69,6 @@ export default {
     activeSwitch () {
       if (this.commentIsActive === false) {
         this.commentIsActive = true
-        this.buttonContent = 'I am done'
       } else {
         axios.post(`http://localhost:8081/api/articles/${this.id}/comments`, {
           title: this.title,
@@ -80,7 +81,6 @@ export default {
           }
         })
         this.commentIsActive = false
-        this.buttonContent = 'new Comment'
       }
     }
   }
@@ -113,17 +113,22 @@ export default {
 .contentEditor {
   background-color: transparent;
 }
+img {
+  height: 50px;
+  width: 50px;
+  cursor: pointer;
+
+}
 button {
-    color: #05FFA1;
-    padding: 5px;
-    border: 2px solid #05FFA1;
-    background-color: black;
-    border-radius: 5px;
-    font-weight: bold;
-    font-size: 16px;
-  }
-button:hover {
-    color: black;
-    background-color: #05FFA1;
-  }
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  padding: 0px;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  position: absolute;
+  margin-top: 10px;
+  align-self: center;
+}
 </style>

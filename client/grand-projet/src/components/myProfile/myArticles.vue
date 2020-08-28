@@ -38,6 +38,7 @@ export default {
     display: flex;
     flex-direction: column ;
     width: 717px;
-    margin-right: 30px;
+    margin-right: 20px;
+    margin-left: 5%;
   }
 </style>

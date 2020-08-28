@@ -2,7 +2,8 @@
   <div>
     <div class="wrapper">
       <button @click="activeEdition()" class='updateArticle' v-if="article.author.id == this.$store.getters.GET_CONNECTED_USER">
-      {{buttonContent}}
+        <img v-if="this.articleEdition === false" src="@/assets/edit-vert.png"/>
+        <img v-if="this.articleEdition === true" src="@/assets/yellowValidation.png"/>
       </button>
       <myArticle v-if="!this.articleEdition" :article=article ></myArticle>
       <articleEditor v-if="this.articleEdition" :article=article></articleEditor>
@@ -23,8 +24,7 @@ export default {
       articleEdition: false,
       article: {},
       id: this.$route.params.id,
-      comments: [],
-      buttonContent: 'modifier article'
+      comments: []
     }
   },
   components: {
@@ -37,10 +37,8 @@ export default {
     activeEdition () {
       if (this.articleEdition === false) {
         this.articleEdition = true
-        this.buttonContent = 'valider'
       } else {
         this.articleEdition = false
-        this.buttonContent = 'modifier article'
       }
     }
   },
@@ -62,21 +60,27 @@ export default {
 .wrapper {
   margin-bottom: 10%;
 }
+
+img {
+  height: 50px;
+  width: 50px;
+  cursor: pointer;;
+}
+button {
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  padding: 0px;
+  border: none;
+  background-color: transparent;
+  margin-left: 10px;
+  left: 1429px;
+  cursor: pointer;
+}
 .updateArticle {
-  margin-left: 10px;;
   position: absolute;
   top: 360px;
-  left: 1429px;
-  color: #05FFA1;
-  padding: 5px;
-  border: 2px solid #05FFA1;
-  background-color: black;
-  border-radius: 5px;
-  font-weight: bold;
-  font-size: 16px;
+  margin-top: 10px;
 }
-.updateArticle:hover {
-  color: black;
-  background-color: #05FFA1;
-}
+
 </style>

@@ -18,6 +18,6 @@ export default {
     border-radius: 50%;
     padding: 0px;
     border: none;
-    background-image: url('../assets/yellowValidation.png')
+    background-image: url('../assets/croix-bleue.png')
   }
 </style>

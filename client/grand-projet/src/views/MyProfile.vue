@@ -2,10 +2,13 @@
   <div>
     <div class="wrapper">
       <infos-card :user=user></infos-card>
+      <button>
+          <img src='@/assets/edit-bleu.png'>
+        </button>
       <article-list :articles=articles></article-list>
       <router-link class='link' :to="{ name: 'CreateArticle', params: { id : user.id}}">
         <button>
-          Create an article
+          <img src='@/assets/croix-bleue.png'>
         </button>
       </router-link>
     </div>
@@ -52,19 +55,23 @@ export default {
   align-items: flex-start;
   margin: 60px 10%;
 }
-
+img {
+  height: 50px;
+  width: 50px;
+  cursor: pointer;;
+}
 button {
     margin-top: 10px;
-    color: #05FFFF;
-    padding: 5px;
-    border: 2px solid #05FFFF;
-    background-color: black;
-    border-radius: 10px;
-    font-weight: bold;
-    font-size: 16px;
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    padding: 0px;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
   }
-  button:hover {
-    color: black;
-    background-color: #05FFFF;
+  .link {
+    cursor: pointer;
   }
+
 </style>
