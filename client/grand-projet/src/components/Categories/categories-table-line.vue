@@ -18,7 +18,7 @@ export default {
   props: ['category'],
   mounted () {
     axios
-      .get(`${process.ENV.VUE_APP_API}/api/articles/byCategories?categories=${this.category.id}`)
+      .get(`${process.env.VUE_APP_API}/api/articles/byCategories?categories=${this.category.id}`)
       .then(response => (
         this.articlesByCategory = response.data
       )

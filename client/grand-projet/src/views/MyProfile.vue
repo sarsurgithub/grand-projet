@@ -47,12 +47,12 @@ export default {
   },
   mounted () {
     axios
-      .get(`${process.ENV.VUE_APP_API}/api/users/${this.$store.getters.GET_CONNECTED_USER}`)
+      .get(`${process.env.VUE_APP_API}/api/users/${this.$store.getters.GET_CONNECTED_USER}`)
       .then(response => {
         this.user = response.data
       })
     axios
-      .get(`${process.ENV.VUE_APP_API}/api/articles/byUser?user=${this.$store.getters.GET_CONNECTED_USER}`)
+      .get(`${process.env.VUE_APP_API}/api/articles/byUser?user=${this.$store.getters.GET_CONNECTED_USER}`)
       .then(response => {
         this.articles = response.data
       })

@@ -43,7 +43,7 @@ export default {
   },
   mounted () {
     axios
-      .get(`${process.ENV.VUE_APP_API}/api/articles/${this.id}`)
+      .get(`${process.env.VUE_APP_API}/api/articles/${this.id}`)
       .then(response => {
         console.log(response)
         this.article = response.data

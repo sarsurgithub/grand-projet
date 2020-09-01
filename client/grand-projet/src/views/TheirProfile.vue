@@ -27,14 +27,14 @@ export default {
   },
   mounted () {
     axios
-      .get(`${process.ENV.VUE_APP_API}/api/users/${this.$route.params.id}`)
+      .get(`${process.env.VUE_APP_API}/api/users/${this.$route.params.id}`)
       .then(response => {
         console.log(response)
         this.user = response.data
       }
       )
     axios
-      .get(`${process.ENV.VUE_APP_API}/api/articles/byUser?user=${this.$route.params.id}`)
+      .get(`${process.env.VUE_APP_API}/api/articles/byUser?user=${this.$route.params.id}`)
       .then(response => {
         console.log(response)
         this.articles = response.data

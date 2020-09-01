@@ -43,10 +43,10 @@ export default {
     like () {
       if (this.liked) {
         axios
-          .get(`${process.ENV.VUE_APP_API}/api/articles/${this.article.id}/deleteLike`)
+          .get(`${process.env.VUE_APP_API}/api/articles/${this.article.id}/deleteLike`)
       } else {
         axios
-          .get(`${process.ENV.VUE_APP_API}/api/articles/${this.article.id}/addLike`)
+          .get(`${process.env.VUE_APP_API}/api/articles/${this.article.id}/addLike`)
       }
     }
   }
