@@ -127,7 +127,7 @@ export default {
         })
         console.log('dans la boucle')
         const response = await axios
-          .get(`http://localhost:8081/api/categories/getIds?${this.url}`)
+          .get(`${process.ENV.VUE_APP_API}/api/categories/getIds?${this.url}`)
         this.categories = response.data
         console.log(response)
       }

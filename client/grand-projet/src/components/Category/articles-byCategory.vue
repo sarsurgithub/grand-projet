@@ -30,13 +30,13 @@ export default {
   },
   mounted () {
     axios
-      .get(`http://localhost:8081/api/articles/byCategories?categories=${this.$route.params.id}`)
+      .get(`${process.ENV.VUE_APP_API}/api/articles/byCategories?categories=${this.$route.params.id}`)
       .then(response => (
         this.articles = response.data
       )
       )
     axios
-      .get(`http://localhost:8081/api/categories/${this.$route.params.id}`)
+      .get(`${process.ENV.VUE_APP_API}/api/categories/${this.$route.params.id}`)
       .then(response => (
         this.category = response.data.name
       )

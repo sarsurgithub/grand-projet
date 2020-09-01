@@ -159,9 +159,9 @@ export default {
 
       networkSeries.nodes.template.events.on('hit', function (event) {
         if (event.target.dataItem.categories === 'article') {
-          window.location = `http://localhost:8080/articles/${event.target.dataItem.id}`
+          window.location = `./articles/${event.target.dataItem.id}`
         } else if (event.target.dataItem.categories === 'category') {
-          window.location = `http://localhost:8080/category/${event.target.dataItem.id}`
+          window.location = `./category/${event.target.dataItem.id}`
         }
       })
     })

@@ -10,7 +10,7 @@
         <button type="submit" @click="formSubmit()">
           Login
         </button>
-        <a href='http://localhost:8080/createAccount' class='createAccount'>
+        <a href='./createAccount' class='createAccount'>
         create an account
         </a>
       </div>
