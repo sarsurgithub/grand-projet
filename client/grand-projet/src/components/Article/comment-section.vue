@@ -70,7 +70,7 @@ export default {
       if (this.commentIsActive === false) {
         this.commentIsActive = true
       } else {
-        axios.post(`http://localhost:8081/api/articles/${this.id}/comments`, {
+        axios.post(`${process.env.VUE_APP_API}/api/articles/${this.id}/comments`, {
           title: this.title,
           content: this.description,
           author: this.$store.getters.GET_CONNECTED_USER

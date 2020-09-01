@@ -120,7 +120,7 @@ export default {
       if (this.categoriesNames.length !== 0) {
         // envoyer un array des catégories à potentiellement ajouter, les doublons sont gérés par le backend
         console.log('étape4 créer les catégories')
-        await axios.post('http://localhost:8081/api/categories', this.categoriesToPost, {
+        await axios.post(`${process.env.VUE_APP_API}/api/categories`, this.categoriesToPost, {
           headers: {
             Authorization: 'Bearer ' + this.$store.getters.GET_AUTH_TOKEN
           }
@@ -135,7 +135,7 @@ export default {
       // envoyer un article avec son titre, contenu, autheur, et les ids de ses catégories
       console.log('étape6: créer article')
       console.log('categ ids' + this.categories)
-      await axios.patch(`http://localhost:8081/api/articles/${this.article.id}`, {
+      await axios.patch(`${process.env.VUE_APP_API}/api/articles/${this.article.id}`, {
         title: this.title,
         content: this.description,
         categories_ids: this.categories

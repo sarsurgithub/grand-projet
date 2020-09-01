@@ -30,7 +30,7 @@ export default {
     createCategories: function () {
       for (let i = 0; i < this.tags.length; i++) {
         console.log(this.tags[i].text)
-        axios.post('http://localhost:8081/api/categories', {
+        axios.post(`${process.env.VUE_APP_API}/api/categories`, {
           name: this.tags[i].text
         })
       }

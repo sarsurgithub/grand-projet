@@ -40,7 +40,7 @@ export default {
     async formSubmit () {
       console.log('nous entrons dans la fonction formSubmit')
 
-      axios.post('http://localhost:8081/api/users', {
+      axios.post(`${process.env.VUE_APP_API}/api/users`, {
         username: this.username,
         firstName: this.firstName,
         lastName: this.lastName,

@@ -32,7 +32,7 @@ export default {
 
     let articles
 
-    const promise = axios.get('http://localhost:8081/api/articles')
+    const promise = axios.get(`${process.env.VUE_APP_API}/api/articles`)
       .then(function (response) {
         articles = response.data
         articles.sort(function (a, b) {

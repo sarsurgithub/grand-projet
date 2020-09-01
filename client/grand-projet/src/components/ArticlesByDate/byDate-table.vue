@@ -28,7 +28,7 @@ export default {
   },
   mounted () {
     axios
-      .get('http://localhost:8081/api/articles')
+      .get(`${process.env.VUE_APP_API}/api/articles`)
       .then(response => (
         this.articles = response.data
       )

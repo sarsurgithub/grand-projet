@@ -35,7 +35,7 @@ export default {
     async formSubmit () {
       console.log('nous entrons dans la fonction formSubmit')
 
-      axios.post('http://localhost:8081/api/login', {
+      axios.post(`${process.env.VUE_APP_API}/api/login`, {
         username: this.username,
         password: this.password
       })

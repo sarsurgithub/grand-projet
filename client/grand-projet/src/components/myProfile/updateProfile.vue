@@ -41,7 +41,7 @@ export default {
     async formSubmit () {
       console.log('nous entrons dans la fonction formSubmit')
 
-      axios.patch(`http://localhost:8081/api/users/${this.$store.getters.GET_CONNECTED_USER}`, {
+      axios.patch(`${process.env.VUE_APP_API}/api/users/${this.$store.getters.GET_CONNECTED_USER}`, {
         username: this.username,
         firstName: this.firstName,
         lastName: this.lastName,
