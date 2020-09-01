@@ -35,7 +35,6 @@ export default {
     const promise = axios.get('http://localhost:8081/api/articles')
       .then(function (response) {
         articles = response.data
-        console.log(articles)
         articles.sort(function (a, b) {
           if (a.id > b.id) return 1
           if (b.id > a.id) return -1
@@ -44,9 +43,7 @@ export default {
         if (articles.length >= 10) {
           articles = articles.slice(1).slice(-10)
         }
-        console.log('articles' + articles)
       })
-    console.log(promise)
     mesPromesses.push(promise)
 
     Promise.all(mesPromesses).then((values) => {
@@ -68,8 +65,6 @@ export default {
         category: 'article'
       }))
 
-      console.log('articles formatted' + articlesFormated)
-
       articles.forEach(element => {
         const id = element.id
         element.categories.forEach(category => {
@@ -83,7 +78,6 @@ export default {
         })
       })
 
-      console.log(categories)
       const categoriesFormated = categories.map(category => ({
         id: category.id,
         name: category.name,
@@ -106,13 +100,13 @@ export default {
         category: 'category'
       }))
       const data = categoriesFormated.concat(articlesFormated)
-      console.log('data' + data)
 
       chart.data = data
 
       networkSeries.tooltip.keepTargetHover = true
       networkSeries.tooltip.label.interactionsEnabled = true
       networkSeries.minRadius = 40
+      networkSeries.maxRadius = 60
       networkSeries.fontSize = 10
 
       const dataFields = networkSeries.dataFields
@@ -164,8 +158,6 @@ export default {
       })
 
       networkSeries.nodes.template.events.on('hit', function (event) {
-        console.log(event.target.dataItem)
-        console.log('hit')
         if (event.target.dataItem.categories === 'article') {
           window.location = `http://localhost:8080/articles/${event.target.dataItem.id}`
         } else if (event.target.dataItem.categories === 'category') {

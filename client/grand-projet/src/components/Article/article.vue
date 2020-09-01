@@ -10,8 +10,9 @@
           </router-link>
         </div>
       </div>
-      <button class='like'>
+      <button class='like' @click="like()" >
         <img src='@/assets/greenLike.png'>
+        {{article.views}}
       </button>
       <div class='author'> Written by
         <router-link class='link' :to="{ name: 'TheirProfile', params: { id : article.author.id }}">
@@ -25,11 +26,30 @@
 
 <script>
 import tag from '@/components/Article/tag.vue'
+import axios from 'axios'
+
 export default {
   components: {
     tag
   },
-  props: ['article']
+  props: ['article'],
+  data () {
+    return {
+      liked: false
+    }
+  },
+  methods: {
+
+    like () {
+      if (this.liked) {
+        axios
+          .get(`http://localhost:8081/api/articles/${this.article.id}/deleteLike`)
+      } else {
+        axios
+          .get(`http://localhost:8081/api/articles/${this.article.id}/addLike`)
+      }
+    }
+  }
 }
 </script>
 

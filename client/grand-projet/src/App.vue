@@ -45,6 +45,9 @@ export default {
 }
 </script>
 <style lang="scss">
+button {
+  outline: none;
+}
 .logout {
   margin-left: 5%;
 }

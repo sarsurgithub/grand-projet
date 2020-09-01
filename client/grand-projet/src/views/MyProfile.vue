@@ -1,8 +1,9 @@
 <template>
   <div>
     <div class="wrapper">
-      <infos-card :user=user></infos-card>
-      <button>
+      <infos-card v-if="!this.edition"  :user=user></infos-card>
+      <updateInfos v-if="this.edition" :user=user></updateInfos>
+      <button @click="activeEdition()">
           <img src='@/assets/edit-bleu.png'>
         </button>
       <article-list :articles=articles></article-list>
@@ -19,19 +20,30 @@
 
 import articleList from '@/components/myProfile/myArticles.vue'
 import infosCard from '@/components/myProfile/myInfos.vue'
+import updateInfos from '@/components/myProfile/updateProfile.vue'
 import axios from 'axios'
 
 export default {
   data: function () {
     return {
-      connectedUserId: 1,
       user: {},
-      articles: []
+      articles: [],
+      edition: false
     }
   },
   components: {
     articleList,
-    infosCard
+    infosCard,
+    updateInfos
+  },
+  methods: {
+    activeEdition () {
+      if (this.edition === false) {
+        this.edition = true
+      } else {
+        this.edition = false
+      }
+    }
   },
   mounted () {
     axios

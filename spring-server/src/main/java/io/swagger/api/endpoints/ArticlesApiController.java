@@ -32,6 +32,7 @@ import java.net.URI;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2020-04-08T14:21:38.963Z[GMT]")
 @Controller
@@ -195,6 +196,36 @@ public class ArticlesApiController implements ArticlesApi {
 
     }
 
+    public ResponseEntity<Void> addLike(@ApiParam(value = "Id of the article",required=true) @PathVariable("articleId") Long articleId) {
+        ArticleEntity articleEntity = articleRepository.findById(articleId).get();
+        Integer initialLikes = articleEntity.getViews();
+        articleEntity.setViews(initialLikes + 1);
+
+        articleRepository.save(articleEntity);
+
+        URI location = ServletUriComponentsBuilder
+                .fromCurrentRequest().path("/{id}")
+                .buildAndExpand(articleEntity.getId()).toUri();
+
+        return ResponseEntity.created(location).build();
+
+    }
+
+    public ResponseEntity<Void> deleteLike(@ApiParam(value = "Id of the article",required=true) @PathVariable("articleId") Long articleId) {
+        ArticleEntity articleEntity = articleRepository.findById(articleId).get();
+        Integer initialLikes = articleEntity.getViews();
+        articleEntity.setViews(initialLikes - 1);
+
+        articleRepository.save(articleEntity);
+
+        URI location = ServletUriComponentsBuilder
+                .fromCurrentRequest().path("/{id}")
+                .buildAndExpand(articleEntity.getId()).toUri();
+
+        return ResponseEntity.created(location).build();
+
+
+    }
 
 
     // COMMENTS

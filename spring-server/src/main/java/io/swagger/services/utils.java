@@ -15,6 +15,7 @@ public class utils {
         ArticleEntity entity = new ArticleEntity();
         entity.setTitle(article.getTitle());
         entity.setContent(article.getContent());
+        entity.setViews(article.getViews());
         return entity;
     }
 

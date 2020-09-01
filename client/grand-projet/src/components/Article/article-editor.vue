@@ -24,7 +24,8 @@
     <button
       class='validate_button'
       @click="formSubmit()">
-      I'm done </button>
+      <img src="@/assets/yellowValidation.png"/>
+    </button>
   </div>
 </template>
 
@@ -46,6 +47,7 @@ export default {
     return {
       tag: '',
       tags: this.article.categories.map(tag => tag.name),
+      superTags: [],
       title: this.article.title,
       categoriesToPost: [],
       categories: [],
@@ -82,11 +84,15 @@ export default {
   methods: {
 
     async formSubmit () {
+      console.log(this.tags)
       console.log('nous entrons dans la fonction formSubmit')
-
+      this.article.categories.forEach(element => {
+        this.superTags.text = element.name
+      })
+      console.log(this.superTags)
       // servira à avoir un array avec seulement les noms des catégories, pour retrouver les ids des catégories
       console.log('étape1 : créer array de noms')
-      this.categoriesNames = this.tags.map(tag => tag.text)
+      this.categoriesNames = this.superTags.map(tag => tag.text)
       console.log('categ: ' + this.categoriesNames)
 
       // servira à avoir un array sous la forme [{ name : design }, { name: sociology}] pour pouvoir ajouter les catégories
@@ -94,7 +100,7 @@ export default {
       this.categoriesToPost = this.tags.map(tag => ({
         name: tag.text
       }))
-      console.log(this.categoriesToPost)
+      console.log('important: ' + this.categoriesToPost)
 
       // pour chacun des tag entré, ajouter à l'url pour préparer la prochaine requête
       console.log('étape3 : créer url')
@@ -128,16 +134,7 @@ export default {
 
       // envoyer un article avec son titre, contenu, autheur, et les ids de ses catégories
       console.log('étape6: créer article')
-      console.log(`http://localhost:8081/api/articles/${this.article.id}`, {
-        title: this.title,
-        content: this.description,
-        categories_ids: this.categories
-      },
-      {
-        headers: {
-          Authorization: 'Bearer ' + this.$store.getters.GET_AUTH_TOKEN
-        }
-      })
+      console.log('categ ids' + this.categories)
       await axios.patch(`http://localhost:8081/api/articles/${this.article.id}`, {
         title: this.title,
         content: this.description,
@@ -158,6 +155,7 @@ export default {
       this.categoriesToPost = []
       this.categoriesIds = []
       this.categoriesNames = []
+      this.$router.push({ name: 'Article', params: { id: this.article.id } })
       console.log('url au début: ' + this.url)
     }
   }
@@ -165,19 +163,22 @@ export default {
 </script>
 
 <style scoped>
-  .validate_button {
-    color: #FFFE00;
-    padding: 5px;
-    border: 2px solid #FFFE00;
-    background-color: black;
-    border-radius: 5px;
-    font-weight: bold;
-    font-size: 16px;
-  }
-  .validate_button:hover {
-    color: black;
-    background-color: #FFFE00;
-  }
+  img {
+  height: 50px;
+  width: 50px;
+  cursor: pointer;;
+}
+button {
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  padding: 0px;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  position: absolute;
+  left: 50%;
+}
   .wrapper-editor {
     background-color: white;
     color: black;
@@ -193,6 +194,7 @@ export default {
   }
   .editor {
     margin: 15px 15% 15px 15%;
+    padding-bottom: 60px;;
   }
 
 </style>

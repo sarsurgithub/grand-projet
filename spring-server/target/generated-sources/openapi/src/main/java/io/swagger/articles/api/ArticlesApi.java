@@ -30,7 +30,7 @@ import javax.validation.constraints.*;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2020-08-26T11:16:28.324752+02:00[Europe/Zurich]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2020-09-01T15:06:31.171958+02:00[Europe/Zurich]")
 
 @Validated
 @Api(value = "articles", description = "the articles API")
@@ -48,6 +48,18 @@ public interface ArticlesApi {
         consumes = { "application/json" },
         method = RequestMethod.POST)
     default ResponseEntity<Void> addCommentToAnArticle(@ApiParam(value = "ID of the article",required=true) @PathVariable("articleId") Long articleId,@ApiParam(value = "comment to add to the article"  )  @Valid @RequestBody CreateComment createComment) {
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
+
+
+    @ApiOperation(value = "adds a like to the counter", nickname = "addLike", notes = "", tags={ "articles", })
+    @ApiResponses(value = { 
+        @ApiResponse(code = 200, message = "successful operation"),
+        @ApiResponse(code = 400, message = "Invalid tag value") })
+    @RequestMapping(value = "/articles/{articleId}/addLike",
+        method = RequestMethod.GET)
+    default ResponseEntity<Void> addLike(@ApiParam(value = "Id of the article",required=true) @PathVariable("articleId") Long articleId) {
         return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
 
     }
@@ -86,6 +98,18 @@ public interface ArticlesApi {
     @RequestMapping(value = "/articles/{articleId}/comments/{commentId}",
         method = RequestMethod.DELETE)
     default ResponseEntity<Void> deleteComment(@ApiParam(value = "ID of the comment to delete",required=true) @PathVariable("commentId") Long commentId,@ApiParam(value = "Article ID",required=true) @PathVariable("articleId") Long articleId) {
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
+
+
+    @ApiOperation(value = "deletes a like from the counter", nickname = "deleteLike", notes = "", tags={ "articles", })
+    @ApiResponses(value = { 
+        @ApiResponse(code = 200, message = "successful operation"),
+        @ApiResponse(code = 400, message = "Invalid tag value") })
+    @RequestMapping(value = "/articles/{articleId}/deleteLike",
+        method = RequestMethod.GET)
+    default ResponseEntity<Void> deleteLike(@ApiParam(value = "Id of the article",required=true) @PathVariable("articleId") Long articleId) {
         return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
 
     }

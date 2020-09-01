@@ -14,7 +14,7 @@ import javax.validation.constraints.*;
 /**
  * CreateArticle
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2020-08-26T11:16:28.324752+02:00[Europe/Zurich]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2020-09-01T15:06:31.171958+02:00[Europe/Zurich]")
 
 public class CreateArticle   {
   @JsonProperty("title")
@@ -29,6 +29,9 @@ public class CreateArticle   {
   @JsonProperty("categories_ids")
   @Valid
   private List<Long> categoriesIds = null;
+
+  @JsonProperty("views")
+  private Integer views;
 
   public CreateArticle title(String title) {
     this.title = title;
@@ -121,6 +124,27 @@ public class CreateArticle   {
     this.categoriesIds = categoriesIds;
   }
 
+  public CreateArticle views(Integer views) {
+    this.views = views;
+    return this;
+  }
+
+  /**
+   * Get views
+   * @return views
+  */
+  @ApiModelProperty(required = true, value = "")
+  @NotNull
+
+
+  public Integer getViews() {
+    return views;
+  }
+
+  public void setViews(Integer views) {
+    this.views = views;
+  }
+
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -134,12 +158,13 @@ public class CreateArticle   {
     return Objects.equals(this.title, createArticle.title) &&
         Objects.equals(this.content, createArticle.content) &&
         Objects.equals(this.authorId, createArticle.authorId) &&
-        Objects.equals(this.categoriesIds, createArticle.categoriesIds);
+        Objects.equals(this.categoriesIds, createArticle.categoriesIds) &&
+        Objects.equals(this.views, createArticle.views);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(title, content, authorId, categoriesIds);
+    return Objects.hash(title, content, authorId, categoriesIds, views);
   }
 
   @Override
@@ -151,6 +176,7 @@ public class CreateArticle   {
     sb.append("    content: ").append(toIndentedString(content)).append("\n");
     sb.append("    authorId: ").append(toIndentedString(authorId)).append("\n");
     sb.append("    categoriesIds: ").append(toIndentedString(categoriesIds)).append("\n");
+    sb.append("    views: ").append(toIndentedString(views)).append("\n");
     sb.append("}");
     return sb.toString();
   }

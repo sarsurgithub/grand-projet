@@ -83,6 +83,7 @@ export default {
     async formSubmit () {
       // servira à avoir un array avec seulement les noms des catégories, pour retrouver les ids des catégories
       this.categoriesNames = this.tags.map(tag => tag.text)
+      console.log(this.categoriesNames)
 
       // servira à avoir un array sous la forme [{ name : design }, { name: sociology}] pour pouvoir ajouter les catégories
       this.categoriesToPost = this.tags.map(tag => ({
@@ -116,7 +117,8 @@ export default {
         title: this.title,
         content: this.description,
         author_id: this.$store.getters.GET_CONNECTED_USER,
-        categories_ids: this.categories
+        categories_ids: this.categories,
+        views: 0
       },
       {
         headers: {
@@ -126,18 +128,9 @@ export default {
         .then((response) => {
           this.articleId = response.headers.location.substring(35)
           console.log(this.articleId)
+          console.log(response)
           this.$router.push({ name: 'Article', params: { id: this.articleId } })
         })
-
-      // remettre toutes les valeurs à leur origine, maybe rediriger vers la page de l'article ? ou page de l'auteur ?
-      this.url = ''
-      this.description = null
-      this.categories = []
-      this.tags = []
-      this.title = null
-      this.categoriesToPost = []
-      this.categoriesIds = []
-      this.categoriesNames = []
     }
   }
 }

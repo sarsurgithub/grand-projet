@@ -3,11 +3,10 @@
     <div class="wrapper">
       <button @click="activeEdition()" class='updateArticle' v-if="article.author.id == this.$store.getters.GET_CONNECTED_USER">
         <img v-if="this.articleEdition === false" src="@/assets/edit-vert.png"/>
-        <img v-if="this.articleEdition === true" src="@/assets/yellowValidation.png"/>
       </button>
       <myArticle v-if="!this.articleEdition" :article=article ></myArticle>
       <articleEditor v-if="this.articleEdition" :article=article></articleEditor>
-      <comments :comments=comments ></comments>
+      <comments v-if="!this.articleEdition" :comments=comments ></comments>
     </div>
   </div>
 </template>

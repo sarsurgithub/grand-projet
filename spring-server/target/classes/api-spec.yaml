@@ -184,6 +184,46 @@ paths:
         404:
           description: Article not found
           content: {}
+  /articles/{articleId}/addLike:
+    get:
+      tags:
+        - articles
+      summary: adds a like to the counter
+      operationId: addLike
+      parameters:
+        - name: articleId
+          in: path
+          description: Id of the article
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        200:
+          description: successful operation
+        400:
+          description: Invalid tag value
+          content: {}
+  /articles/{articleId}/deleteLike:
+    get:
+      tags:
+        - articles
+      summary: deletes a like from the counter
+      operationId: deleteLike
+      parameters:
+        - name: articleId
+          in: path
+          description: Id of the article
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        200:
+          description: successful operation
+        400:
+          description: Invalid tag value
+          content: {}
   /articles/{articleId}/comments:
     get:
       tags:
@@ -617,6 +657,7 @@ components:
         - title
         - author_id
         - content
+        - views
       type: object
       properties:
         title:
@@ -632,6 +673,8 @@ components:
           items:
             type: integer
             format: int64
+        views:
+          type: integer
     GetArticle:
       required:
         - id
