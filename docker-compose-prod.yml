@@ -11,6 +11,8 @@ services:
       - db_data:/var/lib/mysql
     ports:
       - 3000:3306
+    networks:
+      - network
   
   phpmyadmin:
     image: phpmyadmin/phpmyadmin:latest
@@ -24,9 +26,12 @@ services:
     restart: always
     ports:
       - 8888:80
+    networks:
+      - network
 
   server:
     image: grand-projet/server:latest
+    container_name: grand-projet_server
     depends_on: 
       - db
     environment: 
@@ -34,14 +39,23 @@ services:
     restart: always
     ports: 
       - 8081:8081
+    networks:
+      - network
+
   client:
     image: grand-projet/client:latest
     container_name: grand-projet_client
     restart: always
     ports:
       - 80:80
+    networks:
+      - network
 
 volumes:
   db_data:
+
+networks:
+  network: 
+    external: false
 
 
